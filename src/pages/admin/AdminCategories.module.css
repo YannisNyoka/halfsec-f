@@ -1,0 +1,13 @@
+.page { padding: 32px; display: flex; flex-direction: column; gap: 24px; }
+.title { font-size: 24px; font-weight: 700; color: var(--color-text); }
+.layout { display: grid; grid-template-columns: 360px 1fr; gap: 24px; align-items: start; }
+.formCard, .listCard { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+.cardTitle { font-size: 15px; font-weight: 700; color: var(--color-text); }
+.form { display: flex; flex-direction: column; gap: 14px; }
+.list { display: flex; flex-direction: column; gap: 0; }
+.catRow { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--color-border); }
+.catRow:last-child { border-bottom: none; }
+.catName { font-size: 14px; font-weight: 600; color: var(--color-text); }
+.catDesc { font-size: 12px; color: var(--color-muted); margin-top: 2px; }
+.catActions { display: flex; align-items: center; gap: 8px; }
+.empty { font-size: 14px; color: var(--color-muted); padding: 20px 0; }

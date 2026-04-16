@@ -1,0 +1,28 @@
+.hero {
+  min-height: calc(100vh - 64px);
+  display: flex;
+  align-items: center;
+  background: var(--color-bg);
+}
+.content { display: flex; flex-direction: column; gap: 24px; max-width: 600px; }
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-gold);
+  background: var(--color-gold-muted);
+  padding: 5px 14px;
+  border-radius: 999px;
+  width: fit-content;
+  letter-spacing: 0.3px;
+}
+.heading {
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  color: var(--color-text);
+}
+.heading span { color: var(--color-gold); }
+.sub { font-size: 18px; color: var(--color-muted); max-width: 480px; }
+.actions { display: flex; gap: 12px; flex-wrap: wrap; }

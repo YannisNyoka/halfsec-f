@@ -1,0 +1,55 @@
+.page { padding: 32px; display: flex; flex-direction: column; gap: 28px; }
+.header { display: flex; flex-direction: column; gap: 4px; }
+.title { font-size: 26px; font-weight: 700; color: var(--color-text); }
+.sub { font-size: 14px; color: var(--color-muted); }
+
+.statsGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.statCard {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+.statLabel { font-size: 12px; color: var(--color-muted); margin-bottom: 8px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+.statValue { font-size: 28px; font-weight: 800; color: var(--color-text); }
+.statGold { color: var(--color-gold); }
+
+.quickLinks { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.section { display: flex; flex-direction: column; gap: 14px; }
+.sectionTitle { font-size: 17px; font-weight: 700; color: var(--color-text); }
+
+.table {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.tableHeader {
+  display: grid;
+  grid-template-columns: 120px 1fr 80px 100px 120px 60px;
+  padding: 12px 20px;
+  background: var(--color-surface2);
+  font-size: 11px; font-weight: 700;
+  color: var(--color-muted);
+  text-transform: uppercase; letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--color-border);
+}
+.tableRow {
+  display: grid;
+  grid-template-columns: 120px 1fr 80px 100px 120px 60px;
+  padding: 14px 20px;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 14px;
+  transition: background var(--transition);
+}
+.tableRow:last-child { border-bottom: none; }
+.tableRow:hover { background: var(--color-surface2); }
+.orderNum { font-weight: 700; color: var(--color-text); }
+.customer { color: var(--color-text-secondary); }
+.muted { color: var(--color-muted); }
+.amount { font-weight: 700; color: var(--color-gold); }
+.viewLink { color: var(--color-gold); font-size: 13px; font-weight: 600; }
+.viewLink:hover { text-decoration: underline; }
+.empty { padding: 32px; text-align: center; color: var(--color-muted); font-size: 14px; }

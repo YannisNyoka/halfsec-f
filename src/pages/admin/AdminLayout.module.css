@@ -1,0 +1,82 @@
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+.sidebar {
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.brand {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--color-text);
+  padding: 0 12px;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.brand span:first-of-type { color: var(--color-gold); }
+
+.adminTag {
+  font-size: 10px !important;
+  font-weight: 700;
+  background: var(--color-gold-muted);
+  color: var(--color-gold) !important;
+  padding: 2px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+}
+
+.nav { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  transition: background var(--transition), color var(--transition);
+}
+.navItem:hover { background: var(--color-surface2); color: var(--color-text); }
+.navActive { background: var(--color-gold-muted) !important; color: var(--color-gold) !important; font-weight: 600; }
+.navActive svg { stroke: var(--color-gold); }
+
+.sidebarFooter { border-top: 1px solid var(--color-border); padding-top: 16px; display: flex; flex-direction: column; gap: 12px; }
+
+.userInfo { display: flex; align-items: center; gap: 10px; padding: 0 4px; }
+.avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--color-gold-muted);
+  color: var(--color-gold);
+  font-size: 14px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.userName { font-size: 13px; font-weight: 600; color: var(--color-text); }
+.userRole { font-size: 11px; color: var(--color-muted); }
+
+.logoutBtn {
+  display: flex; align-items: center; gap: 8px;
+  background: none; border: none;
+  font-size: 13px; color: var(--color-muted);
+  padding: 8px 12px; border-radius: var(--radius-sm);
+  transition: color var(--transition), background var(--transition);
+  width: 100%; text-align: left;
+}
+.logoutBtn:hover { color: var(--color-danger); background: rgba(224,82,82,0.08); }
+
+.main { overflow-y: auto; }

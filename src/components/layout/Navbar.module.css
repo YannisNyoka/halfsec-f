@@ -1,0 +1,60 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  height: 64px;
+}
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+.logo {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--color-text);
+}
+.logo span { color: var(--color-gold); }
+.links { display: flex; align-items: center; gap: 24px; }
+.link { font-size: 14px; color: var(--color-text-secondary); transition: color var(--transition); }
+.link:hover { color: var(--color-text); }
+.adminLink { font-size: 14px; color: var(--color-gold); font-weight: 600; }
+.logoutBtn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  transition: color var(--transition);
+  padding: 0;
+}
+.logoutBtn:hover { color: var(--color-danger); }
+.registerBtn { padding: 8px 18px !important; font-size: 13px !important; }
+
+.cartLink {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  transition: color var(--transition);
+  position: relative;
+}
+.cartLink:hover { color: var(--color-text); }
+
+.cartBadge {
+  background: var(--color-gold);
+  color: #1a1a1a;
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
