@@ -80,3 +80,22 @@
 .logoutBtn:hover { color: var(--color-danger); background: rgba(224,82,82,0.08); }
 
 .main { overflow-y: auto; }
+
+.themeToggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--color-muted);
+  padding: 8px 12px;
+  width: 100%;
+  transition: all var(--transition);
+}
+.themeToggle:hover {
+  color: var(--color-gold);
+  border-color: var(--color-gold);
+  background: var(--color-gold-muted);
+}

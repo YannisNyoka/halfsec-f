@@ -3,6 +3,7 @@ import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext.jsx';
 import Navbar from './components/layout/Navbar';
 import { ProtectedRoute, AdminRoute } from './components/common/ProtectedRoute';
+import { ThemeProvider } from './context/ThemeContext.jsx';
 
 // Public pages
 import HomePage from './pages/HomePage';
@@ -87,11 +88,13 @@ const AppContent = () => {
 // ── App wraps everything in providers + BrowserRouter ────────────────────────
 const App = () => (
   <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+    <ThemeProvider>
     <AuthProvider>
       <CartProvider>
         <AppContent />
       </CartProvider>
     </AuthProvider>
+    </ThemeProvider>
   </BrowserRouter>
 );
 

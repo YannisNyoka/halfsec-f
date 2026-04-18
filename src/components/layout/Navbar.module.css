@@ -5,6 +5,7 @@
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
   height: 64px;
+  transition: background var(--transition), border-color var(--transition);
 }
 .inner {
   display: flex;
@@ -19,20 +20,21 @@
   color: var(--color-text);
 }
 .logo span { color: var(--color-gold); }
-.links { display: flex; align-items: center; gap: 24px; }
-.link { font-size: 14px; color: var(--color-text-secondary); transition: color var(--transition); }
-.link:hover { color: var(--color-text); }
-.adminLink { font-size: 14px; color: var(--color-gold); font-weight: 600; }
-.logoutBtn {
-  background: none;
-  border: none;
+
+.links { display: flex; align-items: center; gap: 20px; }
+
+.link {
   font-size: 14px;
   color: var(--color-text-secondary);
   transition: color var(--transition);
-  padding: 0;
 }
-.logoutBtn:hover { color: var(--color-danger); }
-.registerBtn { padding: 8px 18px !important; font-size: 13px !important; }
+.link:hover { color: var(--color-text); }
+
+.adminLink {
+  font-size: 14px;
+  color: var(--color-gold);
+  font-weight: 600;
+}
 
 .cartLink {
   display: flex;
@@ -47,7 +49,7 @@
 
 .cartBadge {
   background: var(--color-gold);
-  color: #1a1a1a;
+  color: #fff;
   font-size: 11px;
   font-weight: 700;
   min-width: 18px;
@@ -57,4 +59,38 @@
   align-items: center;
   justify-content: center;
   padding: 0 4px;
+}
+
+.logoutBtn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  transition: color var(--transition);
+  padding: 0;
+}
+.logoutBtn:hover { color: var(--color-danger); }
+
+.registerBtn {
+  padding: 8px 18px !important;
+  font-size: 13px !important;
+}
+
+.themeBtn {
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+  flex-shrink: 0;
+}
+.themeBtn:hover {
+  background: var(--color-surface2);
+  color: var(--color-gold);
+  border-color: var(--color-gold);
 }
