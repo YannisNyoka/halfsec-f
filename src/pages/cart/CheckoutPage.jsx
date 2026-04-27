@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useCart } from '../../context/CartContext';
+import { useCart } from '../../context/CartContext.jsx';
 import { placeOrder } from '../../api/orders';
+import { getYocoPublicKey, chargeCard } from '../../api/payment';
 import useAuth from '../../hooks/useAuth';
+import useYoco from '../../hooks/useYoco';
 import styles from './CheckoutPage.module.css';
 
 const SA_PROVINCES = [
@@ -25,12 +27,23 @@ const CheckoutPage = () => {
     province: user?.address?.province || '',
     postalCode: user?.address?.postalCode || '',
     phone: user?.phone || '',
-    paymentMethod: 'eft',
+    paymentMethod: 'yoco',
     notes: '',
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState('');
+  const [yocoPublicKey, setYocoPublicKey] = useState('');
+  const [paymentStep, setPaymentStep] = useState('form'); // 'form' | 'processing' | 'done'
+
+  const { yoco, sdkReady } = useYoco(yocoPublicKey);
+
+  // Fetch Yoco public key on mount
+  useEffect(() => {
+    getYocoPublicKey()
+      .then(({ data }) => setYocoPublicKey(data.publicKey))
+      .catch(() => {});
+  }, []);
 
   const handleChange = (e) => {
     setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
@@ -56,33 +69,73 @@ const CheckoutPage = () => {
       setErrors(validationErrors);
       return;
     }
-    if (!cart?.items?.length) {
-      navigate('/cart');
-      return;
-    }
+    if (!cart?.items?.length) { navigate('/cart'); return; }
 
     setLoading(true);
     setServerError('');
+
     try {
+      // Step 1 — Create order (pending payment)
       const { data } = await placeOrder({
         shippingAddress: {
-          name: form.name,
-          street: form.street,
-          city: form.city,
-          province: form.province,
-          postalCode: form.postalCode,
-          country: 'South Africa',
-          phone: form.phone,
+          name: form.name, street: form.street, city: form.city,
+          province: form.province, postalCode: form.postalCode,
+          country: 'South Africa', phone: form.phone,
         },
         paymentMethod: form.paymentMethod,
         notes: form.notes,
       });
-      await clear();
-      navigate(`/orders/${data.order._id}`, { state: { justPlaced: true } });
+
+      const order = data.order;
+
+      // Step 2 — If Yoco, open popup
+      if (form.paymentMethod === 'yoco') {
+        if (!sdkReady || !yoco) {
+          setServerError('Payment system not ready. Please refresh and try again.');
+          setLoading(false);
+          return;
+        }
+
+        setPaymentStep('processing');
+
+        yoco.showPopup({
+          amountInCents: Math.round(orderTotal * 100),
+          currency: 'ZAR',
+          name: 'Halfsec',
+          description: `Order ${order.orderNumber}`,
+          callback: async (result) => {
+            if (result.error) {
+              setServerError(result.error.message || 'Payment cancelled.');
+              setPaymentStep('form');
+              setLoading(false);
+              return;
+            }
+
+            // Step 3 — Charge with token
+            try {
+              await chargeCard(result.id, order._id);
+              await clear();
+              navigate(`/orders/${order._id}`, { state: { justPlaced: true, paid: true } });
+            } catch (chargeErr) {
+              setServerError(
+                chargeErr.response?.data?.message || 'Payment failed. Please contact us.'
+              );
+              setPaymentStep('form');
+              setLoading(false);
+            }
+          },
+        });
+
+      } else {
+        // EFT or other — order placed, redirect
+        await clear();
+        navigate(`/orders/${order._id}`, { state: { justPlaced: true } });
+      }
+
     } catch (err) {
       setServerError(err.response?.data?.message || 'Failed to place order. Please try again.');
-    } finally {
       setLoading(false);
+      setPaymentStep('form');
     }
   };
 
@@ -98,12 +151,23 @@ const CheckoutPage = () => {
       <div className="container">
         <h1 className={styles.title}>Checkout</h1>
 
-        {serverError && <div className="alert alert-error" style={{ marginBottom: 24 }}>{serverError}</div>}
+        {serverError && (
+          <div className="alert alert-error" style={{ marginBottom: 24 }}>{serverError}</div>
+        )}
+
+        {paymentStep === 'processing' && (
+          <div className={styles.processingOverlay}>
+            <div className={styles.processingCard}>
+              <div className="spinner" style={{ width: 40, height: 40, borderTopColor: 'var(--color-gold)' }} />
+              <p>Processing payment...</p>
+            </div>
+          </div>
+        )}
 
         <div className={styles.layout}>
-          {/* Form */}
           <form onSubmit={handleSubmit} className={styles.form}>
 
+            {/* Shipping */}
             <section className={styles.section}>
               <h2 className={styles.sectionTitle}>Shipping address</h2>
               <div className={styles.formGrid}>
@@ -149,49 +213,117 @@ const CheckoutPage = () => {
               </div>
             </section>
 
+            {/* Payment method */}
             <section className={styles.section}>
               <h2 className={styles.sectionTitle}>Payment method</h2>
               <div className={styles.paymentOptions}>
                 {[
-                  { value: 'eft', label: 'EFT / Bank transfer', icon: '🏦' },
-                  { value: 'card', label: 'Credit / Debit card', icon: '💳' },
-                  { value: 'payfast', label: 'PayFast', icon: '⚡' },
+                  {
+                    value: 'yoco',
+                    label: 'Pay by card',
+                    sub: 'Visa, Mastercard — secure Yoco checkout',
+                    icon: (
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" strokeWidth="1.5">
+                        <rect x="1" y="4" width="22" height="16" rx="2"/>
+                        <line x1="1" y1="10" x2="23" y2="10"/>
+                      </svg>
+                    ),
+                    recommended: true,
+                  },
+                  {
+                    value: 'eft',
+                    label: 'EFT / Bank transfer',
+                    sub: 'Manual bank transfer — order held until payment received',
+                    icon: (
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" strokeWidth="1.5">
+                        <rect x="2" y="5" width="20" height="14" rx="2"/>
+                        <path d="M2 10h20"/>
+                        <path d="M6 15h4M14 15h2"/>
+                      </svg>
+                    ),
+                  },
                 ].map((opt) => (
                   <label
                     key={opt.value}
                     className={`${styles.paymentOption} ${form.paymentMethod === opt.value ? styles.paymentSelected : ''}`}
                   >
-                    <input
-                      type="radio" name="paymentMethod"
-                      value={opt.value} checked={form.paymentMethod === opt.value}
-                      onChange={handleChange} style={{ display: 'none' }}
-                    />
+                    <input type="radio" name="paymentMethod" value={opt.value}
+                      checked={form.paymentMethod === opt.value}
+                      onChange={handleChange} style={{ display: 'none' }} />
                     <span className={styles.paymentIcon}>{opt.icon}</span>
-                    <span className={styles.paymentLabel}>{opt.label}</span>
+                    <div className={styles.paymentInfo}>
+                      <span className={styles.paymentLabel}>
+                        {opt.label}
+                        {opt.recommended && (
+                          <span className={styles.recommended}>Recommended</span>
+                        )}
+                      </span>
+                      <span className={styles.paymentSub}>{opt.sub}</span>
+                    </div>
                     {form.paymentMethod === opt.value && (
                       <span className={styles.paymentCheck}>✓</span>
                     )}
                   </label>
                 ))}
               </div>
+
+              {form.paymentMethod === 'yoco' && (
+                <div className={styles.yocoInfo}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" strokeWidth="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  </svg>
+                  Secured by Yoco — your card details are encrypted and never stored.
+                </div>
+              )}
+
+              {form.paymentMethod === 'eft' && (
+                <div className={styles.eftInfo}>
+  <strong>Banking details:</strong><br />
+  Bank: Capitec<br />
+  Account name: Halfsec<br />
+  Account number: 2331479069<br />
+  Branch code: 470010<br />
+  Reference: your order number (shown after placing)
+</div>
+              )}
             </section>
 
+            {/* Notes */}
             <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>Order notes <span>(optional)</span></h2>
-              <textarea
-                name="notes" className="form-input" rows={3}
+              <h2 className={styles.sectionTitle}>
+                Order notes <span style={{ fontWeight: 400, color: 'var(--color-muted)', fontSize: 13 }}>(optional)</span>
+              </h2>
+              <textarea name="notes" className="form-input" rows={3}
                 value={form.notes} onChange={handleChange}
-                placeholder="Any special instructions for your order..."
-                style={{ resize: 'vertical' }}
-              />
+                placeholder="Any special instructions..."
+                style={{ resize: 'vertical' }} />
             </section>
 
-            <button type="submit" className="btn btn-primary btn-full btn-lg" disabled={loading}>
-              {loading ? <><span className="spinner" />Placing order...</> : `Place order — R${orderTotal.toLocaleString()}`}
+            <button
+              type="submit"
+              className="btn btn-primary btn-full btn-lg"
+              disabled={loading || (form.paymentMethod === 'yoco' && !sdkReady)}
+            >
+              {loading ? (
+                <><span className="spinner" />Placing order...</>
+              ) : form.paymentMethod === 'yoco' ? (
+                `Pay R${orderTotal.toLocaleString()} with card`
+              ) : (
+                `Place order — R${orderTotal.toLocaleString()}`
+              )}
             </button>
+
+            {form.paymentMethod === 'yoco' && !sdkReady && yocoPublicKey && (
+              <p style={{ textAlign: 'center', fontSize: 13, color: 'var(--color-muted)' }}>
+                Loading payment system...
+              </p>
+            )}
           </form>
 
-          {/* Order summary sidebar */}
+          {/* Order summary */}
           <div className={styles.summary}>
             <h2 className={styles.summaryTitle}>Order summary</h2>
             <div className={styles.summaryItems}>
@@ -204,9 +336,7 @@ const CheckoutPage = () => {
                     }
                     <span className={styles.summaryQtyBadge}>{item.quantity}</span>
                   </div>
-                  <div className={styles.summaryItemInfo}>
-                    <span className={styles.summaryItemName}>{item.product.name}</span>
-                  </div>
+                  <span className={styles.summaryItemName}>{item.product.name}</span>
                   <span className={styles.summaryItemPrice}>
                     R{(item.priceAtAdd * item.quantity).toLocaleString()}
                   </span>
@@ -214,7 +344,9 @@ const CheckoutPage = () => {
               ))}
             </div>
             <div className={styles.summaryRows}>
-              <div className={styles.summaryRow}><span>Subtotal</span><span>R{total.toLocaleString()}</span></div>
+              <div className={styles.summaryRow}>
+                <span>Subtotal</span><span>R{total.toLocaleString()}</span>
+              </div>
               <div className={styles.summaryRow}>
                 <span>Shipping</span>
                 <span style={{ color: shippingCost === 0 ? 'var(--color-success)' : 'inherit' }}>
