@@ -27,11 +27,13 @@ export const CartProvider = ({ children }) => {
   const add = async (productId, quantity = 1) => {
     const { data } = await addToCart(productId, quantity);
     setCart(data.cart);
+    await fetchCart();
   };
 
   const update = async (productId, quantity) => {
     const { data } = await updateCartItem(productId, quantity);
     setCart(data.cart);
+    await fetchCart();
   };
 
   const remove = async (productId) => {

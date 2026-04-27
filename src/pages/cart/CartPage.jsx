@@ -3,6 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext.jsx';
 import styles from './CartPage.module.css';
 
+const { cart, loading, itemCount, total, update, remove, fetchCart } = useCart();
+
+// Refetch cart every time this page is visited
+useEffect(() => {
+  fetchCart();
+}, []);
+
 const CartPage = () => {
   const { cart, loading, itemCount, total, update, remove } = useCart();
   const navigate = useNavigate();

@@ -45,6 +45,12 @@ const CheckoutPage = () => {
       .catch(() => {});
   }, []);
 
+  useEffect(() => {
+  console.log('Yoco public key:', yocoPublicKey);
+  console.log('SDK ready:', sdkReady);
+  console.log('Yoco object:', yoco);
+}, [yocoPublicKey, sdkReady, yoco]);
+
   const handleChange = (e) => {
     setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
     setErrors((p) => ({ ...p, [e.target.name]: '' }));

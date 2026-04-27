@@ -4,6 +4,7 @@ import { getProductBySlug } from '../../api/products';
 import api from '../../api/axios';
 import useAuth from '../../hooks/useAuth';
 import styles from './ProductDetailPage.module.css';
+import { useCart } from '../../context/CartContext.jsx';
 
 const conditionColors = {
   'like new': 'badge-gold',
@@ -16,6 +17,7 @@ const ProductDetailPage = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
+  const { add, fetchCart } = useCart();
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -32,21 +34,24 @@ const ProductDetailPage = () => {
   }, [slug]);
 
   const handleAddToCart = async () => {
-    if (!product?._id) return; 
-    
-    if (!isAuthenticated) return navigate('/login', { state: { from: { pathname: `/shop/${slug}` } } });
-    setAddingToCart(true);
-    setCartMessage('');
-    try {
-      await api.post('/cart/add', { productId: product._id, quantity: 1 });
-      setCartMessage('Added to cart!');
-      setTimeout(() => setCartMessage(''), 3000);
-    } catch (err) {
-      setCartMessage(err.response?.data?.message || 'Could not add to cart.');
-    } finally {
-      setAddingToCart(false);
-    }
-  };
+  if (!product?._id) return;
+
+  if (!isAuthenticated) {
+    navigate('/login', { state: { from: { pathname: `/shop/${slug}` } } });
+    return;
+  }
+  setAdding(true);
+  setCartError('');
+  try {
+    await add(product._id, 1);  // ← use context add
+    setAdded(true);
+    setTimeout(() => setAdded(false), 3000);
+  } catch (err) {
+    setCartError(err.response?.data?.message || 'Could not add to cart.');
+  } finally {
+    setAdding(false);
+  }
+};
 
   if (loading) return (
     <div className="page-loader">
