@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useLocation, Link } from 'react-router-dom';
+import { useParams, useLocation, Link,useSearchParams } from 'react-router-dom';
 import { getMyOrder } from '../../api/orders';
 import styles from './OrderDetailPage.module.css';
 
@@ -13,7 +13,9 @@ const STATUS_COLORS = {
 const OrderDetailPage = () => {
   const { id } = useParams();
   const location = useLocation();
-  const justPlaced = location.state?.justPlaced;
+  const [searchParams] = useSearchParams(); 
+  const justPlaced = location.state?.justPlaced || searchParams.get('paid') === 'true';
+
 
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);

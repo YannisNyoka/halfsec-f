@@ -40,16 +40,24 @@ const ProductDetailPage = () => {
     navigate('/login', { state: { from: { pathname: `/shop/${slug}` } } });
     return;
   }
-  setAdding(true);
-  setCartError('');
+
+  setAddingToCart(true);
+  setCartMessage('');
+
   try {
-    await add(product._id, 1);  // ← use context add
-    setAdded(true);
-    setTimeout(() => setAdded(false), 3000);
+    await add(product._id, 1);
+
+    setCartMessage('Added to cart successfully');
+    
+    // Optional: refresh cart state
+    await fetchCart();
+
   } catch (err) {
-    setCartError(err.response?.data?.message || 'Could not add to cart.');
+    setCartMessage(
+      err.response?.data?.message || 'Could not add to cart.'
+    );
   } finally {
-    setAdding(false);
+    setAddingToCart(false);
   }
 };
 

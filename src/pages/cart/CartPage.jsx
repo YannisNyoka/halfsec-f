@@ -1,20 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext.jsx';
 import styles from './CartPage.module.css';
 
-const { cart, loading, itemCount, total, update, remove, fetchCart } = useCart();
-
-// Refetch cart every time this page is visited
-useEffect(() => {
-  fetchCart();
-}, []);
-
 const CartPage = () => {
-  const { cart, loading, itemCount, total, update, remove } = useCart();
+  // ✅ ALL hooks are inside the component
+  const { cart, loading, itemCount, total, update, remove, fetchCart } = useCart();
   const navigate = useNavigate();
   const [updating, setUpdating] = useState({});
   const [removing, setRemoving] = useState({});
+
+  // Refetch cart every time this page is visited
+  useEffect(() => {
+    fetchCart();
+  }, [fetchCart]);
 
   const handleUpdate = async (productId, quantity) => {
     setUpdating((p) => ({ ...p, [productId]: true }));
@@ -53,7 +52,9 @@ const CartPage = () => {
   return (
     <div className={styles.page}>
       <div className="container">
-        <h1 className={styles.title}>Your cart <span>({itemCount} item{itemCount !== 1 ? 's' : ''})</span></h1>
+        <h1 className={styles.title}>
+          Your cart <span>({itemCount} item{itemCount !== 1 ? 's' : ''})</span>
+        </h1>
 
         <div className={styles.layout}>
           {/* Cart items */}
@@ -117,9 +118,12 @@ const CartPage = () => {
                   >
                     {removing[product._id]
                       ? <span className="spinner" style={{ width: 14, height: 14 }} />
-                      : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                      : (
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <line x1="18" y1="6" x2="6" y2="18"/>
+                          <line x1="6" y1="6" x2="18" y2="18"/>
                         </svg>
+                      )
                     }
                   </button>
                 </div>
