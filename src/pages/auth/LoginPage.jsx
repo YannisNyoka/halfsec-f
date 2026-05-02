@@ -28,7 +28,7 @@ const LoginPage = () => {
       // Redirect admin to dashboard, others to where they came from
       navigate(user.role === 'admin' ? '/admin' : from, { replace: true });
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed. Please try again.');
+      setError(err.response?.data?.message || 'login failed. Please try again.');
     } finally {
       setLoading(false);
     }
