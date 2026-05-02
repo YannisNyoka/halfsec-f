@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext.jsx';
 import styles from './CartPage.module.css';
+import SEO from '../../components/common/SEO';
 
 const CartPage = () => {
   // ✅ ALL hooks are inside the component
@@ -51,6 +52,7 @@ const CartPage = () => {
 
   return (
     <div className={styles.page}>
+      <SEO title="Your cart" url="https://halfsec.co.za/cart" />
       <div className="container">
         <h1 className={styles.title}>
           Your cart <span>({itemCount} item{itemCount !== 1 ? 's' : ''})</span>

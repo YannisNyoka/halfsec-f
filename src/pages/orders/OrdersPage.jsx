@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getMyOrders } from '../../api/orders';
 import styles from './OrdersPage.module.css';
+import SEO from '../../components/common/SEO';
 
 const STATUS_COLORS = {
   pending: 'badge-muted',
@@ -32,6 +33,7 @@ const OrdersPage = () => {
 
   return (
     <div className={styles.page}>
+      <SEO title="My orders" url="https://halfsec.co.za/orders" />
       <div className="container">
         <h1 className={styles.title}>My orders</h1>
 

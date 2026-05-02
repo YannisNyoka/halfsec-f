@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import styles from './AuthPage.module.css';
+import SEO from '../../components/common/SEO';
 
 const LoginPage = () => {
   const { login } = useAuth();
@@ -35,6 +36,11 @@ const LoginPage = () => {
 
   return (
     <div className={styles.page}>
+      <SEO
+        title="Login"
+        description="Sign in to your halfsec account"
+        url="https://halfsec.co.za/login"
+      />
       <div className={styles.card}>
         <div className={styles.header}>
           <Link to="/" className={styles.brand}>half<span>sec</span></Link>

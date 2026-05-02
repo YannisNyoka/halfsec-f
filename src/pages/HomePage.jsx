@@ -4,6 +4,7 @@ import useAuth from '../hooks/useAuth';
 import { getProducts, getCategories } from '../api/products';
 import ProductCard from '../components/common/ProductCard';
 import styles from './HomePage.module.css';
+import SEO from '../components/common/SEO';
 
 const HomePage = () => {
   const { isAuthenticated, isAdmin } = useAuth();
@@ -31,6 +32,14 @@ const HomePage = () => {
 
   return (
     <div className={styles.page}>
+
+      <>
+  <SEO
+    title="Find unique items at half the price"
+    description="Curated second-hand goods — quality checked, fairly priced, delivered anywhere in South Africa."
+    url="https://halfsec.co.za"
+  />
+</>
 
       {/* ── Hero ── */}
       <section className={styles.hero}>

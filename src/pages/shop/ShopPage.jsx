@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useProducts, useCategories } from '../../hooks/useProducts';
 import ProductCard from '../../components/common/ProductCard';
 import styles from './ShopPage.module.css';
+import SEO from '../../components/common/SEO';
 
 const CONDITIONS = ['like new', 'good', 'fair', 'poor'];
 const SORT_OPTIONS = [
@@ -58,6 +59,12 @@ const ShopPage = () => {
   return (
     <div className={styles.page}>
       <div className={`container ${styles.layout}`}>
+
+        <SEO
+  title="Shop second-hand items"
+  description="Browse curated second-hand clothing, electronics, furniture and more at half the original price."
+  url="https://halfsec.co.za/shop"
+/>
 
         {/* ── Sidebar filters ── */}
         <aside className={styles.sidebar}>

@@ -5,6 +5,7 @@ import api from '../../api/axios';
 import useAuth from '../../hooks/useAuth';
 import styles from './ProductDetailPage.module.css';
 import { useCart } from '../../context/CartContext.jsx';
+import SEO from '../../components/common/SEO';
 
 const conditionColors = {
   'like new': 'badge-gold',
@@ -74,7 +75,17 @@ const ProductDetailPage = () => {
     : null;
 
   return (
+    
     <div className={styles.page}>
+
+       <SEO
+    title={product.name}
+    description={`${product.description.slice(0, 150)}...`}
+    image={product.images?.[0]?.url}
+    url={`https://halfsec.co.za/shop/${product.slug}`}
+    type="product"
+    product={product}
+  />
       <div className="container">
 
         {/* Breadcrumb */}
