@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import styles from './AuthPage.module.css';
-import SEO from '../../components/common/SEO';
+import SEO from '@/components/common/SEO';
 
 const LoginPage = () => {
   const { login } = useAuth();

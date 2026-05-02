@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import styles from './AuthPage.module.css';
-import SEO from '../../components/common/SEO';
+import SEO from '@/components/common/SEO';
 
 const RegisterPage = () => {
   const { register } = useAuth();

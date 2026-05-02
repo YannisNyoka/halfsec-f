@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useProducts, useCategories } from '../../hooks/useProducts';
 import ProductCard from '../../components/common/ProductCard';
 import styles from './ShopPage.module.css';
-import SEO from '../../components/common/SEO';
+import SEO from '@/components/common/SEO';
 
 const CONDITIONS = ['like new', 'good', 'fair', 'poor'];
 const SORT_OPTIONS = [

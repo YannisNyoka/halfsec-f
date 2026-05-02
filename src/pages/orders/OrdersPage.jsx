@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getMyOrders } from '../../api/orders';
 import styles from './OrdersPage.module.css';
-import SEO from '../../components/common/SEO';
+import SEO from '@/components/common/SEO';
 
 const STATUS_COLORS = {
   pending: 'badge-muted',
