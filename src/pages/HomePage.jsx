@@ -31,16 +31,13 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className={styles.page}>
-
-      <>
+    <>
   <SEO
     title="Find unique items at half the price"
     description="Curated second-hand goods — quality checked, fairly priced, delivered anywhere in South Africa."
     url="https://halfsec.co.za"
   />
-</>
-
+    <div className={styles.page}>
       {/* ── Hero ── */}
       <section className={styles.hero}>
         <div className={`container ${styles.heroContent}`}>
@@ -261,6 +258,7 @@ const HomePage = () => {
       )}
 
     </div>
+    </>
   );
 };
 

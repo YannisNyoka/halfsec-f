@@ -35,12 +35,13 @@ const LoginPage = () => {
   };
 
   return (
+    <>
+  <SEO
+    title="Sign in"
+    description="Sign in to your Halfsec account to shop, track orders and more."
+    url="https://halfsec.co.za/login"
+  />
     <div className={styles.page}>
-      <SEO
-        title="Login"
-        description="Sign in to your halfsec account"
-        url="https://halfsec.co.za/login"
-      />
       <div className={styles.card}>
         <div className={styles.header}>
           <Link to="/" className={styles.brand}>half<span>sec</span></Link>
@@ -96,6 +97,7 @@ const LoginPage = () => {
         </p>
       </div>
     </div>
+    </>
   );
 };
 

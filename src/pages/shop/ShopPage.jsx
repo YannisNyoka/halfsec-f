@@ -57,15 +57,14 @@ const ShopPage = () => {
   const hasActiveFilters = filters.search || filters.category || filters.condition;
 
   return (
-    <div className={styles.page}>
-      <div className={`container ${styles.layout}`}>
-
-        <SEO
+    <>
+    <SEO
   title="Shop second-hand items"
   description="Browse curated second-hand clothing, electronics, furniture and more at half the original price."
   url="https://halfsec.co.za/shop"
 />
-
+    <div className={styles.page}>
+      <div className={`container ${styles.layout}`}>
         {/* ── Sidebar filters ── */}
         <aside className={styles.sidebar}>
           <div className={styles.sidebarHeader}>
@@ -226,6 +225,7 @@ const ShopPage = () => {
         </main>
       </div>
     </div>
+     </>
   );
 };
 

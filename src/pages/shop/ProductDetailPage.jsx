@@ -75,10 +75,8 @@ const ProductDetailPage = () => {
     : null;
 
   return (
-    
-    <div className={styles.page}>
-
-       <SEO
+    <>
+  <SEO
     title={product.name}
     description={`${product.description.slice(0, 150)}...`}
     image={product.images?.[0]?.url}
@@ -86,6 +84,7 @@ const ProductDetailPage = () => {
     type="product"
     product={product}
   />
+    <div className={styles.page}>
       <div className="container">
 
         {/* Breadcrumb */}
@@ -202,6 +201,7 @@ const ProductDetailPage = () => {
         </div>
       </div>
     </div>
+</>
   );
 };
 

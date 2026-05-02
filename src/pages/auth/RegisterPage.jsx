@@ -49,12 +49,13 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className={styles.page}>
-      <SEO
+    <>
+  <SEO
     title="Create account"
     description="Create a free Halfsec account and start shopping quality second-hand items at half the price."
     url="https://halfsec.co.za/register"
   />
+    <div className={styles.page}>
       <div className={styles.card}>
         <div className={styles.header}>
           <Link to="/" className={styles.brand}>half<span>sec</span></Link>
@@ -126,6 +127,7 @@ const RegisterPage = () => {
         </p>
       </div>
     </div>
+    </>
   );
 };
 
