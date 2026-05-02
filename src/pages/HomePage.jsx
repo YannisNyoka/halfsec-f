@@ -250,7 +250,7 @@ const HomePage = () => {
                 Create free account
               </Link>
               <Link to="/shop" className="btn btn-outline btn-lg">
-                Browse first
+                Browse first.
               </Link>
             </div>
           </div>
