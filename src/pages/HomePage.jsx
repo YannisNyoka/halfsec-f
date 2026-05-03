@@ -34,7 +34,7 @@ const HomePage = () => {
     <>
   <SEO
     title="Find unique items at half the price"
-    description="Curated second-hand goods — quality checked, fairly priced, delivered anywhere in South Africa."
+    description="Curated pre-loved goods — quality checked, fairly priced, delivered anywhere in South Africa."
     url="https://halfsec.co.za"
   />
     <div className={styles.page}>
@@ -47,7 +47,7 @@ const HomePage = () => {
               Find unique items<br />at <span>unbeatable</span>  prices
             </h1>
             <p className={styles.sub}>
-              Curated second-hand goods — quality checked, fairly priced,
+              Curated pre-loved goods — quality checked, fairly priced,
               ready to find a new home.
             </p>
             <div className={styles.heroActions}>
@@ -203,7 +203,7 @@ const HomePage = () => {
                   </svg>
                 ),
                 title: 'Real savings',
-                desc: 'Save 40–70% off original retail prices on quality second-hand items.',
+                desc: 'Save 40–70% off original retail prices on quality pre-loved items.',
               },
               {
                 icon: (
@@ -243,7 +243,7 @@ const HomePage = () => {
           <div className={`container ${styles.ctaContent}`}>
             <h2 className={styles.ctaTitle}>Ready to start saving?</h2>
             <p className={styles.ctaSub}>
-              Join Halfsec today and discover quality second-hand items at unbeatable prices.
+              Join Halfsec today and discover quality pre-loved items at unbeatable prices.
             </p>
             <div className={styles.ctaActions}>
               <Link to="/register" className="btn btn-primary btn-lg">
