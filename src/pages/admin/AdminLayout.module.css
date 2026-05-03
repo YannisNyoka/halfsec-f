@@ -52,10 +52,20 @@
   transition: background var(--transition), color var(--transition);
 }
 .navItem:hover { background: var(--color-surface2); color: var(--color-text); }
-.navActive { background: var(--color-gold-muted) !important; color: var(--color-gold) !important; font-weight: 600; }
+.navActive {
+  background: var(--color-gold-muted) !important;
+  color: var(--color-gold) !important;
+  font-weight: 600;
+}
 .navActive svg { stroke: var(--color-gold); }
 
-.sidebarFooter { border-top: 1px solid var(--color-border); padding-top: 16px; display: flex; flex-direction: column; gap: 12px; }
+.sidebarFooter {
+  border-top: 1px solid var(--color-border);
+  padding-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
 .userInfo { display: flex; align-items: center; gap: 10px; padding: 0 4px; }
 .avatar {
@@ -79,7 +89,7 @@
 }
 .logoutBtn:hover { color: var(--color-danger); background: rgba(224,82,82,0.08); }
 
-.main { overflow-y: auto; }
+.main { overflow-y: auto; min-width: 0; }
 
 .themeToggle {
   display: flex;
@@ -98,4 +108,59 @@
   color: var(--color-gold);
   border-color: var(--color-gold);
   background: var(--color-gold-muted);
+}
+
+/* ── Tablet ── */
+@media (max-width: 1024px) {
+  .layout { grid-template-columns: 200px 1fr; }
+  .brand { font-size: 17px; }
+}
+
+/* ── Mobile — sidebar becomes bottom nav ── */
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    padding-bottom: 70px;
+  }
+
+  .sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    height: auto;
+    flex-direction: row;
+    padding: 8px 12px;
+    border-right: none;
+    border-top: 1px solid var(--color-border);
+    z-index: 100;
+    overflow-x: auto;
+    overflow-y: hidden;
+    justify-content: space-around;
+    padding-bottom: env(safe-area-inset-bottom, 8px);
+  }
+
+  .brand { display: none; }
+  .sidebarFooter { display: none; }
+  .nav {
+    flex-direction: row;
+    gap: 0;
+    flex: 1;
+    justify-content: space-around;
+  }
+
+  .navItem {
+    flex-direction: column;
+    gap: 3px;
+    padding: 6px 12px;
+    font-size: 10px;
+    border-radius: var(--radius-sm);
+    min-width: 56px;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .main { min-width: 0; }
 }

@@ -1,5 +1,15 @@
-.page { padding: 32px; max-width: 900px; display: flex; flex-direction: column; gap: 20px; }
+.page {
+  padding: 24px;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 .header { display: flex; flex-direction: column; gap: 8px; }
 .back { font-size: 13px; color: var(--color-muted); transition: color var(--transition); }
 .back:hover { color: var(--color-gold); }
-.title { font-size: 24px; font-weight: 700; color: var(--color-text); }
+.title { font-size: 22px; font-weight: 700; color: var(--color-text); }
+
+@media (max-width: 768px) {
+  .page { padding: 16px; }
+}
