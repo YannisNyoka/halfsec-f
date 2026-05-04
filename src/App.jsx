@@ -56,6 +56,9 @@ const AppContent = () => {
         <Route path="/orders" element={
           <ProtectedRoute><OrdersPage /></ProtectedRoute>
         } />
+        <Route path="/profile" element={
+           <ProtectedRoute><ProfilePage /></ProtectedRoute>
+        } />
         <Route path="/orders/:id" element={
           <ProtectedRoute><OrderDetailPage /></ProtectedRoute>
         } />

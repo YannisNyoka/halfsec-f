@@ -94,3 +94,19 @@
   color: var(--color-gold);
   border-color: var(--color-gold);
 }
+
+.profileAvatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-gold-muted);
+  color: var(--color-gold);
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--color-gold);
+  transition: background var(--transition);
+}
+.profileAvatar:hover { background: var(--color-gold); color: #fff; }

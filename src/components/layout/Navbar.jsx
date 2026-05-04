@@ -61,13 +61,18 @@ const Navbar = () => {
                   <span className={styles.cartBadge}>{itemCount}</span>
                 )}
               </Link>
-              <Link to="/orders" className={styles.link}>Orders</Link>
-              {isAdmin && (
-                <Link to="/admin" className={styles.adminLink}>Admin</Link>
-              )}
-              <button onClick={handleLogout} className={styles.logoutBtn}>
-                Logout
-              </button>
+             <Link to="/orders" className={styles.link}>Orders</Link>
+    <Link to="/profile" className={styles.link}>
+      <span className={styles.profileAvatar}>
+        {user?.name?.charAt(0).toUpperCase()}
+      </span>
+    </Link>
+    {isAdmin && (
+      <Link to="/admin" className={styles.adminLink}>Admin</Link>
+    )}
+    <button onClick={handleLogout} className={styles.logoutBtn}>
+      Logout
+    </button>
             </>
           ) : (
             <>
