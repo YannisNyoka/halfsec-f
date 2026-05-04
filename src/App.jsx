@@ -17,6 +17,7 @@ import CartPage from './pages/cart/CartPage';
 import CheckoutPage from './pages/cart/CheckoutPage';
 import OrdersPage from './pages/orders/OrdersPage';
 import OrderDetailPage from './pages/orders/OrderDetailPage';
+import ProfilePage from './pages/profile/ProfilePage';
 
 // Admin pages
 import AdminLayout from './pages/admin/AdminLayout';
@@ -27,6 +28,7 @@ import EditProduct from './pages/admin/EditProduct';
 import AdminOrders from './pages/admin/AdminOrders';
 import AdminOrderDetail from './pages/admin/AdminOrderDetail';
 import AdminCategories from './pages/admin/AdminCategories';
+
 
 // ── AppContent lives inside BrowserRouter so useLocation works ───────────────
 const AppContent = () => {
