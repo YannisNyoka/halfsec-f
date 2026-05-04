@@ -4,6 +4,7 @@ import { useProducts, useCategories } from '../../hooks/useProducts';
 import ProductCard from '../../components/common/ProductCard';
 import styles from './ShopPage.module.css';
 import SEO from '@/components/common/SEO';
+import SearchBar from '../../components/common/SearchBar';
 
 const CONDITIONS = ['like new', 'good', 'fair', 'poor'];
 const SORT_OPTIONS = [
@@ -125,28 +126,12 @@ const ShopPage = () => {
 
           {/* Top bar */}
           <div className={styles.topBar}>
-            <form onSubmit={handleSearch} className={styles.searchForm}>
-              <div className={styles.searchWrap}>
-                <svg className={styles.searchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
-                </svg>
-                <input
-                  type="text"
-                  className={styles.searchInput}
-                  placeholder="Search products..."
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                />
-                {searchInput && (
-                  <button type="button" className={styles.clearSearch}
-                    onClick={() => { setSearchInput(''); updateFilter('search', ''); }}>
-                    ✕
-                  </button>
-                )}
-              </div>
-              <button type="submit" className="btn btn-primary btn-sm">Search</button>
-            </form>
-
+            <div className={styles.searchWrap}>
+  <SearchBar
+    placeholder="Search products..."
+    className={styles.shopSearch}
+  />
+</div>
             <select
               className={styles.sortSelect}
               value={filters.sort}

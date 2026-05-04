@@ -142,3 +142,6 @@
   .topBar { flex-direction: column; }
   .sortSelect { width: 100%; }
 }
+
+.searchWrap { flex: 1; }
+.shopSearch { width: 100%; }

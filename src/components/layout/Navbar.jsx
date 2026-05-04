@@ -3,6 +3,8 @@ import useAuth from '../../hooks/useAuth';
 import { useCart } from '../../context/CartContext.jsx';
 import { useTheme } from '../../context/ThemeContext.jsx';
 import styles from './Navbar.module.css';
+import SearchBar from '../common/SearchBar';
+
 
 const SunIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -43,6 +45,10 @@ const Navbar = () => {
         <Link to="/" className={styles.logo}>
           half<span>sec</span>
         </Link>
+
+<div className={styles.navSearch}>
+  <SearchBar placeholder="Search..." />
+</div>
 
         <div className={styles.links}>
           <Link to="/shop" className={styles.link}>Shop</Link>

@@ -110,3 +110,13 @@
   transition: background var(--transition);
 }
 .profileAvatar:hover { background: var(--color-gold); color: #fff; }
+
+.navSearch {
+  flex: 1;
+  max-width: 400px;
+  margin: 0 24px;
+}
+
+@media (max-width: 768px) {
+  .navSearch { display: none; }
+}
