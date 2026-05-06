@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styles from './ProductCard.module.css';
+import ShareButton from './ShareButton';
 
 const conditionColors = {
   'like new': 'badge-gold',
@@ -32,6 +33,15 @@ const ProductCard = ({ product }) => {
       </div>
 
       <div className={styles.body}>
+        <div className={styles.cardActions}>
+  <span className={styles.viewLink}>View item →</span>
+  <div
+    className={styles.shareWrap}
+    onClick={(e) => e.preventDefault()} // prevent card navigation
+  >
+    <ShareButton product={product} />
+  </div>
+</div>
         <div className={styles.topRow}>
           <span className={`badge ${conditionColors[product.condition] || 'badge-muted'}`}>
             {product.condition}

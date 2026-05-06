@@ -8,6 +8,7 @@ import { useCart } from '../../context/CartContext.jsx';
 import SEO from '@/components/common/SEO';
 import RelatedProducts from '../../components/common/RelatedProducts';
 import useRecentlyViewed from '../../hooks/useRecentlyViewed';
+import ShareButton from '../../components/common/ShareButton';
 
 const conditionColors = {
   'like new': 'badge-gold',
@@ -196,6 +197,8 @@ const ProductDetailPage = () => {
                 ? 'Out of stock'
                 : 'Add to cart'}
             </button>
+            
+            <ShareButton product={product} />
 
             {!isAuthenticated && (
               <p className={styles.loginHint}>

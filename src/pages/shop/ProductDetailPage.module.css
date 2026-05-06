@@ -99,3 +99,15 @@
   .name { font-size: 22px; }
   .price { font-size: 26px; }
 }
+
+.actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .actions { flex-direction: column; }
+  .actions > * { width: 100%; }
+}
