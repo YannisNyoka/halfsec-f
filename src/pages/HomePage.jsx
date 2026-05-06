@@ -5,6 +5,8 @@ import { getProducts, getCategories } from '../api/products';
 import ProductCard from '../components/common/ProductCard';
 import styles from './HomePage.module.css';
 import SEO from '../components/common/SEO';
+import RecentlyViewed from '../components/common/RecentlyViewed';
+
 
 const HomePage = () => {
   const { isAuthenticated, isAdmin } = useAuth();
@@ -236,6 +238,8 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+
+      <RecentlyViewed />
 
       {/* ── CTA ── */}
       {!isAuthenticated && (

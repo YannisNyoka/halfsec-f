@@ -6,6 +6,8 @@ import useAuth from '../../hooks/useAuth';
 import styles from './ProductDetailPage.module.css';
 import { useCart } from '../../context/CartContext.jsx';
 import SEO from '@/components/common/SEO';
+import RelatedProducts from '../../components/common/RelatedProducts';
+import useRecentlyViewed from '../../hooks/useRecentlyViewed';
 
 const conditionColors = {
   'like new': 'badge-gold',
@@ -19,7 +21,7 @@ const ProductDetailPage = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const { add, fetchCart } = useCart();
-
+  const { addProduct } = useRecentlyViewed();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeImg, setActiveImg] = useState(0);
@@ -27,12 +29,15 @@ const ProductDetailPage = () => {
   const [cartMessage, setCartMessage] = useState('');
 
   useEffect(() => {
-    setLoading(true);
-    getProductBySlug(slug)
-      .then(({ data }) => setProduct(data.product))
-      .catch(() => navigate('/shop', { replace: true }))
-      .finally(() => setLoading(false));
-  }, [slug]);
+  setLoading(true);
+  getProductBySlug(slug)
+    .then(({ data }) => {
+      setProduct(data.product);
+      addProduct(data.product); // 
+    })
+    .catch(() => navigate('/shop', { replace: true }))
+    .finally(() => setLoading(false));
+}, [slug]);
 
   const handleAddToCart = async () => {
   if (!product?._id) return;
@@ -199,6 +204,15 @@ const ProductDetailPage = () => {
             )}
           </div>
         </div>
+        {/* ── Related products ── */}
+        {product.category && (
+          <RelatedProducts
+            categoryId={product.category._id}
+            currentSlug={product.slug}
+            categoryName={product.category.name}
+          />
+        )}
+
       </div>
     </div>
 </>
