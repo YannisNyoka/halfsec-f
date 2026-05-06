@@ -28,6 +28,7 @@ import EditProduct from './pages/admin/EditProduct';
 import AdminOrders from './pages/admin/AdminOrders';
 import AdminOrderDetail from './pages/admin/AdminOrderDetail';
 import AdminCategories from './pages/admin/AdminCategories';
+import AdminAnalytics from './pages/admin/AdminAnalytics';
 
 
 // ── AppContent lives inside BrowserRouter so useLocation works ───────────────
@@ -76,6 +77,7 @@ const AppContent = () => {
           <Route path="orders" element={<AdminOrders />} />
           <Route path="orders/:id" element={<AdminOrderDetail />} />
           <Route path="categories" element={<AdminCategories />} />
+          <Route path="analytics" element={<AdminAnalytics />} />
         </Route>
 
         {/* ── 404 ── */}
