@@ -1,0 +1,117 @@
+.page { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+.header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; }
+.title { font-size: 22px; font-weight: 700; color: var(--color-text); }
+.sub { font-size: 14px; color: var(--color-muted); margin-top: 4px; }
+
+.statsGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.statCard {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+.statLabel { font-size: 11px; font-weight: 600; color: var(--color-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.statValue { font-size: 26px; font-weight: 800; color: var(--color-text); }
+.statIn { color: var(--color-success); }
+.statLow { color: var(--color-warning, #d97706); }
+.statOut { color: var(--color-danger); }
+
+.section { display: flex; flex-direction: column; gap: 14px; }
+.sectionTitle {
+  font-size: 16px; font-weight: 700; color: var(--color-text);
+  display: flex; align-items: center; gap: 10px;
+}
+.alertBadge {
+  background: var(--color-danger);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+
+.allGood {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 48px 24px;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 12px; text-align: center;
+  color: var(--color-success);
+}
+.allGood h3 { font-size: 18px; font-weight: 700; color: var(--color-text); }
+.allGood p { font-size: 14px; color: var(--color-muted); }
+
+.table {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  overflow-x: auto;
+}
+.tableHeader {
+  display: grid;
+  grid-template-columns: 2fr 100px 90px 90px 110px 60px 200px;
+  padding: 10px 16px;
+  background: var(--color-surface2);
+  font-size: 11px; font-weight: 700;
+  color: var(--color-muted); text-transform: uppercase; letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--color-border);
+  min-width: 750px;
+}
+.row {
+  display: grid;
+  grid-template-columns: 2fr 100px 90px 90px 110px 60px 200px;
+  padding: 12px 16px;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border);
+  transition: background var(--transition);
+  min-width: 750px;
+}
+.row:last-child { border-bottom: none; }
+.row:hover { background: var(--color-surface2); }
+.rowEditing { background: var(--color-gold-muted) !important; }
+
+.productCell { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.productImg { width: 40px; height: 40px; border-radius: var(--radius-sm); overflow: hidden; background: var(--color-surface2); flex-shrink: 0; }
+.productImg img { width: 100%; height: 100%; object-fit: cover; }
+.imgFallback { width: 100%; height: 100%; background: var(--color-surface2); }
+.productName { font-size: 13px; font-weight: 600; color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.productSlug { font-size: 11px; color: var(--color-muted); }
+
+.cell { font-size: 13px; color: var(--color-text-secondary); }
+
+.stockInput {
+  width: 70px !important;
+  padding: 6px 8px !important;
+  font-size: 13px !important;
+}
+
+.stockNum { font-size: 16px; font-weight: 700; }
+.stockOut { color: var(--color-danger); }
+.stockLow { color: #d97706; }
+.stockOk { color: var(--color-success); }
+
+.threshold { font-size: 13px; color: var(--color-muted); }
+
+.statusBadge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.statusOut { background: rgba(224,82,82,0.12); color: var(--color-danger); }
+.statusLow { background: rgba(217,119,6,0.12); color: #d97706; }
+.statusIn { background: rgba(76,175,125,0.12); color: var(--color-success); }
+
+.actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+
+@media (max-width: 1024px) {
+  .statsGrid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .page { padding: 16px; }
+  .statsGrid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .statValue { font-size: 20px; }
+}

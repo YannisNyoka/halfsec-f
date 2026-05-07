@@ -75,3 +75,19 @@
   .quickLinks { gap: 8px; }
   .quickLinks .btn { font-size: 13px; padding: 8px 14px; }
 }
+
+.stockBanner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(217,119,6,0.1);
+  border: 1px solid rgba(217,119,6,0.3);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #d97706;
+  transition: background var(--transition);
+}
+.stockBanner:hover { background: rgba(217,119,6,0.15); }
+.stockBanner strong { font-weight: 700; }
+.stockBannerLink { margin-left: auto; font-weight: 600; white-space: nowrap; }

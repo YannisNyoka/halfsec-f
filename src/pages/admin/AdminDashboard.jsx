@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getDashboardStats, getAllOrders } from '../../api/admin';
 import styles from './AdminDashboard.module.css';
+import { getStockOverview } from '../../api/stock';
 
 const STATUS_COLORS = {
   pending: 'badge-muted', confirmed: 'badge-gold',
@@ -13,6 +14,8 @@ const AdminDashboard = () => {
   const [stats, setStats] = useState(null);
   const [recentOrders, setRecentOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [stockAlert, setStockAlert] = useState(null);
+
 
   useEffect(() => {
     Promise.all([
@@ -23,7 +26,15 @@ const AdminDashboard = () => {
       setRecentOrders(ordersRes.data.orders);
     }).catch(console.error)
       .finally(() => setLoading(false));
-  }, []);
+
+      getStockOverview().then(({ data }) => {
+  const { lowStock, outOfStock } = data.overview;
+  if (lowStock + outOfStock > 0) {
+    setStockAlert({ lowStock, outOfStock });
+  }
+}).catch(() => {});
+  },
+   []);
 
   if (loading) return (
     <div className="page-loader">
@@ -37,6 +48,27 @@ const AdminDashboard = () => {
         <h1 className={styles.title}>Dashboard</h1>
         <p className={styles.sub}>Welcome back, here's what's happening with Halfsec today.</p>
       </div>
+
+      {stockAlert && (
+  <Link to="/admin/stock" className={styles.stockBanner}>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" strokeWidth="2">
+      <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+      <line x1="12" y1="9" x2="12" y2="13"/>
+      <line x1="12" y1="17" x2="12.01" y2="17"/>
+    </svg>
+    <span>
+      {stockAlert.outOfStock > 0 && (
+        <strong>{stockAlert.outOfStock} product{stockAlert.outOfStock !== 1 ? 's' : ''} out of stock</strong>
+      )}
+      {stockAlert.outOfStock > 0 && stockAlert.lowStock > 0 && ' · '}
+      {stockAlert.lowStock > 0 && (
+        <span>{stockAlert.lowStock} running low</span>
+      )}
+    </span>
+    <span className={styles.stockBannerLink}>Manage stock →</span>
+  </Link>
+)}
 
       {/* Stats */}
       <div className={styles.statsGrid}>
