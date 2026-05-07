@@ -18,6 +18,7 @@ import CheckoutPage from './pages/cart/CheckoutPage';
 import OrdersPage from './pages/orders/OrdersPage';
 import OrderDetailPage from './pages/orders/OrderDetailPage';
 import ProfilePage from './pages/profile/ProfilePage';
+import WishlistPage from './pages/wishlist/WishlistPage';
 
 // Admin pages
 import AdminLayout from './pages/admin/AdminLayout';
@@ -30,6 +31,7 @@ import AdminOrderDetail from './pages/admin/AdminOrderDetail';
 import AdminCategories from './pages/admin/AdminCategories';
 import AdminAnalytics from './pages/admin/AdminAnalytics';
 import AdminStock from './pages/admin/AdminStock';
+import { WishlistProvider } from './context/WishlistContext.jsx';
 
 
 // ── AppContent lives inside BrowserRouter so useLocation works ───────────────
@@ -66,6 +68,9 @@ const AppContent = () => {
         <Route path="/orders/:id" element={
           <ProtectedRoute><OrderDetailPage /></ProtectedRoute>
         } />
+        <Route path="/wishlist" element={
+          <ProtectedRoute><WishlistPage /></ProtectedRoute>
+        } />
 
         {/* ── Admin (nested routes inside AdminLayout) ── */}
         <Route path="/admin" element={
@@ -100,7 +105,9 @@ const App = () => (
     <ThemeProvider>
     <AuthProvider>
       <CartProvider>
-        <AppContent />
+        <WishlistProvider>
+          <AppContent />
+        </WishlistProvider>
       </CartProvider>
     </AuthProvider>
     </ThemeProvider>

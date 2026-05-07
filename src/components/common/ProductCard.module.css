@@ -126,3 +126,17 @@
   padding: 6px 12px !important;
   font-size: 12px !important;
 }
+
+.wishlistBtn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+.card:hover .wishlistBtn { opacity: 1; }
+
+/* Always show on touch devices */
+@media (hover: none) {
+  .wishlistBtn { opacity: 1; }
+}

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import styles from './ProductCard.module.css';
 import ShareButton from './ShareButton';
+import WishlistButton from './WishlistButton';
 
 const conditionColors = {
   'like new': 'badge-gold',
@@ -28,6 +29,12 @@ const ProductCard = ({ product }) => {
             </svg>
           </div>
         )}
+        <div
+    className={styles.wishlistBtn}
+    onClick={(e) => e.preventDefault()}
+  >
+    <WishlistButton product={product} size="sm" />
+  </div>
         {discount && <span className={styles.discountBadge}>-{discount}%</span>}
         {product.stock === 0 && <div className={styles.soldOut}>Sold out</div>}
       </div>

@@ -120,3 +120,29 @@
 @media (max-width: 768px) {
   .navSearch { display: none; }
 }
+
+.wishlistLink {
+  display: flex;
+  align-items: center;
+  position: relative;
+  color: var(--color-text-secondary);
+  transition: color var(--transition);
+}
+.wishlistLink:hover { color: #e05252; }
+
+.wishlistBadge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #e05252;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+}

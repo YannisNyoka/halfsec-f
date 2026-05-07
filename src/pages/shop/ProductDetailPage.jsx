@@ -9,6 +9,7 @@ import SEO from '@/components/common/SEO';
 import RelatedProducts from '../../components/common/RelatedProducts';
 import useRecentlyViewed from '../../hooks/useRecentlyViewed';
 import ShareButton from '../../components/common/ShareButton';
+import WishlistButton from '../../components/common/WishlistButton';
 
 const conditionColors = {
   'like new': 'badge-gold',
@@ -197,7 +198,7 @@ const ProductDetailPage = () => {
                 ? 'Out of stock'
                 : 'Add to cart'}
             </button>
-            
+            <WishlistButton product={product} size="lg" showLabel />
             <ShareButton product={product} />
 
             {!isAuthenticated && (
