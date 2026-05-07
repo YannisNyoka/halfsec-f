@@ -10,6 +10,8 @@ import RelatedProducts from '../../components/common/RelatedProducts';
 import useRecentlyViewed from '../../hooks/useRecentlyViewed';
 import ShareButton from '../../components/common/ShareButton';
 import WishlistButton from '../../components/common/WishlistButton';
+import ProductReviews from '../../components/common/ProductReviews';
+import { RatingDisplay } from '../../components/common/StarRating';
 
 const conditionColors = {
   'like new': 'badge-gold',
@@ -158,6 +160,15 @@ const ProductDetailPage = () => {
               )}
             </div>
 
+            {/* Rating */}
+            {product.rating?.count > 0 && (
+             <RatingDisplay
+              rating={product.rating.average}
+               count={product.rating.count}
+                size={16}
+               />
+               )}
+
             <div className={styles.divider} />
 
             <p className={styles.description}>{product.description}</p>
@@ -216,6 +227,9 @@ const ProductDetailPage = () => {
             categoryName={product.category.name}
           />
         )}
+
+        {/* Reviews */}
+         <ProductReviews product={product} />
 
       </div>
     </div>

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import styles from './ProductCard.module.css';
 import ShareButton from './ShareButton';
 import WishlistButton from './WishlistButton';
+import { RatingDisplay } from './StarRating';
 
 const conditionColors = {
   'like new': 'badge-gold',
@@ -63,6 +64,14 @@ const ProductCard = ({ product }) => {
         {product.category?.name && (
           <span className={styles.category}>{product.category.name}</span>
         )}
+
+        {product.rating?.count > 0 && (
+  <RatingDisplay
+    rating={product.rating.average}
+    count={product.rating.count}
+    size={13}
+  />
+)}
 
         <div className={styles.priceRow}>
           <span className={styles.price}>R{product.price.toLocaleString()}</span>
