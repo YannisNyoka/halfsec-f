@@ -5,6 +5,7 @@ import { placeOrder } from '../../api/orders';
 import { createYocoCheckout } from '../../api/payment';
 import useAuth from '../../hooks/useAuth';
 import styles from './CheckoutPage.module.css';
+import CouponInput from '../../components/common/CouponInput';
 
 const SA_PROVINCES = [
   'Eastern Cape','Free State','Gauteng','KwaZulu-Natal',
@@ -22,7 +23,9 @@ const CheckoutPage = () => {
   const returnOrderId = searchParams.get('orderId');
 
   const shippingCost = total >= 500 ? 0 : 80;
-  const orderTotal = total + shippingCost;
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+const discountAmount = appliedCoupon?.discountAmount || 0;
+const orderTotal = total + shippingCost - discountAmount;
 
   const [form, setForm] = useState({
     name: user?.name || '',
@@ -93,6 +96,7 @@ const CheckoutPage = () => {
         },
         paymentMethod: form.paymentMethod,
         notes: form.notes,
+        couponCode: appliedCoupon?.coupon?.code || null,
       });
 
       const order = data.order;
@@ -331,6 +335,24 @@ const CheckoutPage = () => {
                   {shippingCost === 0 ? 'Free' : `R${shippingCost}`}
                 </span>
               </div>
+              {discountAmount > 0 && (
+    <div className={styles.summaryRow} style={{ color: 'var(--color-success)' }}>
+      <span>Discount ({appliedCoupon.coupon.code})</span>
+      <span>-R{discountAmount.toLocaleString()}</span>
+    </div>
+  )}
+
+{/* Coupon input */}
+<div className={styles.couponSection}>
+  <p className={styles.couponLabel}>Promo code</p>
+  <CouponInput
+    orderTotal={total + shippingCost}
+    appliedCoupon={appliedCoupon}
+    onApply={setAppliedCoupon}
+    onRemove={() => setAppliedCoupon(null)}
+  />
+</div>
+
               <div className={styles.divider} />
               <div className={styles.summaryTotal}>
                 <span>Total</span>

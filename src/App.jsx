@@ -31,6 +31,7 @@ import AdminOrderDetail from './pages/admin/AdminOrderDetail';
 import AdminCategories from './pages/admin/AdminCategories';
 import AdminAnalytics from './pages/admin/AdminAnalytics';
 import AdminStock from './pages/admin/AdminStock';
+import AdminCoupons from './pages/admin/AdminCoupons';
 import { WishlistProvider } from './context/WishlistContext.jsx';
 
 
@@ -85,6 +86,7 @@ const AppContent = () => {
           <Route path="categories" element={<AdminCategories />} />
           <Route path="analytics" element={<AdminAnalytics />} />
           <Route path="stock" element={<AdminStock />} />
+          <Route path="coupons" element={<AdminCoupons />} />
         </Route>
 
         {/* ── 404 ── */}
