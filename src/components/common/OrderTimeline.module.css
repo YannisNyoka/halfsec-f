@@ -1,0 +1,133 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* Tracking card */
+.trackingCard {
+  background: var(--color-gold-muted);
+  border: 1px solid rgba(245,166,35,0.25);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.trackingItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.trackingLabel {
+  font-size: 12px;
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+.trackingValue {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.trackingCode {
+  font-family: monospace;
+  letter-spacing: 1px;
+  color: var(--color-gold);
+}
+
+/* Timeline */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 12px;
+  position: relative;
+  padding-bottom: 20px;
+}
+
+.entry:last-child {
+  padding-bottom: 0;
+}
+
+.connector {
+  position: absolute;
+  left: 15px;
+  top: 32px;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-border);
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 1;
+  border: 2px solid transparent;
+  background: var(--color-surface2);
+}
+
+.iconLatest {
+  box-shadow: 0 0 0 4px var(--color-bg);
+}
+
+.content {
+  padding-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.statusLabel {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.timestamp {
+  font-size: 11px;
+  color: var(--color-muted);
+}
+
+.message {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+/* Status colors */
+.colorPending { color: var(--color-muted); border-color: var(--color-border); }
+.colorConfirmed { color: var(--color-gold); border-color: var(--color-gold); background: var(--color-gold-muted); }
+.colorProcessing { color: #3b82f6; border-color: #3b82f6; background: rgba(59,130,246,0.1); }
+.colorShipped { color: #8b5cf6; border-color: #8b5cf6; background: rgba(139,92,246,0.1); }
+.colorDelivered { color: var(--color-success); border-color: var(--color-success); background: var(--color-success-bg); }
+.colorCancelled { color: var(--color-danger); border-color: var(--color-danger); background: var(--color-danger-bg); }

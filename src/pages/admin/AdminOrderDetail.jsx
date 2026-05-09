@@ -15,32 +15,55 @@ const AdminOrderDetail = () => {
   const [paymentStatus, setPaymentStatus] = useState('');
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
+  const [trackingNumber, setTrackingNumber] = useState(order?.trackingNumber || '');
+const [courierName, setCourierName] = useState(order?.courierName || '');
+const [estimatedDelivery, setEstimatedDelivery] = useState(
+  order?.estimatedDelivery
+    ? new Date(order.estimatedDelivery).toISOString().split('T')[0]
+    : ''
+);
+const [statusMessage, setStatusMessage] = useState('');
 
-  useEffect(() => {
-    getOrderAdmin(id)
-      .then(({ data }) => {
-        setOrder(data.order);
-        setOrderStatus(data.order.orderStatus);
-        setPaymentStatus(data.order.paymentStatus);
-      })
-      .catch(() => setError('Order not found.'))
-      .finally(() => setLoading(false));
-  }, [id]);
+ useEffect(() => {
+  getOrderAdmin(id)
+    .then(({ data }) => {
+      setOrder(data.order);
+      setOrderStatus(data.order.orderStatus);
+      setPaymentStatus(data.order.paymentStatus);
+      setTrackingNumber(data.order.trackingNumber || '');       // 👈 missing
+      setCourierName(data.order.courierName || '');             // 👈 missing
+      setEstimatedDelivery(
+        data.order.estimatedDelivery
+          ? new Date(data.order.estimatedDelivery).toISOString().split('T')[0]
+          : ''
+      );                                                        // 👈 missing
+    })
+    .catch(() => setError('Order not found.'))
+    .finally(() => setLoading(false));
+}, [id]);
 
   const handleUpdate = async () => {
-    setUpdating(true);
-    setSuccess(''); setError('');
-    try {
-      const { data } = await updateOrderStatus(id, { orderStatus, paymentStatus });
-      setOrder(data.order);
-      setSuccess('Order updated successfully.');
-      setTimeout(() => setSuccess(''), 3000);
-    } catch (err) {
-      setError(err.response?.data?.message || 'Update failed.');
-    } finally {
-      setUpdating(false);
-    }
-  };
+  setUpdating(true);
+  setSuccess(''); setError('');
+  try {
+    const { data } = await updateOrderStatus(id, {
+      orderStatus,
+      paymentStatus,
+      trackingNumber: trackingNumber || null,
+      courierName: courierName || null,
+      estimatedDelivery: estimatedDelivery || null,
+      statusMessage: statusMessage || null,
+    });
+    setOrder(data.order);
+    setStatusMessage('');
+    setSuccess('Order updated successfully.');
+    setTimeout(() => setSuccess(''), 3000);
+  } catch (err) {
+    setError(err.response?.data?.message || 'Update failed.');
+  } finally {
+    setUpdating(false);
+  }
+};
 
   if (loading) return <div className="page-loader"><div className="spinner" style={{ width: 32, height: 32, borderTopColor: 'var(--color-gold)' }} /></div>;
   if (!order) return <div style={{ padding: 32 }}><div className="alert alert-error">{error}</div></div>;
@@ -106,33 +129,100 @@ const AdminOrderDetail = () => {
         <div className={styles.sidebar}>
           {/* Update status */}
           <div className={styles.card}>
-            <h2 className={styles.cardTitle}>Update status</h2>
-            <div className="form-group">
-              <label className="form-label">Order status</label>
-              <select className="form-select" value={orderStatus} onChange={(e) => setOrderStatus(e.target.value)}>
-                {ORDER_STATUSES.map((s) => (
-                  <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>
-                ))}
-              </select>
-            </div>
-            <div className="form-group" style={{ marginTop: 12 }}>
-              <label className="form-label">Payment status</label>
-              <select className="form-select" value={paymentStatus} onChange={(e) => setPaymentStatus(e.target.value)}>
-                {PAYMENT_STATUSES.map((s) => (
-                  <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>
-                ))}
-              </select>
-            </div>
-            <button
-              className="btn btn-primary btn-full"
-              style={{ marginTop: 16 }}
-              onClick={handleUpdate}
-              disabled={updating}
-            >
-              {updating ? <><span className="spinner" />Updating...</> : 'Save changes'}
-            </button>
-          </div>
+  <h2 className={styles.cardTitle}>Update order</h2>
 
+  <div className="form-group">
+    <label className="form-label">Order status</label>
+    <select className="form-select" value={orderStatus}
+      onChange={(e) => setOrderStatus(e.target.value)}>
+      {ORDER_STATUSES.map((s) => (
+        <option key={s} value={s}>
+          {s.charAt(0).toUpperCase() + s.slice(1)}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  <div className="form-group" style={{ marginTop: 12 }}>
+    <label className="form-label">Payment status</label>
+    <select className="form-select" value={paymentStatus}
+      onChange={(e) => setPaymentStatus(e.target.value)}>
+      {PAYMENT_STATUSES.map((s) => (
+        <option key={s} value={s}>
+          {s.charAt(0).toUpperCase() + s.slice(1)}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  <div className="form-group" style={{ marginTop: 12 }}>
+    <label className="form-label">Courier name</label>
+    <input
+      className="form-input"
+      placeholder="e.g. The Courier Guy"
+      value={courierName}
+      onChange={(e) => setCourierName(e.target.value)}
+    />
+  </div>
+
+  <div className="form-group" style={{ marginTop: 12 }}>
+    <label className="form-label">Tracking number</label>
+    <input
+      className="form-input"
+      placeholder="e.g. TCG123456789"
+      value={trackingNumber}
+      onChange={(e) => setTrackingNumber(e.target.value)}
+      style={{ fontFamily: 'monospace', letterSpacing: 1 }}
+    />
+  </div>
+
+  <div className="form-group" style={{ marginTop: 12 }}>
+    <label className="form-label">Estimated delivery</label>
+    <input
+      type="date"
+      className="form-input"
+      value={estimatedDelivery}
+      onChange={(e) => setEstimatedDelivery(e.target.value)}
+    />
+  </div>
+
+  <div className="form-group" style={{ marginTop: 12 }}>
+    <label className="form-label">
+      Status message{' '}
+      <span style={{ color: 'var(--color-muted)', fontWeight: 400 }}>
+        (optional)
+      </span>
+    </label>
+    <input
+      className="form-input"
+      placeholder="Custom message for the customer..."
+      value={statusMessage}
+      onChange={(e) => setStatusMessage(e.target.value)}
+    />
+  </div>
+
+  <button
+    className="btn btn-primary btn-full"
+    style={{ marginTop: 16 }}
+    onClick={handleUpdate}
+    disabled={updating}
+  >
+    {updating ? <><span className="spinner" />Updating...</> : 'Save changes'}
+  </button>
+</div>
+
+{/* Timeline in admin too */}
+{order.timeline?.length > 0 && (
+  <div className={styles.card}>
+    <OrderTimeline
+      timeline={order.timeline}
+      currentStatus={order.orderStatus}
+      trackingNumber={order.trackingNumber}
+      courierName={order.courierName}
+      estimatedDelivery={order.estimatedDelivery}
+    />
+  </div>
+)}
           {/* Summary */}
           <div className={styles.card}>
             <h2 className={styles.cardTitle}>Payment summary</h2>

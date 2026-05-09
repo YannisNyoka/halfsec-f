@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useLocation, Link,useSearchParams } from 'react-router-dom';
 import { getMyOrder } from '../../api/orders';
+import OrderTimeline from '../../components/common/OrderTimeline';
 import styles from './OrderDetailPage.module.css';
 
 const STEPS = ['pending', 'confirmed', 'processing', 'shipped', 'delivered'];
@@ -71,24 +72,16 @@ const OrderDetailPage = () => {
           </div>
         </div>
 
-        {/* Progress tracker */}
-        {!isCancelled && (
-          <div className={styles.tracker}>
-            {STEPS.map((step, i) => (
-              <div key={step} className={styles.trackStep}>
-                <div className={`${styles.trackDot} ${i <= currentStep ? styles.trackDotActive : ''}`}>
-                  {i < currentStep ? '✓' : i + 1}
-                </div>
-                <span className={`${styles.trackLabel} ${i <= currentStep ? styles.trackLabelActive : ''}`}>
-                  {step.charAt(0).toUpperCase() + step.slice(1)}
-                </span>
-                {i < STEPS.length - 1 && (
-                  <div className={`${styles.trackLine} ${i < currentStep ? styles.trackLineActive : ''}`} />
-                )}
-              </div>
-            ))}
-          </div>
-        )}
+       {/* Timeline */}
+<div className={styles.card}>
+  <OrderTimeline
+    timeline={order.timeline}
+    currentStatus={order.orderStatus}
+    trackingNumber={order.trackingNumber}
+    courierName={order.courierName}
+    estimatedDelivery={order.estimatedDelivery}
+  />
+</div>
 
         <div className={styles.layout}>
           {/* Items */}
