@@ -46,7 +46,7 @@ const AdminDashboard = () => {
     <div className={styles.page}>
       <div className={styles.header}>
         <h1 className={styles.title}>Dashboard</h1>
-        <p className={styles.sub}>Welcome back, here's what's happening with Halfsec today.</p>
+        <p className={styles.sub}>Welcome back, here's what's happening with halfsec today.</p>
       </div>
 
       {stockAlert && (
