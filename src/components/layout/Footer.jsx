@@ -18,7 +18,7 @@ const Footer = () => {
             Second hand. First class.
           </p>
           <p className={styles.description}>
-            Curated second-hand goods — quality checked,
+            Curated pre-loved goods — quality checked,
             fairly priced, delivered anywhere in South Africa.
           </p>
 

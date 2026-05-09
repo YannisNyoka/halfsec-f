@@ -183,7 +183,7 @@ const HomePage = () => {
       <section className={styles.whySection}>
         <div className="container">
           <h2 className={styles.sectionTitle} style={{ textAlign: 'center', marginBottom: 40 }}>
-            Why shop at Halfsec?
+            Why shop at halfsec?
           </h2>
           <div className={styles.whyGrid}>
             {[
