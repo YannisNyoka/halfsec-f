@@ -1,0 +1,70 @@
+.page {
+  background: var(--color-bg);
+  min-height: calc(100vh - 64px);
+  padding: 48px 0 80px;
+}
+
+.content {
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--color-text);
+  letter-spacing: -0.5px;
+}
+
+.updated {
+  font-size: 13px;
+  color: var(--color-muted);
+  margin-top: -20px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.section h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.section p {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+}
+
+.section ul,
+.section ol {
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section li {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.section a {
+  color: var(--color-gold);
+  font-weight: 500;
+}
+.section a:hover { text-decoration: underline; }
+
+.section strong { color: var(--color-text); }
+
+@media (max-width: 640px) {
+  .page { padding: 32px 0 60px; }
+  .title { font-size: 26px; }
+}

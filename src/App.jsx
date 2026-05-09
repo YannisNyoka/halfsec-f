@@ -4,6 +4,7 @@ import { CartProvider } from './context/CartContext.jsx';
 import Navbar from './components/layout/Navbar';
 import { ProtectedRoute, AdminRoute } from './components/common/ProtectedRoute';
 import { ThemeProvider } from './context/ThemeContext.jsx';
+import Footer from './components/layout/Footer';
 
 // Public pages
 import HomePage from './pages/HomePage';
@@ -11,6 +12,9 @@ import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import ShopPage from './pages/shop/ShopPage';
 import ProductDetailPage from './pages/shop/ProductDetailPage';
+import PrivacyPage from './pages/legal/PrivacyPage';
+import TermsPage from './pages/legal/TermsPage';
+import ReturnsPage from './pages/legal/ReturnsPage';
 
 // Customer protected pages
 import CartPage from './pages/cart/CartPage';
@@ -52,6 +56,9 @@ const AppContent = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/shop" element={<ShopPage />} />
         <Route path="/shop/:slug" element={<ProductDetailPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/returns" element={<ReturnsPage />} />
 
         {/* ── Customer protected ── */}
         <Route path="/cart" element={
@@ -97,6 +104,7 @@ const AppContent = () => {
           </div>
         } />
       </Routes>
+      {!isAdmin && <Footer />}
     </>
   );
 };

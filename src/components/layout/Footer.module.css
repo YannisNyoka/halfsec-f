@@ -1,0 +1,225 @@
+.footer {
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  margin-top: auto;
+}
+
+/* ── Main grid ── */
+.inner {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 48px;
+  padding-top: 56px;
+  padding-bottom: 48px;
+}
+
+/* ── Brand ── */
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--color-text);
+  text-decoration: none;
+  width: fit-content;
+}
+.logo span { color: var(--color-gold); }
+
+.tagline {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-gold);
+  letter-spacing: 0.3px;
+}
+
+.description {
+  font-size: 14px;
+  color: var(--color-muted);
+  line-height: 1.6;
+  max-width: 260px;
+}
+
+/* Socials */
+.socials {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.social {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface2);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-muted);
+  transition: all var(--transition);
+  text-decoration: none;
+}
+.social:hover {
+  background: var(--color-gold-muted);
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+
+/* ── Columns ── */
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.colTitle {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footerLink {
+  font-size: 14px;
+  color: var(--color-muted);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.footerLink:hover { color: var(--color-gold); }
+
+/* Contact */
+.contactList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-muted);
+}
+
+.contactItem svg { flex-shrink: 0; color: var(--color-gold); }
+
+.contactText {
+  font-size: 14px;
+  color: var(--color-muted);
+}
+
+/* Shipping badge */
+.shippingBadge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-gold-muted);
+  border: 1px solid rgba(245,166,35,0.2);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-gold);
+  margin-top: 4px;
+}
+
+/* ── Bottom bar ── */
+.bottom {
+  border-top: 1px solid var(--color-border);
+  padding: 16px 0;
+}
+
+.bottomInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.copyright {
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.legalLinks {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legalLink {
+  font-size: 13px;
+  color: var(--color-muted);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.legalLink:hover { color: var(--color-gold); }
+
+.dot {
+  color: var(--color-border);
+  font-size: 13px;
+}
+
+/* Payment icons */
+.paymentIcons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.payIcon {
+  background: var(--color-surface2);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.3px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .brand { grid-column: 1 / -1; }
+  .description { max-width: 100%; }
+}
+
+@media (max-width: 640px) {
+  .inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    padding-top: 36px;
+    padding-bottom: 32px;
+  }
+  .brand { grid-column: 1 / -1; }
+  .bottomInner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .legalLinks { flex-wrap: wrap; }
+  .paymentIcons { flex-wrap: wrap; }
+}
+
+@media (max-width: 400px) {
+  .inner { grid-template-columns: 1fr; }
+}
