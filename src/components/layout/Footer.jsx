@@ -25,7 +25,7 @@ const Footer = () => {
           {/* Social links */}
           <div className={styles.socials}>
             
-             <a href="https://wa.me/27XXXXXXXXX"
+             <a href="https://wa.me/2778685826"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.social}
@@ -156,7 +156,7 @@ const Footer = () => {
       <div className={styles.bottom}>
         <div className={`container ${styles.bottomInner}`}>
           <p className={styles.copyright}>
-            © {currentYear} Halfsec. All rights reserved.
+            © {currentYear} halfsec. All rights reserved.
           </p>
           <div className={styles.legalLinks}>
             <Link to="/privacy" className={styles.legalLink}>Privacy policy</Link>
