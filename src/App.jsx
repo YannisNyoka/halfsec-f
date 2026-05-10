@@ -5,6 +5,7 @@ import Navbar from './components/layout/Navbar';
 import { ProtectedRoute, AdminRoute } from './components/common/ProtectedRoute';
 import { ThemeProvider } from './context/ThemeContext.jsx';
 import Footer from './components/layout/Footer';
+import PageErrorBoundary from './components/common/PageErrorBoundary';
 
 // Public pages
 import HomePage from './pages/HomePage';
@@ -15,6 +16,8 @@ import ProductDetailPage from './pages/shop/ProductDetailPage';
 import PrivacyPage from './pages/legal/PrivacyPage';
 import TermsPage from './pages/legal/TermsPage';
 import ReturnsPage from './pages/legal/ReturnsPage';
+import NotFoundPage from './pages/NotFoundPage';
+
 
 // Customer protected pages
 import CartPage from './pages/cart/CartPage';
@@ -62,22 +65,46 @@ const AppContent = () => {
 
         {/* ── Customer protected ── */}
         <Route path="/cart" element={
-          <ProtectedRoute><CartPage /></ProtectedRoute>
+          <ProtectedRoute>
+            <PageErrorBoundary>
+              <CartPage />
+            </PageErrorBoundary>
+          </ProtectedRoute>
         } />
         <Route path="/checkout" element={
-          <ProtectedRoute><CheckoutPage /></ProtectedRoute>
+          <ProtectedRoute>
+            <PageErrorBoundary>
+              <CheckoutPage />
+            </PageErrorBoundary>
+          </ProtectedRoute>
         } />
         <Route path="/orders" element={
-          <ProtectedRoute><OrdersPage /></ProtectedRoute>
+          <ProtectedRoute>
+            <PageErrorBoundary>
+              <OrdersPage />
+            </PageErrorBoundary>
+          </ProtectedRoute>
         } />
         <Route path="/profile" element={
-           <ProtectedRoute><ProfilePage /></ProtectedRoute>
+           <ProtectedRoute>
+             <PageErrorBoundary>
+               <ProfilePage />
+             </PageErrorBoundary>
+           </ProtectedRoute>
         } />
         <Route path="/orders/:id" element={
-          <ProtectedRoute><OrderDetailPage /></ProtectedRoute>
+          <ProtectedRoute>
+            <PageErrorBoundary>
+              <OrderDetailPage />
+            </PageErrorBoundary>
+          </ProtectedRoute>
         } />
         <Route path="/wishlist" element={
-          <ProtectedRoute><WishlistPage /></ProtectedRoute>
+          <ProtectedRoute>
+            <PageErrorBoundary>
+              <WishlistPage />
+            </PageErrorBoundary>
+          </ProtectedRoute>
         } />
 
         {/* ── Admin (nested routes inside AdminLayout) ── */}
@@ -98,10 +125,7 @@ const AppContent = () => {
 
         {/* ── 404 ── */}
         <Route path="*" element={
-          <div style={{ textAlign: 'center', padding: '80px 24px' }}>
-            <h1 style={{ fontSize: 48, fontWeight: 700, color: 'var(--color-text)' }}>404</h1>
-            <p style={{ color: 'var(--color-muted)', marginTop: 8 }}>Page not found.</p>
-          </div>
+          <NotFoundPage />
         } />
       </Routes>
       {!isAdmin && <Footer />}
