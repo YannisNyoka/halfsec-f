@@ -29,6 +29,9 @@ import OrdersPage from './pages/orders/OrdersPage';
 import OrderDetailPage from './pages/orders/OrderDetailPage';
 import ProfilePage from './pages/profile/ProfilePage';
 import WishlistPage from './pages/wishlist/WishlistPage';
+import { CompareProvider } from './context/CompareContext.jsx';
+import CompareBar from './components/common/CompareBar';
+import ComparePage from './pages/compare/ComparePage';
 
 // Admin pages
 import AdminLayout from './pages/admin/AdminLayout';
@@ -67,6 +70,7 @@ const AppContent = () => {
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/returns" element={<ReturnsPage />} />
+        <Route path="/compare" element={<ComparePage />} />
 
         {/* ── Customer protected ── */}
         <Route path="/cart" element={
@@ -134,6 +138,7 @@ const AppContent = () => {
         } />
       </Routes>
       {!isAdmin && <Footer />}
+      {!isAdmin && <CompareBar />}
       {!isAdmin && <BackToTop />}
     </>
   );
@@ -146,7 +151,9 @@ const App = () => (
     <AuthProvider>
       <CartProvider>
         <WishlistProvider>
-          <AppContent />
+          <CompareProvider>
+            <AppContent />
+          </CompareProvider>
         </WishlistProvider>
       </CartProvider>
     </AuthProvider>

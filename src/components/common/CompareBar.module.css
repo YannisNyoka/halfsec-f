@@ -1,0 +1,151 @@
+.bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--color-surface);
+  border-top: 2px solid var(--color-gold);
+  z-index: 180;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.15);
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.count {
+  background: var(--color-gold);
+  color: #1a1a1a;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 1px 7px;
+  border-radius: 999px;
+}
+
+.products {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Product chip */
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-surface2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px 6px 6px;
+  max-width: 200px;
+}
+
+.chipImg {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--color-border);
+}
+.chipImg img { width: 100%; height: 100%; object-fit: cover; }
+.chipImgFallback { width: 100%; height: 100%; background: var(--color-border); }
+
+.chipName {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+.chipRemove {
+  background: none;
+  border: none;
+  color: var(--color-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border-radius: 50%;
+  transition: color var(--transition), background var(--transition);
+  flex-shrink: 0;
+}
+.chipRemove:hover {
+  color: var(--color-danger);
+  background: rgba(224,82,82,0.1);
+}
+
+/* Empty slot */
+.emptySlot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1.5px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.clearBtn {
+  background: none;
+  border: none;
+  font-size: 13px;
+  color: var(--color-muted);
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  transition: color var(--transition);
+}
+.clearBtn:hover { color: var(--color-danger); }
+
+.compareBtn { white-space: nowrap; }
+
+@media (max-width: 768px) {
+  .inner { padding: 10px 16px; }
+  .emptySlot { display: none; }
+  .chipName { max-width: 80px; }
+  .label { display: none; }
+}

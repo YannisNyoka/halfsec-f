@@ -3,6 +3,8 @@ import styles from './ProductCard.module.css';
 import ShareButton from './ShareButton';
 import WishlistButton from './WishlistButton';
 import { RatingDisplay } from './StarRating';
+import CompareButton from './CompareButton';
+
 
 const conditionColors = {
   'like new': 'badge-gold',
@@ -35,6 +37,7 @@ const ProductCard = ({ product }) => {
     onClick={(e) => e.preventDefault()}
   >
     <WishlistButton product={product} size="sm" />
+    <CompareButton product={product} size="sm" />
   </div>
         {discount && <span className={styles.discountBadge}>-{discount}%</span>}
         {product.stock === 0 && <div className={styles.soldOut}>Sold out</div>}

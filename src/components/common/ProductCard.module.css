@@ -140,3 +140,19 @@
 @media (hover: none) {
   .wishlistBtn { opacity: 1; }
 }
+
+.imageActions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+.card:hover .imageActions { opacity: 1; }
+
+@media (hover: none) {
+  .imageActions { opacity: 1; }
+}
