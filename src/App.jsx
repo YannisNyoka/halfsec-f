@@ -6,6 +6,9 @@ import { ProtectedRoute, AdminRoute } from './components/common/ProtectedRoute';
 import { ThemeProvider } from './context/ThemeContext.jsx';
 import Footer from './components/layout/Footer';
 import PageErrorBoundary from './components/common/PageErrorBoundary';
+import ScrollToTop from './components/common/ScrollToTop';
+import BackToTop from './components/common/BackToTop';
+import ScrollProgressBar from './components/common/ScrollProgressBar';
 
 // Public pages
 import HomePage from './pages/HomePage';
@@ -49,7 +52,9 @@ const AppContent = () => {
 
   return (
     <>
+      <ScrollToTop />
       {/* Hide the main navbar inside admin — admin has its own sidebar */}
+      {!isAdmin && <ScrollProgressBar />}
       {!isAdmin && <Navbar />}
 
       <Routes>
@@ -129,6 +134,7 @@ const AppContent = () => {
         } />
       </Routes>
       {!isAdmin && <Footer />}
+      {!isAdmin && <BackToTop />}
     </>
   );
 };
