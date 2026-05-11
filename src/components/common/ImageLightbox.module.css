@@ -1,0 +1,213 @@
+/* Overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Header */
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
+  z-index: 10;
+}
+
+.counter {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.8);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.controlBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--transition);
+  backdrop-filter: blur(4px);
+}
+.controlBtn:hover:not(:disabled) {
+  background: rgba(255,255,255,0.2);
+}
+.controlBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.closeBtn {
+  background: rgba(224,82,82,0.2) !important;
+  border-color: rgba(224,82,82,0.3) !important;
+}
+.closeBtn:hover {
+  background: rgba(224,82,82,0.4) !important;
+}
+
+.zoomLevel {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  min-width: 44px;
+  text-align: center;
+}
+
+/* Main image */
+.imageWrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 80px 80px 120px;
+  position: relative;
+}
+
+.image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.1s ease;
+  transform-origin: center center;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.zoomed { cursor: grab; }
+
+/* Loading skeleton */
+.skeleton {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: var(--radius-md);
+  background: rgba(255,255,255,0.05);
+  animation: shimmer 1.4s ease infinite;
+}
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* Nav buttons */
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  z-index: 10;
+  backdrop-filter: blur(4px);
+}
+.navBtn:hover {
+  background: rgba(245,166,35,0.3);
+  border-color: rgba(245,166,35,0.5);
+}
+
+.prevBtn { left: 16px; }
+.nextBtn { right: 16px; }
+
+/* Thumbnails */
+.thumbnails {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+  padding: 8px;
+  background: rgba(0,0,0,0.5);
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(8px);
+  max-width: calc(100vw - 32px);
+  overflow-x: auto;
+}
+
+.thumb {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 2px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  transition: border-color var(--transition), transform var(--transition);
+  flex-shrink: 0;
+  background: none;
+  padding: 0;
+}
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.thumb:hover {
+  border-color: rgba(245,166,35,0.6);
+  transform: scale(1.05);
+}
+.thumbActive {
+  border-color: #f5a623 !important;
+  transform: scale(1.05);
+}
+
+/* Hints */
+.hints {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  white-space: nowrap;
+  z-index: 10;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .imageWrap { padding: 70px 8px 140px; }
+  .prevBtn { left: 8px; width: 40px; height: 40px; }
+  .nextBtn { right: 8px; width: 40px; height: 40px; }
+  .hints { display: none; }
+  .thumbnails { bottom: 80px; }
+  .controlBtn { width: 32px; height: 32px; }
+}
