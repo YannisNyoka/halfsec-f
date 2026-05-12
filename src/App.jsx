@@ -46,6 +46,8 @@ import AdminAnalytics from './pages/admin/AdminAnalytics';
 import AdminStock from './pages/admin/AdminStock';
 import AdminCoupons from './pages/admin/AdminCoupons';
 import { WishlistProvider } from './context/WishlistContext.jsx';
+import AdminCustomers from './pages/admin/AdminCustomers';
+import AdminCustomerDetail from './pages/admin/AdminCustomerDetail';
 
 
 // ── AppContent lives inside BrowserRouter so useLocation works ───────────────
@@ -130,6 +132,8 @@ const AppContent = () => {
           <Route path="analytics" element={<AdminAnalytics />} />
           <Route path="stock" element={<AdminStock />} />
           <Route path="coupons" element={<AdminCoupons />} />
+          <Route path="customers" element={<AdminCustomers />} />
+          <Route path="customers/:id" element={<AdminCustomerDetail />} />
         </Route>
 
         {/* ── 404 ── */}
