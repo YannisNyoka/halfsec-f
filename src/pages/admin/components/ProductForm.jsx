@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { uploadImages, deleteImage } from '../../../api/admin';
 import { getAllCategoriesAdmin } from '../../../api/admin';
 import styles from './ProductForm.module.css';
+import { generateDescription } from '../../../api/ai';
 
 const CONDITIONS = ['like new', 'good', 'fair', 'poor'];
 
@@ -20,6 +21,9 @@ const ProductForm = ({ initial = {}, onSubmit, loading, submitLabel = 'Save prod
   const [categories, setCategories] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [generating, setGenerating] = useState(false);
+const [genError, setGenError] = useState('');
+
 
   useEffect(() => {
     getAllCategoriesAdmin()
@@ -32,6 +36,28 @@ const ProductForm = ({ initial = {}, onSubmit, loading, submitLabel = 'Save prod
     setForm((p) => ({ ...p, [name]: type === 'checkbox' ? checked : value }));
     setErrors((p) => ({ ...p, [name]: '' }));
   };
+
+  const handleGenerate = async () => {
+  if (!form.name.trim()) {
+    setGenError('Enter a product name first.');
+    return;
+  }
+  setGenerating(true);
+  setGenError('');
+  try {
+    const { data } = await generateDescription({
+      name: form.name,
+      category: categories.find((c) => c._id === form.category)?.name,
+      condition: form.condition,
+      tags: form.tags,
+    });
+    setForm((p) => ({ ...p, description: data.description }));
+  } catch {
+    setGenError('Failed to generate. Try again.');
+  } finally {
+    setGenerating(false);
+  }
+};
 
   const handleImageUpload = async (e) => {
     const files = Array.from(e.target.files);
@@ -146,14 +172,43 @@ const ProductForm = ({ initial = {}, onSubmit, loading, submitLabel = 'Save prod
               value={form.name} onChange={handleChange} placeholder="e.g. Vintage Levi's Jacket" />
             {errors.name && <span className="form-error">{errors.name}</span>}
           </div>
-          <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-            <label className="form-label">Description</label>
-            <textarea name="description" className={`form-input ${errors.description ? 'error' : ''}`}
-              value={form.description} onChange={handleChange}
-              rows={4} style={{ resize: 'vertical' }}
-              placeholder="Describe the item, its condition, size, brand..." />
-            {errors.description && <span className="form-error">{errors.description}</span>}
-          </div>
+          <div className="form-group">
+  <div className={styles.descLabel}>
+    <label className="form-label">Description</label>
+    <button
+      type="button"
+      className={styles.aiBtn}
+      onClick={handleGenerate}
+      disabled={generating || !form.name}
+      title="Generate description with AI"
+    >
+      {generating ? (
+        <><span className="spinner" style={{ width: 12, height: 12 }} />Generating...</>
+      ) : (
+        <>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" strokeWidth="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+          Write with AI
+        </>
+      )}
+    </button>
+  </div>
+  {genError && <span className="form-error">{genError}</span>}
+  <textarea
+    name="description"
+    className={`form-input ${errors.description ? 'error' : ''}`}
+    value={form.description}
+    onChange={handleChange}
+    rows={4}
+    placeholder="Describe the item — or click 'Write with AI' above"
+    style={{ resize: 'vertical' }}
+  />
+  {errors.description && <span className="form-error">{errors.description}</span>}
+</div>
           <div className="form-group">
             <label className="form-label">Category</label>
             <select name="category" className={`form-select ${errors.category ? 'error' : ''}`}

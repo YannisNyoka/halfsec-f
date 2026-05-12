@@ -13,3 +13,30 @@
 @media (max-width: 768px) {
   .page { padding: 16px; }
 }
+
+.descLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.aiBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-gold-muted);
+  border: 1px solid rgba(245,166,35,0.3);
+  border-radius: var(--radius-sm);
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-gold);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.aiBtn:hover:not(:disabled) {
+  background: var(--color-gold);
+  color: #fff;
+  border-color: var(--color-gold);
+}
+.aiBtn:disabled { opacity: 0.5; cursor: not-allowed; }
