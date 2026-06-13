@@ -1,0 +1,36 @@
+.page { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+.header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; }
+.title { font-size: 22px; font-weight: 700; color: var(--color-text); }
+.sub { font-size: 13px; color: var(--color-muted); margin-top: 4px; }
+
+.empty {
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+  padding: 60px 20px; text-align: center; color: var(--color-muted);
+}
+
+.tableWrap { overflow-x: auto; border-radius: var(--radius-lg); }
+.table {
+  width: 100%; border-collapse: collapse;
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg); overflow: hidden; min-width: 650px;
+}
+.table thead tr { background: var(--color-surface2); border-bottom: 1px solid var(--color-border); }
+.table th { padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 700; color: var(--color-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.table tbody tr { border-bottom: 1px solid var(--color-border); transition: background var(--transition); }
+.table tbody tr:last-child { border-bottom: none; }
+.table tbody tr:hover { background: var(--color-surface2); }
+.table td { padding: 12px 14px; vertical-align: middle; }
+
+.productCell { display: flex; align-items: center; gap: 10px; }
+.productImg { width: 44px; height: 44px; border-radius: var(--radius-sm); overflow: hidden; background: var(--color-surface2); flex-shrink: 0; }
+.productImg img { width: 100%; height: 100%; object-fit: cover; }
+.imgFallback { width: 100%; height: 100%; background: var(--color-surface2); }
+.productName { font-size: 13px; font-weight: 600; color: var(--color-text); }
+.productCategory { font-size: 11px; color: var(--color-muted); }
+.cell { font-size: 13px; color: var(--color-text-secondary); }
+.outOfStock { color: var(--color-danger); font-weight: 600; }
+.actions { display: flex; gap: 6px; }
+.pagination { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.pageInfo { font-size: 13px; color: var(--color-muted); }
+
+@media (max-width: 640px) { .page { padding: 16px; } }

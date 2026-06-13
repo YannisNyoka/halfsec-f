@@ -49,6 +49,15 @@ import { WishlistProvider } from './context/WishlistContext.jsx';
 import AdminCustomers from './pages/admin/AdminCustomers';
 import AdminCustomerDetail from './pages/admin/AdminCustomerDetail';
 
+import BecomeSellerPage from './pages/seller/BecomeSellerPage';
+import SellerLayout from './pages/seller/SellerLayout';
+import SellerDashboard from './pages/seller/SellerDashboard';
+import SellerProducts from './pages/seller/SellerProducts';
+import SellerProductForm from './pages/seller/SellerProductForm';
+import SellerOrders from './pages/seller/SellerOrders';
+import SellerProfile from './pages/seller/SellerProfile';
+import AdminSellers from './pages/admin/AdminSellers';
+
 
 // ── AppContent lives inside BrowserRouter so useLocation works ───────────────
 const AppContent = () => {
@@ -118,6 +127,22 @@ const AppContent = () => {
           </ProtectedRoute>
         } />
 
+        <Route path="/sell" element={
+  <ProtectedRoute><BecomeSellerPage /></ProtectedRoute>
+} />
+
+// Seller routes (nested, mirrors admin pattern):
+<Route path="/seller" element={
+  <ProtectedRoute><SellerLayout /></ProtectedRoute>
+}>
+  <Route index element={<SellerDashboard />} />
+  <Route path="products" element={<SellerProducts />} />
+  <Route path="products/new" element={<SellerProductForm />} />
+  <Route path="products/edit/:id" element={<SellerProductForm />} />
+  <Route path="orders" element={<SellerOrders />} />
+  <Route path="profile" element={<SellerProfile />} />
+</Route>
+
         {/* ── Admin (nested routes inside AdminLayout) ── */}
         <Route path="/admin" element={
           <AdminRoute><AdminLayout /></AdminRoute>
@@ -134,6 +159,7 @@ const AppContent = () => {
           <Route path="coupons" element={<AdminCoupons />} />
           <Route path="customers" element={<AdminCustomers />} />
           <Route path="customers/:id" element={<AdminCustomerDetail />} />
+          <Route path="sellers" element={<AdminSellers />} />
         </Route>
 
         {/* ── 404 ── */}

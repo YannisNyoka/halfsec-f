@@ -1,0 +1,39 @@
+.page { padding: 24px; max-width: 700px; display: flex; flex-direction: column; gap: 20px; }
+.header { display: flex; flex-direction: column; gap: 8px; }
+.back { font-size: 13px; color: var(--color-muted); transition: color var(--transition); }
+.back:hover { color: var(--color-gold); }
+.title { font-size: 22px; font-weight: 700; color: var(--color-text); }
+
+.form { display: flex; flex-direction: column; gap: 16px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.imageGrid { display: flex; flex-wrap: wrap; gap: 10px; }
+.imagePreview {
+  position: relative; width: 90px; height: 90px;
+  border-radius: var(--radius-sm); overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+.imagePreview img { width: 100%; height: 100%; object-fit: cover; }
+.removeImg {
+  position: absolute; top: 4px; right: 4px;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(0,0,0,0.6); color: #fff; border: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.uploadBtn {
+  width: 90px; height: 90px;
+  border: 1.5px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px; font-size: 11px; color: var(--color-muted);
+  cursor: pointer; transition: all var(--transition);
+}
+.uploadBtn:hover { border-color: var(--color-gold); color: var(--color-gold); }
+
+.formActions { display: flex; gap: 10px; padding-top: 8px; }
+
+@media (max-width: 640px) {
+  .page { padding: 16px; }
+  .grid2 { grid-template-columns: 1fr; }
+}
