@@ -3,6 +3,7 @@ import { useParams, useLocation, Link,useSearchParams } from 'react-router-dom';
 import { getMyOrder } from '../../api/orders';
 import OrderTimeline from '../../components/common/OrderTimeline';
 import styles from './OrderDetailPage.module.css';
+import ProtectionFeeInfo from '../../components/common/ProtectionFeeInfo';
 
 const STEPS = ['pending', 'confirmed', 'processing', 'shipped', 'delivered'];
 
@@ -128,16 +129,35 @@ const OrderDetailPage = () => {
             <div className={styles.card}>
               <h2 className={styles.cardTitle}>Payment summary</h2>
               <div className={styles.summaryRows}>
-                <div className={styles.summaryRow}><span>Subtotal</span><span>R{order.itemsTotal.toLocaleString()}</span></div>
-                <div className={styles.summaryRow}>
-                  <span>Shipping</span>
-                  <span style={{ color: order.shippingCost === 0 ? 'var(--color-success)' : 'inherit' }}>
-                    {order.shippingCost === 0 ? 'Free' : `R${order.shippingCost}`}
-                  </span>
-                </div>
-                <div style={{ height: 1, background: 'var(--color-border)' }} />
-                <div className={styles.summaryTotal}><span>Total</span><span>R{order.total.toLocaleString()}</span></div>
-              </div>
+  <div className={styles.summaryRow}>
+    <span>Subtotal</span>
+    <span>R{order.itemsTotal.toLocaleString()}</span>
+  </div>
+
+  {order.buyerProtectionFee > 0 && (
+    <div className={styles.summaryRow}>
+      <span className={styles.feeLabel}>
+        Buyer Protection Fee
+        <ProtectionFeeInfo />
+      </span>
+      <span>R{order.buyerProtectionFee.toLocaleString()}</span>
+    </div>
+  )}
+
+  <div className={styles.summaryRow}>
+    <span>Shipping</span>
+    <span style={{ color: order.shippingCost === 0 ? 'var(--color-success)' : 'inherit' }}>
+      {order.shippingCost === 0 ? 'Free' : `R${order.shippingCost}`}
+    </span>
+  </div>
+
+  <div style={{ height: 1, background: 'var(--color-border)' }} />
+
+  <div className={styles.summaryTotal}>
+    <span>Total</span>
+    <span>R{order.total.toLocaleString()}</span>
+  </div>
+</div>
               <div className={styles.paymentMethod}>
                 <span className={styles.pmLabel}>Payment method</span>
                 <span className={styles.pmValue}>{order.paymentMethod.toUpperCase()}</span>

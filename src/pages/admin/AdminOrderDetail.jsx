@@ -223,6 +223,40 @@ const [statusMessage, setStatusMessage] = useState('');
     />
   </div>
 )}
+
+{order.subOrders?.length > 1 && (
+  <div className={styles.card}>
+    <h2 className={styles.cardTitle}>Order breakdown by seller</h2>
+    <div className={styles.subOrders}>
+      {order.subOrders.map((sub, i) => (
+        <div key={i} className={styles.subOrder}>
+          <div className={styles.subOrderHeader}>
+            <span className={styles.subOrderSeller}>
+              {sub.seller ? `Seller order` : 'Halfsec (platform)'}
+            </span>
+            <span className={`badge ${
+              sub.escrowStatus === 'released' ? 'badge-success' :
+              sub.escrowStatus === 'disputed' ? 'badge-danger' :
+              'badge-gold'
+            }`}>
+              {sub.escrowStatus}
+            </span>
+          </div>
+          {sub.items.map((item, j) => (
+            <div key={j} className={styles.subOrderItem}>
+              <span>{item.name} × {item.quantity}</span>
+              <span>R{(item.price * item.quantity).toLocaleString()}</span>
+            </div>
+          ))}
+          <div className={styles.subOrderTotal}>
+            <span>Subtotal</span>
+            <span>R{sub.subtotal.toLocaleString()}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
           {/* Summary */}
           <div className={styles.card}>
             <h2 className={styles.cardTitle}>Payment summary</h2>

@@ -6,6 +6,8 @@ import { createYocoCheckout } from '../../api/payment';
 import useAuth from '../../hooks/useAuth';
 import styles from './CheckoutPage.module.css';
 import CouponInput from '../../components/common/CouponInput';
+import ProtectionFeeInfo from '../../components/common/ProtectionFeeInfo';
+import { getCheckoutPreview } from '../../api/orders';
 
 const SA_PROVINCES = [
   'Eastern Cape','Free State','Gauteng','KwaZulu-Natal',
@@ -40,6 +42,15 @@ const orderTotal = total + shippingCost - discountAmount;
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState('');
+  const [preview, setPreview] = useState(null);
+const [previewLoading, setPreviewLoading] = useState(true);
+
+useEffect(() => {
+  getCheckoutPreview()
+    .then(({ data }) => setPreview(data))
+    .catch(() => {})
+    .finally(() => setPreviewLoading(false));
+}, []);
 
   // Show error if returned from failed/cancelled Yoco payment
   useEffect(() => {
@@ -354,10 +365,52 @@ const orderTotal = total + shippingCost - discountAmount;
 </div>
 
               <div className={styles.divider} />
-              <div className={styles.summaryTotal}>
-                <span>Total</span>
-                <span>R{orderTotal.toLocaleString()}</span>
-              </div>
+              <div className={styles.summaryTotals}>
+  {previewLoading ? (
+    <div className={styles.skeletonLine} />
+  ) : preview ? (
+    <>
+      <div className={styles.summaryRow}>
+        <span>Subtotal</span>
+        <span>R{preview.itemsTotal.toLocaleString()}</span>
+      </div>
+
+      {preview.buyerProtectionFee > 0 && (
+        <div className={styles.summaryRow}>
+          <span className={styles.feeLabel}>
+            Buyer Protection Fee
+            <ProtectionFeeInfo />
+          </span>
+          <span>R{preview.buyerProtectionFee.toLocaleString()}</span>
+        </div>
+      )}
+
+      <div className={styles.summaryRow}>
+        <span>Shipping</span>
+        <span className={preview.shippingCost === 0 ? styles.freeShipping : ''}>
+          {preview.shippingCost === 0 ? 'Free' : `R${preview.shippingCost}`}
+        </span>
+      </div>
+
+      {preview.sellerCount > 1 && (
+        <div className={styles.multiSellerNote}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" strokeWidth="2">
+            <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/>
+            <line x1="7" y1="7" x2="7.01" y2="7"/>
+          </svg>
+          Your order includes items from {preview.sellerCount} different sellers.
+          They'll each be shipped separately.
+        </div>
+      )}
+
+      <div className={`${styles.summaryRow} ${styles.summaryTotal}`}>
+        <span>Total</span>
+        <span>R{preview.total.toLocaleString()}</span>
+      </div>
+    </>
+  ) : null}
+</div>
             </div>
           </div>
         </div>

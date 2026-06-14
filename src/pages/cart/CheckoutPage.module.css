@@ -141,3 +141,55 @@
   font-weight: 600;
   color: var(--color-text-secondary);
 }
+
+.feeLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.freeShipping {
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.multiSellerNote {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: rgba(59,130,246,0.08);
+  border: 1px solid rgba(59,130,246,0.2);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 12px;
+  color: #3b82f6;
+  line-height: 1.5;
+  margin: 4px 0;
+}
+.multiSellerNote svg { flex-shrink: 0; margin-top: 1px; }
+
+.skeletonLine {
+  height: 16px;
+  background: var(--color-surface2);
+  border-radius: 4px;
+  animation: shimmer 1.4s ease infinite;
+}
+@keyframes shimmer { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  padding: 6px 0;
+}
+
+.summaryTotal {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text);
+  border-top: 1.5px solid var(--color-border);
+  padding-top: 12px;
+  margin-top: 6px;
+}

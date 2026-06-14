@@ -76,3 +76,9 @@
   .layout { grid-template-columns: 1fr; }
   .tracker { padding: 16px; }
 }
+
+.feeLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}

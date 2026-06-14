@@ -73,6 +73,39 @@
 .customerName { font-size: 14px; font-weight: 600; color: var(--color-text); }
 .customerEmail { font-size: 12px; color: var(--color-muted); }
 
+.subOrders { display: flex; flex-direction: column; gap: 12px; }
+.subOrder {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.subOrderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-border);
+}
+.subOrderSeller { font-size: 13px; font-weight: 700; color: var(--color-text); }
+.subOrderItem {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+.subOrderTotal {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-gold);
+  padding-top: 8px;
+  border-top: 1px solid var(--color-border);
+}
+
 @media (max-width: 768px) {
   .page { padding: 16px; }
   .layout { grid-template-columns: 1fr; }
