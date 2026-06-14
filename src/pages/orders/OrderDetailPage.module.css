@@ -82,3 +82,11 @@
   align-items: center;
   gap: 6px;
 }
+
+.subOrdersList { display: flex; flex-direction: column; gap: 16px; }
+.subOrderBlock {
+  display: flex; flex-direction: column; gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+.subOrderBlock:last-child { border-bottom: none; padding-bottom: 0; }

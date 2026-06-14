@@ -48,6 +48,7 @@ import AdminCoupons from './pages/admin/AdminCoupons';
 import { WishlistProvider } from './context/WishlistContext.jsx';
 import AdminCustomers from './pages/admin/AdminCustomers';
 import AdminCustomerDetail from './pages/admin/AdminCustomerDetail';
+import AdminDisputes from './pages/admin/AdminDisputes';
 
 import BecomeSellerPage from './pages/seller/BecomeSellerPage';
 import SellerLayout from './pages/seller/SellerLayout';
@@ -160,6 +161,7 @@ const AppContent = () => {
           <Route path="customers" element={<AdminCustomers />} />
           <Route path="customers/:id" element={<AdminCustomerDetail />} />
           <Route path="sellers" element={<AdminSellers />} />
+          <Route path="disputes" element={<AdminDisputes />} />
         </Route>
 
         {/* ── 404 ── */}

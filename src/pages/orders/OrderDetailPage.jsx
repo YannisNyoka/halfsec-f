@@ -4,6 +4,7 @@ import { getMyOrder } from '../../api/orders';
 import OrderTimeline from '../../components/common/OrderTimeline';
 import styles from './OrderDetailPage.module.css';
 import ProtectionFeeInfo from '../../components/common/ProtectionFeeInfo';
+import EscrowStatus from '../../components/common/EscrowStatus';
 
 const STEPS = ['pending', 'confirmed', 'processing', 'shipped', 'delivered'];
 
@@ -22,6 +23,17 @@ const OrderDetailPage = () => {
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [subOrders, setSubOrders] = useState([]);
+
+  useEffect(() => {
+  if (order?.subOrders) setSubOrders(order.subOrders);
+}, [order]);
+
+const handleSubOrderUpdate = (subOrderId, updates) => {
+  setSubOrders((prev) =>
+    prev.map((s) => (s._id === subOrderId ? { ...s, ...updates } : s))
+  );
+};
 
   useEffect(() => {
     getMyOrder(id)
@@ -88,27 +100,39 @@ const OrderDetailPage = () => {
           {/* Items */}
           <div className={styles.main}>
             <div className={styles.card}>
-              <h2 className={styles.cardTitle}>Items ordered</h2>
-              <div className={styles.items}>
-                {order.items.map((item, i) => (
-                  <div key={i} className={styles.item}>
-                    <div className={styles.itemImg}>
-                      {item.image
-                        ? <img src={item.image} alt={item.name} />
-                        : <div className={styles.imgFallback} />
-                      }
-                    </div>
-                    <div className={styles.itemInfo}>
-                      <span className={styles.itemName}>{item.name}</span>
-                      <span className={styles.itemQty}>Qty: {item.quantity}</span>
-                    </div>
-                    <span className={styles.itemPrice}>
-                      R{(item.price * item.quantity).toLocaleString()}
-                    </span>
-                  </div>
-                ))}
+  <h2 className={styles.cardTitle}>Items ordered</h2>
+  <div className={styles.subOrdersList}>
+    {subOrders.map((sub) => (
+      <div key={sub._id} className={styles.subOrderBlock}>
+        <div className={styles.items}>
+          {sub.items.map((item, i) => (
+            <div key={i} className={styles.item}>
+              <div className={styles.itemImg}>
+                {item.image
+                  ? <img src={item.image} alt={item.name} />
+                  : <div className={styles.imgFallback} />
+                }
               </div>
+              <div className={styles.itemInfo}>
+                <span className={styles.itemName}>{item.name}</span>
+                <span className={styles.itemQty}>Qty: {item.quantity}</span>
+              </div>
+              <span className={styles.itemPrice}>
+                R{(item.price * item.quantity).toLocaleString()}
+              </span>
             </div>
+          ))}
+        </div>
+
+        <EscrowStatus
+          order={order}
+          subOrder={sub}
+          onUpdate={(updates) => handleSubOrderUpdate(sub._id, updates)}
+        />
+      </div>
+    ))}
+  </div>
+</div>
 
             {/* Shipping address */}
             <div className={styles.card}>
