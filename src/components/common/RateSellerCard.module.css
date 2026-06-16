@@ -1,0 +1,28 @@
+.box {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--color-surface2);
+}
+
+.title { font-size: 14px; font-weight: 700; color: var(--color-text); }
+.sub { font-size: 12px; color: var(--color-muted); margin-top: -6px; }
+
+.stars { display: flex; gap: 4px; }
+.starBtn {
+  background: none; border: none; cursor: pointer; padding: 0;
+  display: flex; transition: transform 0.1s ease;
+}
+.starBtn:hover { transform: scale(1.1); }
+
+.error { font-size: 12px; color: var(--color-danger); }
+
+.thanksBox {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--color-success-bg); color: var(--color-success);
+  border-radius: var(--radius-sm); padding: 10px 14px;
+  font-size: 13px; font-weight: 600;
+}

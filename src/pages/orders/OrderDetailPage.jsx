@@ -5,6 +5,7 @@ import OrderTimeline from '../../components/common/OrderTimeline';
 import styles from './OrderDetailPage.module.css';
 import ProtectionFeeInfo from '../../components/common/ProtectionFeeInfo';
 import EscrowStatus from '../../components/common/EscrowStatus';
+import RateSellerCard from '../../components/common/RateSellerCard';
 
 const STEPS = ['pending', 'confirmed', 'processing', 'shipped', 'delivered'];
 
@@ -129,6 +130,12 @@ const handleSubOrderUpdate = (subOrderId, updates) => {
           subOrder={sub}
           onUpdate={(updates) => handleSubOrderUpdate(sub._id, updates)}
         />
+
+        <RateSellerCard
+  order={order}
+  subOrder={sub}
+  onRated={() => handleSubOrderUpdate(sub._id, { rated: true })}
+/>
       </div>
     ))}
   </div>

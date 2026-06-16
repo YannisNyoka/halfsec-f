@@ -24,6 +24,58 @@
 .infoTitle { font-size: 15px; font-weight: 700; color: var(--color-text); }
 .infoText { font-size: 14px; color: var(--color-text-secondary); line-height: 1.7; }
 
+.balanceGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.balanceCard {
+  display: flex;
+  gap: 14px;
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+}
+
+.balanceIcon {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.balanceHeld { background: var(--color-surface); }
+.balanceHeld .balanceIcon { background: var(--color-gold-muted); color: var(--color-gold); }
+
+.balanceAvailable { background: var(--color-success-bg); border-color: var(--color-success-border); }
+.balanceAvailable .balanceIcon { background: rgba(76,175,125,0.15); color: var(--color-success); }
+
+.balancePaid { background: var(--color-surface); }
+.balancePaid .balanceIcon { background: var(--color-surface2); color: var(--color-muted); }
+
+.balanceLabel { font-size: 11px; font-weight: 600; color: var(--color-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.balanceValue { font-size: 22px; font-weight: 800; color: var(--color-text); }
+.balanceHint { font-size: 12px; color: var(--color-muted); margin-top: 2px; }
+
+.payoutsList { display: flex; flex-direction: column; gap: 10px; }
+.payoutRow {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 0; border-bottom: 1px solid var(--color-border);
+}
+.payoutRow:last-child { border-bottom: none; }
+.payoutAmount { font-size: 15px; font-weight: 700; color: var(--color-text); }
+.payoutDate { font-size: 12px; color: var(--color-muted); margin-top: 2px; }
+
+.card {
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg); padding: 20px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.cardTitle { font-size: 15px; font-weight: 700; color: var(--color-text); }
+
+@media (max-width: 1024px) { .balanceGrid { grid-template-columns: 1fr; } }
+
 @media (max-width: 1024px) { .statsGrid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 640px) {
   .page { padding: 16px; }

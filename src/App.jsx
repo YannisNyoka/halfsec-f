@@ -22,6 +22,7 @@ import ReturnsPage from './pages/legal/ReturnsPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 
+
 // Customer protected pages
 import CartPage from './pages/cart/CartPage';
 import CheckoutPage from './pages/cart/CheckoutPage';
@@ -49,6 +50,9 @@ import { WishlistProvider } from './context/WishlistContext.jsx';
 import AdminCustomers from './pages/admin/AdminCustomers';
 import AdminCustomerDetail from './pages/admin/AdminCustomerDetail';
 import AdminDisputes from './pages/admin/AdminDisputes';
+import AdminPayouts from './pages/admin/AdminPayouts';
+import AdminPayoutDetail from './pages/admin/AdminPayoutDetail';
+import AdminModeration from './pages/admin/AdminModeration';
 
 import BecomeSellerPage from './pages/seller/BecomeSellerPage';
 import SellerLayout from './pages/seller/SellerLayout';
@@ -58,6 +62,7 @@ import SellerProductForm from './pages/seller/SellerProductForm';
 import SellerOrders from './pages/seller/SellerOrders';
 import SellerProfile from './pages/seller/SellerProfile';
 import AdminSellers from './pages/admin/AdminSellers';
+import SellerStorefrontPage from './pages/seller/SellerStorefrontPage';
 
 
 // ── AppContent lives inside BrowserRouter so useLocation works ───────────────
@@ -142,6 +147,7 @@ const AppContent = () => {
   <Route path="products/edit/:id" element={<SellerProductForm />} />
   <Route path="orders" element={<SellerOrders />} />
   <Route path="profile" element={<SellerProfile />} />
+  <Route path="/seller-profile/:sellerId" element={<SellerStorefrontPage />} />
 </Route>
 
         {/* ── Admin (nested routes inside AdminLayout) ── */}
@@ -162,6 +168,9 @@ const AppContent = () => {
           <Route path="customers/:id" element={<AdminCustomerDetail />} />
           <Route path="sellers" element={<AdminSellers />} />
           <Route path="disputes" element={<AdminDisputes />} />
+          <Route path="payouts" element={<AdminPayouts />} />
+          <Route path="payouts/:sellerId" element={<AdminPayoutDetail />} />
+          <Route path="moderation" element={<AdminModeration />} />
         </Route>
 
         {/* ── 404 ── */}

@@ -93,7 +93,6 @@ const ProductDetailPage = () => {
         product={product}
       />
 
-      {/* Lightbox */}
       {lightboxOpen && product.images?.length > 0 && (
         <ImageLightbox
           images={product.images}
@@ -123,19 +122,16 @@ const ProductDetailPage = () => {
           </nav>
 
           <div className={styles.layout}>
+
             {/* Images */}
             <div className={styles.images}>
-              {/* Main image — click to open lightbox */}
               <div
                 className={styles.mainImage}
                 onClick={() => openLightbox(activeImg)}
                 title="Click to zoom"
               >
                 {product.images?.[activeImg] ? (
-                  <img
-                    src={product.images[activeImg].url}
-                    alt={product.name}
-                  />
+                  <img src={product.images[activeImg].url} alt={product.name} />
                 ) : (
                   <div className={styles.imagePlaceholder}>
                     <svg viewBox="0 0 24 24" fill="none"
@@ -150,7 +146,6 @@ const ProductDetailPage = () => {
                 {discount && (
                   <span className={styles.discountBadge}>-{discount}%</span>
                 )}
-                {/* Zoom hint overlay */}
                 {product.images?.length > 0 && (
                   <div className={styles.zoomHint}>
                     <svg width="16" height="16" viewBox="0 0 24 24"
@@ -165,7 +160,6 @@ const ProductDetailPage = () => {
                 )}
               </div>
 
-              {/* Thumbnails */}
               {product.images?.length > 1 && (
                 <div className={styles.thumbnails}>
                   {product.images.map((img, i) => (
@@ -206,6 +200,26 @@ const ProductDetailPage = () => {
                   count={product.rating.count}
                   size={16}
                 />
+              )}
+
+              {/* Seller link */}
+              {product.seller && (
+                <Link
+                  to={`/seller-profile/${product.seller._id}`}
+                  className={styles.sellerLink}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" strokeWidth="2">
+                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                  </svg>
+                  Sold by {product.seller.sellerProfile?.businessName || product.seller.name}
+                  {product.seller.sellerProfile?.rating?.count > 0 && (
+                    <span className={styles.sellerRating}>
+                      ★ {product.seller.sellerProfile.rating.average.toFixed(1)}
+                    </span>
+                  )}
+                </Link>
               )}
 
               <div className={styles.priceRow}>
@@ -252,7 +266,6 @@ const ProductDetailPage = () => {
                 </span>
               </div>
 
-              {/* Feedback */}
               {cartMessage && (
                 <div className={`alert ${
                   cartMessage.includes('Added') ? 'alert-success' : 'alert-error'
@@ -289,7 +302,6 @@ const ProductDetailPage = () => {
             </div>
           </div>
 
-          {/* Related products */}
           {product.category && (
             <RelatedProducts
               categoryId={product.category._id}
@@ -298,7 +310,6 @@ const ProductDetailPage = () => {
             />
           )}
 
-          {/* Reviews */}
           <ProductReviews product={product} />
 
         </div>
