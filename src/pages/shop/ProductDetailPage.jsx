@@ -12,6 +12,8 @@ import WishlistButton from '../../components/common/WishlistButton';
 import ImageLightbox from '../../components/common/ImageLightbox';
 import useRecentlyViewed from '../../hooks/useRecentlyViewed';
 import styles from './ProductDetailPage.module.css';
+import { setPriceAlert, getMyPriceAlerts, deletePriceAlert } from '../../api/watchlist';
+import MakeOfferModal from '../../components/common/MakeOfferModal';
 
 const conditionColors = {
   'like new': 'badge-gold',
@@ -34,6 +36,14 @@ const ProductDetailPage = () => {
   const [cartMessage, setCartMessage] = useState('');
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [priceAlertSet, setPriceAlertSet] = useState(false);
+const [priceAlertId, setPriceAlertId] = useState(null);
+const [showAlertInput, setShowAlertInput] = useState(false);
+const [alertPrice, setAlertPrice] = useState('');
+const [settingAlert, setSettingAlert] = useState(false);
+const [alertMessage, setAlertMessage] = useState('');
+const [showOfferModal, setShowOfferModal] = useState(false);
+const [offerPlaced, setOfferPlaced] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -45,6 +55,52 @@ const ProductDetailPage = () => {
       .catch(() => navigate('/shop', { replace: true }))
       .finally(() => setLoading(false));
   }, [slug]);
+
+  useEffect(() => {
+  if (!isAuthenticated || !product) return;
+  getMyPriceAlerts()
+    .then(({ data }) => {
+      const existing = data.alerts.find(
+        (a) => a.product._id === product._id && !a.triggered
+      );
+      if (existing) {
+        setPriceAlertSet(true);
+        setPriceAlertId(existing._id);
+        setAlertPrice(existing.targetPrice);
+      }
+    })
+    .catch(() => {});
+}, [isAuthenticated, product]);
+
+const handleSetAlert = async () => {
+  if (!alertPrice || Number(alertPrice) >= product.price) {
+    setAlertMessage(`Enter a price below R${product.price.toLocaleString()}`);
+    return;
+  }
+  setSettingAlert(true);
+  try {
+    const { data } = await setPriceAlert({
+      productId: product._id,
+      targetPrice: Number(alertPrice),
+    });
+    setPriceAlertSet(true);
+    setPriceAlertId(data.alert._id);
+    setShowAlertInput(false);
+    setAlertMessage('');
+  } catch (err) {
+    setAlertMessage(err.response?.data?.message || 'Failed to set alert.');
+  } finally {
+    setSettingAlert(false);
+  }
+};
+
+const handleRemoveAlert = async () => {
+  if (!priceAlertId) return;
+  await deletePriceAlert(priceAlertId).catch(() => {});
+  setPriceAlertSet(false);
+  setPriceAlertId(null);
+  setAlertPrice('');
+};
 
   const openLightbox = (index) => {
     setLightboxIndex(index);
@@ -292,6 +348,99 @@ const ProductDetailPage = () => {
                 <WishlistButton product={product} size="lg" showLabel />
                 <ShareButton product={product} />
               </div>
+
+              {isAuthenticated && (
+  <div className={styles.priceAlertSection}>
+    {priceAlertSet ? (
+      <div className={styles.alertSet}>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" strokeWidth="2">
+          <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 01-3.46 0"/>
+        </svg>
+        Price alert set for R{Number(alertPrice).toLocaleString()}
+        <button className={styles.removeAlertBtn} onClick={handleRemoveAlert}>
+          Remove
+        </button>
+      </div>
+    ) : showAlertInput ? (
+      <div className={styles.alertInput}>
+        <span className={styles.alertInputLabel}>Alert me when price drops to:</span>
+        <div className={styles.alertInputRow}>
+          <span className={styles.alertCurrency}>R</span>
+          <input
+            type="number"
+            className="form-input"
+            style={{ width: 120 }}
+            value={alertPrice}
+            onChange={(e) => { setAlertPrice(e.target.value); setAlertMessage(''); }}
+            placeholder={Math.round(product.price * 0.8)}
+            min={1}
+            max={product.price - 1}
+          />
+          <button
+            className="btn btn-primary btn-sm"
+            onClick={handleSetAlert}
+            disabled={settingAlert}
+          >
+            {settingAlert ? <><span className="spinner" style={{ width: 12, height: 12 }} />Setting...</> : 'Set alert'}
+          </button>
+          <button
+            className="btn btn-ghost btn-sm"
+            onClick={() => { setShowAlertInput(false); setAlertMessage(''); }}
+          >
+            Cancel
+          </button>
+        </div>
+        {alertMessage && <span className={styles.alertMsg}>{alertMessage}</span>}
+      </div>
+    ) : (
+      <button
+        className={styles.alertBtn}
+        onClick={() => setShowAlertInput(true)}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" strokeWidth="2">
+          <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 01-3.46 0"/>
+        </svg>
+        Set price drop alert
+      </button>
+    )}
+  </div>
+)}
+
+{isAuthenticated && product.seller && product.stock > 0 && (
+  <div>
+    {offerPlaced ? (
+      <div className={styles.offerPlaced}>
+        ✓ Your offer has been sent to the seller
+      </div>
+    ) : (
+      <button
+        className={styles.offerBtn}
+        onClick={() => setShowOfferModal(true)}
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" strokeWidth="2">
+          <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+        </svg>
+        Make an offer
+      </button>
+    )}
+
+    {showOfferModal && (
+      <MakeOfferModal
+        product={product}
+        onClose={() => setShowOfferModal(false)}
+        onSuccess={() => {
+          setShowOfferModal(false);
+          setOfferPlaced(true);
+        }}
+      />
+    )}
+  </div>
+)}
 
               {!isAuthenticated && (
                 <p className={styles.loginHint}>

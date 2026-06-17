@@ -1,0 +1,27 @@
+.wrap { display: flex; flex-direction: column; gap: 12px; padding: 4px 0; }
+
+.labels {
+  display: flex; justify-content: space-between;
+  font-size: 13px; font-weight: 600; color: var(--color-text);
+}
+
+.track {
+  position: relative; height: 4px;
+  background: var(--color-border); border-radius: 999px;
+  margin: 10px 0;
+}
+
+.fill {
+  position: absolute; height: 100%;
+  background: var(--color-gold); border-radius: 999px;
+}
+
+.thumb {
+  position: absolute; top: 50%; transform: translate(-50%, -50%);
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--color-gold); border: 3px solid var(--color-surface);
+  box-shadow: var(--shadow-sm); cursor: grab; transition: transform 0.1s ease;
+  z-index: 2;
+}
+.thumb:hover { transform: translate(-50%, -50%) scale(1.2); }
+.thumbActive { cursor: grabbing; transform: translate(-50%, -50%) scale(1.2); }

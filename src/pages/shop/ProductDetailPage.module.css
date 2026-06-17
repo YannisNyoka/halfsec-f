@@ -178,3 +178,59 @@
   font-weight: 700;
   margin-left: 4px;
 }
+
+.priceAlertSection { margin-top: 4px; }
+
+.alertBtn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: none; border: 1.5px dashed var(--color-border);
+  border-radius: var(--radius-sm); padding: 8px 14px;
+  font-size: 13px; font-weight: 600; color: var(--color-muted);
+  cursor: pointer; transition: all var(--transition);
+}
+.alertBtn:hover {
+  border-color: var(--color-gold); color: var(--color-gold);
+  background: var(--color-gold-muted);
+}
+
+.alertSet {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--color-success-bg); border: 1px solid var(--color-success-border);
+  border-radius: var(--radius-sm); padding: 8px 14px;
+  font-size: 13px; font-weight: 600; color: var(--color-success);
+}
+.removeAlertBtn {
+  background: none; border: none; font-size: 12px; color: var(--color-muted);
+  cursor: pointer; text-decoration: underline; margin-left: 4px;
+}
+
+.alertInput {
+  display: flex; flex-direction: column; gap: 8px;
+  background: var(--color-surface2); border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm); padding: 12px;
+}
+.alertInputLabel { font-size: 13px; color: var(--color-text-secondary); font-weight: 600; }
+.alertInputRow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.alertCurrency { font-size: 14px; font-weight: 700; color: var(--color-text); }
+.alertMsg { font-size: 12px; color: var(--color-danger); }
+
+.offerBtn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: none;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm); padding: 10px 20px;
+  font-size: 14px; font-weight: 600; color: var(--color-text-secondary);
+  cursor: pointer; transition: all var(--transition); width: 100%;
+  justify-content: center;
+}
+.offerBtn:hover {
+  border-color: #3b82f6; color: #3b82f6;
+  background: rgba(59,130,246,0.06);
+}
+
+.offerPlaced {
+  background: var(--color-success-bg); border: 1px solid var(--color-success-border);
+  border-radius: var(--radius-sm); padding: 10px 16px;
+  font-size: 13px; font-weight: 600; color: var(--color-success);
+  text-align: center;
+}

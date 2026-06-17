@@ -1,0 +1,143 @@
+.page { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+
+/* Header */
+.header {
+  display: flex; justify-content: space-between;
+  align-items: flex-start; flex-wrap: wrap; gap: 12px;
+}
+.title { font-size: 22px; font-weight: 700; color: var(--color-text); }
+.sub { font-size: 13px; color: var(--color-muted); margin-top: 4px; }
+
+/* Period selector */
+.periodSelector { display: flex; gap: 4px; background: var(--color-surface2); padding: 4px; border-radius: var(--radius-sm); }
+.periodBtn {
+  background: none; border: none; padding: 6px 14px; border-radius: var(--radius-sm);
+  font-size: 12px; font-weight: 600; color: var(--color-muted); cursor: pointer;
+  transition: all var(--transition);
+}
+.periodBtn:hover { color: var(--color-text); }
+.periodActive { background: var(--color-surface); color: var(--color-gold) !important; box-shadow: var(--shadow-sm); }
+
+/* Stat cards */
+.statsGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.statCard {
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg); padding: 18px;
+  display: flex; flex-direction: column; gap: 6px; overflow: hidden;
+}
+.statHeader { display: flex; justify-content: space-between; align-items: center; }
+.statLabel { font-size: 11px; font-weight: 600; color: var(--color-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.statValue { font-size: 26px; font-weight: 800; color: var(--color-text); }
+
+.changeBadge { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 999px; }
+.changeUp { background: var(--color-success-bg); color: var(--color-success); }
+.changeDown { background: var(--color-danger-bg); color: var(--color-danger); }
+
+/* Sparkline */
+.sparkline { width: 100%; height: 40px; margin-top: 4px; }
+
+/* Card */
+.card {
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg); padding: 20px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.cardHeader { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+.cardTitle { font-size: 15px; font-weight: 700; color: var(--color-text); }
+
+/* Chart tabs */
+.chartTabs { display: flex; gap: 4px; }
+.chartTab {
+  background: none; border: 1px solid var(--color-border); border-radius: var(--radius-sm);
+  padding: 4px 12px; font-size: 12px; font-weight: 600; color: var(--color-muted); cursor: pointer;
+  transition: all var(--transition);
+}
+.chartTab:hover { color: var(--color-text); border-color: var(--color-text); }
+.chartTabActive { background: var(--color-gold-muted); border-color: var(--color-gold); color: var(--color-gold); }
+
+/* Bar chart */
+.barChart { display: flex; flex-direction: column; gap: 8px; }
+.bars {
+  display: flex; align-items: flex-end; gap: 2px; height: 160px;
+  padding: 0 4px; border-bottom: 1px solid var(--color-border);
+}
+.barWrap {
+  flex: 1; display: flex; align-items: flex-end;
+  justify-content: center; height: 100%; position: relative;
+  cursor: crosshair;
+}
+.bar {
+  width: 100%; border-radius: 3px 3px 0 0;
+  transition: opacity var(--transition);
+  min-width: 2px;
+}
+.barWrap:hover .bar { opacity: 0.75; }
+
+/* Bar tooltip */
+.barTooltip {
+  position: absolute; bottom: calc(100% + 8px); left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm); padding: 6px 10px;
+  font-size: 11px; white-space: nowrap; box-shadow: var(--shadow-md);
+  z-index: 10; pointer-events: none;
+}
+.tooltipDate { color: var(--color-muted); }
+.tooltipValue { font-weight: 700; color: var(--color-text); margin-top: 2px; }
+
+.barAxisLabels {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: var(--color-muted); padding: 0 4px;
+}
+
+/* Two col */
+.twoCol { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* Top products */
+.topProductsList { display: flex; flex-direction: column; gap: 12px; }
+.topProduct { display: grid; grid-template-columns: 24px 44px 1fr; gap: 10px; align-items: center; }
+.topProductRank { font-size: 14px; font-weight: 800; color: var(--color-muted); text-align: center; }
+.topProductImg {
+  width: 44px; height: 44px; border-radius: var(--radius-sm);
+  overflow: hidden; background: var(--color-surface2); flex-shrink: 0;
+}
+.topProductImg img { width: 100%; height: 100%; object-fit: cover; }
+.imgFallback { width: 100%; height: 100%; background: var(--color-surface2); }
+.topProductInfo { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.topProductName { font-size: 13px; font-weight: 600; color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.topProductBar { height: 4px; background: var(--color-surface2); border-radius: 999px; overflow: hidden; }
+.topProductBarFill { height: 100%; background: var(--color-gold); border-radius: 999px; }
+.topProductStats { display: flex; justify-content: space-between; font-size: 11px; color: var(--color-muted); }
+.topProductStats span:last-child { font-weight: 700; color: var(--color-text); }
+
+/* Donut chart */
+.donutWrap { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+.donut { width: 160px; height: 160px; flex-shrink: 0; }
+.donutCenter { font-size: 22px; font-weight: 800; fill: var(--color-text); }
+.donutSub { font-size: 11px; fill: var(--color-muted); }
+.donutEmpty { color: var(--color-muted); font-size: 14px; padding: 20px 0; }
+.donutLegend { display: flex; flex-direction: column; gap: 10px; }
+.legendItem { display: flex; align-items: center; gap: 10px; }
+.legendDot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.legendLabel { font-size: 12px; color: var(--color-muted); }
+.legendValue { font-size: 13px; font-weight: 700; color: var(--color-text); }
+
+/* Order status chart */
+.statusGrid { display: flex; gap: 12px; align-items: flex-end; justify-content: space-around; height: 140px; }
+.statusItem { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; height: 100%; }
+.statusBarWrap { flex: 1; width: 100%; display: flex; align-items: flex-end; }
+.statusBar { width: 100%; border-radius: 4px 4px 0 0; transition: height 0.3s ease; }
+.statusCount { font-size: 13px; font-weight: 700; color: var(--color-text); }
+.statusLabel { font-size: 10px; color: var(--color-muted); text-transform: capitalize; text-align: center; }
+
+.noData { color: var(--color-muted); font-size: 14px; padding: 20px 0; text-align: center; }
+
+/* Responsive */
+@media (max-width: 1200px) { .statsGrid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 900px) { .twoCol { grid-template-columns: 1fr; } }
+@media (max-width: 640px) {
+  .page { padding: 16px; }
+  .statsGrid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .statValue { font-size: 20px; }
+  .header { flex-direction: column; align-items: flex-start; }
+}

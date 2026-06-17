@@ -6,6 +6,7 @@ import { useWishlist } from '../../context/WishlistContext.jsx';
 import { useTheme } from '../../context/ThemeContext.jsx';
 import SearchBar from '../common/SearchBar';
 import styles from './Navbar.module.css';
+import NotificationBell from '../common/NotificationBell';
 
 const SunIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -39,9 +40,17 @@ const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const drawerRef = useRef(null);
 
+  // ── Close drawer helper — blurs focused element first to fix aria-hidden warning
+  const closeDrawer = () => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+    setDrawerOpen(false);
+  };
+
   // Close drawer on route change
   useEffect(() => {
-    setDrawerOpen(false);
+    closeDrawer();
   }, [location.pathname]);
 
   // Prevent body scroll when drawer is open
@@ -58,7 +67,7 @@ const Navbar = () => {
   useEffect(() => {
     const handler = (e) => {
       if (drawerRef.current && !drawerRef.current.contains(e.target)) {
-        setDrawerOpen(false);
+        closeDrawer();
       }
     };
     if (drawerOpen) {
@@ -69,7 +78,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     await logout();
-    setDrawerOpen(false);
+    closeDrawer();
     navigate('/');
   };
 
@@ -145,6 +154,8 @@ const Navbar = () => {
               </>
             )}
 
+            {isAuthenticated && <NotificationBell />}
+
             {/* Theme toggle */}
             <button
               onClick={toggleTheme}
@@ -176,6 +187,8 @@ const Navbar = () => {
               className={`${styles.hamburger} ${drawerOpen ? styles.hamburgerOpen : ''}`}
               onClick={() => setDrawerOpen((o) => !o)}
               aria-label="Toggle menu"
+              aria-expanded={drawerOpen}
+              aria-controls="mobile-drawer"
             >
               <span />
               <span />
@@ -188,15 +201,16 @@ const Navbar = () => {
       {/* Overlay */}
       <div
         className={`${styles.overlay} ${drawerOpen ? styles.overlayVisible : ''}`}
-        onClick={() => setDrawerOpen(false)}
+        onClick={closeDrawer}
         aria-hidden="true"
       />
 
-      {/* Drawer */}
+      {/* Drawer — uses inert instead of aria-hidden to properly prevent focus */}
       <div
+        id="mobile-drawer"
         ref={drawerRef}
         className={`${styles.drawer} ${drawerOpen ? styles.drawerOpen : ''}`}
-        aria-hidden={!drawerOpen}
+        inert={!drawerOpen ? true : undefined}
       >
         {/* Drawer header */}
         <div className={styles.drawerHeader}>
@@ -205,7 +219,7 @@ const Navbar = () => {
           </Link>
           <button
             className={styles.closeBtn}
-            onClick={() => setDrawerOpen(false)}
+            onClick={closeDrawer}
             aria-label="Close menu"
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
@@ -292,13 +306,30 @@ const Navbar = () => {
                 My profile
               </NavLink>
 
+               <NavLink to="/watchlist" className={navLinkClass}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" strokeWidth="2">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
+                </svg>
+                Watchlist
+              </NavLink>
+
+              <NavLink to="/notifications" className={navLinkClass}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" strokeWidth="2">
+                  <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                  <path d="M13.73 21a2 2 0 01-3.46 0"/>
+                </svg>
+                Notifications
+              </NavLink>
+
               <NavLink to="/sell" className={navLinkClass}>
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-    stroke="currentColor" strokeWidth="2">
-    <path d="M12 2v20M2 12h20"/>
-  </svg>
-  Sell on Halfsec
-</NavLink>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" strokeWidth="2">
+                  <path d="M12 2v20M2 12h20"/>
+                </svg>
+                Sell on Halfsec
+              </NavLink>
 
               {isAdmin && (
                 <>
@@ -345,7 +376,6 @@ const Navbar = () => {
 
         {/* Drawer footer */}
         <div className={styles.drawerFooter}>
-          {/* Theme toggle */}
           <button
             className={styles.drawerThemeBtn}
             onClick={toggleTheme}

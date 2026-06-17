@@ -4,6 +4,7 @@ import useAuth from '../../hooks/useAuth';
 import { updateProfile, changePassword } from '../../api/profile';
 import SEO from '../../components/common/SEO';
 import styles from './ProfilePage.module.css';
+import usePushNotifications from '../../hooks/usePushNotifications';
 
 const SA_PROVINCES = [
   'Eastern Cape','Free State','Gauteng','KwaZulu-Natal',
@@ -27,6 +28,8 @@ const ProfilePage = () => {
     newPassword: '',
     confirmPassword: '',
   });
+
+  const { isSupported, isSubscribed, permission, loading: pushLoading, subscribe, unsubscribe } = usePushNotifications();
 
   const [profileLoading, setProfileLoading] = useState(false);
   const [profileSuccess, setProfileSuccess] = useState('');
@@ -144,6 +147,13 @@ const ProfilePage = () => {
             </svg>
             <span>My orders</span>
           </Link>
+          <Link to="/watchlist" className={styles.quickLink}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" strokeWidth="1.5">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
+            </svg>
+            <span>Watchlist</span>
+          </Link>
           <Link to="/cart" className={styles.quickLink}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" strokeWidth="1.5">
@@ -176,6 +186,12 @@ const ProfilePage = () => {
             onClick={() => setActiveTab('address')}
           >
             Delivery address
+          </button>
+          <button
+            className={`${styles.tab} ${activeTab === 'notifications' ? styles.tabActive : ''}`}
+            onClick={() => setActiveTab('notifications')}
+          >
+            Notifications
           </button>
           <button
             className={`${styles.tab} ${activeTab === 'password' ? styles.tabActive : ''}`}
@@ -328,6 +344,47 @@ const ProfilePage = () => {
                 </button>
               </div>
             </form>
+          )}
+
+          {/* ── Notifications tab ── */}
+          {activeTab === 'notifications' && (
+            <div className={styles.form}>
+              <h2 className={styles.formTitle}>Push notifications</h2>
+              <p className={styles.formSub}>
+                Get notified about your orders, payouts and disputes — even when the app is closed.
+              </p>
+
+              {!isSupported ? (
+                <div className="alert alert-info">
+                  Push notifications aren't supported in this browser. Try Chrome, Edge or
+                  install Halfsec to your home screen on mobile.
+                </div>
+              ) : (
+                <div className={styles.pushRow}>
+                  <div>
+                    <div className={styles.pushLabel}>Order &amp; payout alerts</div>
+                    <div className={styles.pushSub}>
+                      {permission === 'denied'
+                        ? 'Notifications are blocked. Enable them in your browser settings, then reload this page.'
+                        : isSubscribed
+                        ? "You'll receive push notifications for orders, payouts and disputes."
+                        : 'Get notified about orders, payouts and disputes — even when the app is closed.'}
+                    </div>
+                  </div>
+                  {permission !== 'denied' && (
+                    <button
+                      className={`btn btn-sm ${isSubscribed ? 'btn-ghost' : 'btn-primary'}`}
+                      onClick={isSubscribed ? unsubscribe : subscribe}
+                      disabled={pushLoading}
+                    >
+                      {pushLoading
+                        ? <><span className="spinner" style={{ width: 12, height: 12 }} />Loading...</>
+                        : isSubscribed ? 'Disable' : 'Enable'}
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
           )}
 
           {/* ── Password tab ── */}

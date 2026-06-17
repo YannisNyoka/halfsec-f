@@ -1,0 +1,51 @@
+.prompt {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: var(--shadow-lg);
+  z-index: 200;
+  max-width: 480px;
+  width: calc(100vw - 32px);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.icon { font-size: 24px; flex-shrink: 0; }
+
+.content { flex: 1; min-width: 0; }
+.title { font-size: 14px; font-weight: 700; color: var(--color-text); }
+.sub { font-size: 12px; color: var(--color-muted); margin-top: 2px; line-height: 1.5; }
+.success { font-size: 14px; font-weight: 700; color: var(--color-success); }
+
+.actions { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; flex-shrink: 0; }
+
+.dismissBtn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: var(--color-muted);
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .prompt {
+    bottom: 72px;
+    flex-wrap: wrap;
+  }
+  .actions { flex-direction: row; width: 100%; justify-content: flex-end; }
+}

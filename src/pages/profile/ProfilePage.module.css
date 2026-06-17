@@ -177,3 +177,13 @@
   .quickLinks { gap: 8px; }
   .quickLink { padding: 10px 14px; font-size: 13px; }
 }
+
+.pushRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.pushLabel { font-size: 14px; font-weight: 600; color: var(--color-text); }
+.pushSub { font-size: 13px; color: var(--color-muted); margin-top: 4px; line-height: 1.5; max-width: 400px; }

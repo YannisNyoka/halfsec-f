@@ -7,3 +7,5 @@ export const getRelatedProducts = (categoryId, excludeSlug) =>
   api.get('/products', {
     params: { category: categoryId, limit: 4, exclude: excludeSlug },
   });
+  export const getSearchSuggestions = (q) =>
+  api.get('/products/suggestions', { params: { q } });
