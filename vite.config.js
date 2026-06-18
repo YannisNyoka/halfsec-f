@@ -12,8 +12,8 @@ export default defineConfig({
       srcDir: 'src',
       filename: 'sw.js',
       injectManifest: {
-    globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
-  },
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+      },
       includeAssets: ['favicon.ico', 'halfsec.png', 'apple-touch-icon.png'],
       manifest: {
         name: 'Halfsec — Second Hand, First Class',
@@ -70,51 +70,10 @@ export default defineConfig({
           },
         ],
       },
-      
-      workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
-        runtimeCaching: [
-          // Cache API calls for products (stale-while-revalidate)
-          {
-            urlPattern: /^https:\/\/api\.halfsec\.co\.za\/api\/products/,
-            handler: 'StaleWhileRevalidate',
-            options: {
-              cacheName: 'api-products',
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24, // 24 hours
-              },
-              cacheableResponse: { statuses: [0, 200] },
-            },
-          },
-          // Cache product images (cache first)
-          {
-            urlPattern: /^https:\/\/res\.cloudinary\.com\//,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'cloudinary-images',
-              expiration: {
-                maxEntries: 200,
-                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
-              },
-              cacheableResponse: { statuses: [0, 200] },
-            },
-          },
-          // Network first for auth/orders (always fresh)
-          {
-            urlPattern: /^https:\/\/api\.halfsec\.co\.za\/api\/(orders|auth|cart)/,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'api-auth-orders',
-              networkTimeoutSeconds: 10,
-              cacheableResponse: { statuses: [0, 200] },
-            },
-          },
-        ],
-      },
       devOptions: {
-        enabled: true,
+        enabled: false,
         type: 'module',
+        navigateFallback: 'index.html',
       },
     }),
   ],
@@ -131,7 +90,4 @@ export default defineConfig({
       },
     },
   },
-  strategies: 'injectManifest',
-  srcDir: 'src',
-  filename: 'sw.js',
 });

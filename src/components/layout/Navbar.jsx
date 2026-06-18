@@ -5,8 +5,8 @@ import { useCart } from '../../context/CartContext.jsx';
 import { useWishlist } from '../../context/WishlistContext.jsx';
 import { useTheme } from '../../context/ThemeContext.jsx';
 import SearchBar from '../common/SearchBar';
-import styles from './Navbar.module.css';
 import NotificationBell from '../common/NotificationBell';
+import styles from './Navbar.module.css';
 
 const SunIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -30,6 +30,37 @@ const MoonIcon = () => (
   </svg>
 );
 
+// ── Account links — single source of truth for desktop dropdown + mobile drawer ──
+const accountLinks = [
+  { to: '/profile', label: 'My profile', icon: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+    </svg>
+  )},
+  { to: '/orders', label: 'My orders', icon: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>
+      <rect x="9" y="3" width="6" height="4" rx="1"/>
+    </svg>
+  )},
+  { to: '/watchlist', label: 'Watchlist', icon: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
+    </svg>
+  )},
+  { to: '/notifications', label: 'Notifications', icon: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+      <path d="M13.73 21a2 2 0 01-3.46 0"/>
+    </svg>
+  )},
+  { to: '/sell', label: 'Sell on Halfsec', icon: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M12 2v20M2 12h20"/>
+    </svg>
+  )},
+];
+
 const Navbar = () => {
   const { user, isAdmin, isAuthenticated, logout } = useAuth();
   const { itemCount } = useCart();
@@ -37,10 +68,12 @@ const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const drawerRef = useRef(null);
 
-  // ── Close drawer helper — blurs focused element first to fix aria-hidden warning
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const drawerRef = useRef(null);
+  const menuRef = useRef(null);
+
   const closeDrawer = () => {
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
@@ -48,37 +81,44 @@ const Navbar = () => {
     setDrawerOpen(false);
   };
 
-  // Close drawer on route change
+  // Close drawer + dropdown on route change
   useEffect(() => {
     closeDrawer();
+    setMenuOpen(false);
   }, [location.pathname]);
 
   // Prevent body scroll when drawer is open
   useEffect(() => {
-    if (drawerOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    document.body.style.overflow = drawerOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [drawerOpen]);
 
-  // Close on outside click
+  // Close drawer on outside click
   useEffect(() => {
     const handler = (e) => {
       if (drawerRef.current && !drawerRef.current.contains(e.target)) {
         closeDrawer();
       }
     };
-    if (drawerOpen) {
-      document.addEventListener('mousedown', handler);
-    }
+    if (drawerOpen) document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
   }, [drawerOpen]);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handler = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setMenuOpen(false);
+      }
+    };
+    if (menuOpen) document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [menuOpen]);
 
   const handleLogout = async () => {
     await logout();
     closeDrawer();
+    setMenuOpen(false);
     navigate('/');
   };
 
@@ -106,57 +146,105 @@ const Navbar = () => {
 
             {isAuthenticated ? (
               <>
-                {/* Cart */}
-                <Link to="/cart" className={styles.iconLink}>
+                <Link to="/sell" className={styles.link}>Sell</Link>
+
+                <Link to="/cart" className={styles.iconLink} aria-label="Cart">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" strokeWidth="2">
                     <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
                     <line x1="3" y1="6" x2="21" y2="6"/>
                     <path d="M16 10a4 4 0 01-8 0"/>
                   </svg>
-                  {itemCount > 0 && (
-                    <span className={styles.badge}>{itemCount}</span>
-                  )}
+                  {itemCount > 0 && <span className={styles.badge}>{itemCount}</span>}
                 </Link>
 
-                {/* Wishlist */}
-                <Link to="/wishlist" className={styles.iconLink}>
+                <Link to="/wishlist" className={styles.iconLink} aria-label="Wishlist">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" strokeWidth="2">
                     <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
                   </svg>
                   {wishlistCount > 0 && (
-                    <span className={`${styles.badge} ${styles.badgeHeart}`}>
-                      {wishlistCount}
-                    </span>
+                    <span className={`${styles.badge} ${styles.badgeHeart}`}>{wishlistCount}</span>
                   )}
                 </Link>
 
-                {/* Profile avatar */}
-                <Link to="/profile" className={styles.avatar}>
-                  {user?.name?.charAt(0).toUpperCase()}
-                </Link>
+                <NotificationBell />
 
-                {isAdmin && (
-                  <Link to="/admin" className={styles.adminLink}>Admin</Link>
-                )}
+                {/* Account dropdown */}
+                <div className={styles.menuWrap} ref={menuRef}>
+                  <button
+                    className={styles.avatar}
+                    onClick={() => setMenuOpen((o) => !o)}
+                    aria-label="Account menu"
+                    aria-expanded={menuOpen}
+                    aria-haspopup="true"
+                  >
+                    {user?.name?.charAt(0).toUpperCase()}
+                  </button>
 
-                <button onClick={handleLogout} className={styles.logoutBtn}>
-                  Logout
-                </button>
+                  {menuOpen && (
+                    <div className={styles.menu}>
+                      <div className={styles.menuHeader}>
+                        <div className={styles.menuName}>{user?.name}</div>
+                        <div className={styles.menuEmail}>{user?.email}</div>
+                      </div>
+                      <div className={styles.menuDivider} />
+
+                      {accountLinks.map((item) => (
+                        <NavLink
+                          key={item.to}
+                          to={item.to}
+                          className={({ isActive }) =>
+                            `${styles.menuItem} ${isActive ? styles.menuItemActive : ''}`
+                          }
+                          onClick={() => setMenuOpen(false)}
+                        >
+                          {item.icon}
+                          {item.label}
+                        </NavLink>
+                      ))}
+
+                      {isAdmin && (
+                        <>
+                          <div className={styles.menuDivider} />
+                          <NavLink
+                            to="/admin"
+                            className={styles.menuItem}
+                            onClick={() => setMenuOpen(false)}
+                          >
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                              stroke="currentColor" strokeWidth="2">
+                              <rect x="3" y="3" width="7" height="7"/>
+                              <rect x="14" y="3" width="7" height="7"/>
+                              <rect x="14" y="14" width="7" height="7"/>
+                              <rect x="3" y="14" width="7" height="7"/>
+                            </svg>
+                            Admin dashboard
+                          </NavLink>
+                        </>
+                      )}
+
+                      <div className={styles.menuDivider} />
+                      <button className={styles.menuItem} onClick={handleLogout}>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" strokeWidth="2">
+                          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+                          <polyline points="16 17 21 12 16 7"/>
+                          <line x1="21" y1="12" x2="9" y2="12"/>
+                        </svg>
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </div>
               </>
             ) : (
               <>
                 <Link to="/login" className={styles.link}>Login</Link>
-                <Link to="/register" className="btn btn-primary">
-                  Register
-                </Link>
+                <Link to="/register" className="btn btn-primary">Register</Link>
               </>
             )}
 
-            {isAuthenticated && <NotificationBell />}
-
-            {/* Theme toggle */}
             <button
               onClick={toggleTheme}
               className={styles.themeBtn}
@@ -169,20 +257,17 @@ const Navbar = () => {
           {/* Mobile right side */}
           <div className={styles.mobileRight}>
             {isAuthenticated && (
-              <Link to="/cart" className={styles.iconLink}>
+              <Link to="/cart" className={styles.iconLink} aria-label="Cart">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" strokeWidth="2">
                   <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
                   <line x1="3" y1="6" x2="21" y2="6"/>
                   <path d="M16 10a4 4 0 01-8 0"/>
                 </svg>
-                {itemCount > 0 && (
-                  <span className={styles.badge}>{itemCount}</span>
-                )}
+                {itemCount > 0 && <span className={styles.badge}>{itemCount}</span>}
               </Link>
             )}
 
-            {/* Hamburger */}
             <button
               className={`${styles.hamburger} ${drawerOpen ? styles.hamburgerOpen : ''}`}
               onClick={() => setDrawerOpen((o) => !o)}
@@ -205,14 +290,13 @@ const Navbar = () => {
         aria-hidden="true"
       />
 
-      {/* Drawer — uses inert instead of aria-hidden to properly prevent focus */}
+      {/* Drawer */}
       <div
         id="mobile-drawer"
         ref={drawerRef}
         className={`${styles.drawer} ${drawerOpen ? styles.drawerOpen : ''}`}
         inert={!drawerOpen ? true : undefined}
       >
-        {/* Drawer header */}
         <div className={styles.drawerHeader}>
           <Link to="/" className={styles.drawerLogo}>
             half<span>sec</span>
@@ -230,12 +314,10 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile search */}
         <div className={styles.drawerSearch}>
           <SearchBar placeholder="Search products..." />
         </div>
 
-        {/* User info (if logged in) */}
         {isAuthenticated && (
           <div className={styles.drawerUser}>
             <div className={styles.drawerAvatar}>
@@ -250,7 +332,6 @@ const Navbar = () => {
 
         <div className={styles.drawerDivider} />
 
-        {/* Nav links */}
         <nav className={styles.drawerNav}>
           <NavLink to="/shop" className={navLinkClass}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -272,9 +353,7 @@ const Navbar = () => {
                   <path d="M16 10a4 4 0 01-8 0"/>
                 </svg>
                 Cart
-                {itemCount > 0 && (
-                  <span className={styles.drawerBadge}>{itemCount}</span>
-                )}
+                {itemCount > 0 && <span className={styles.drawerBadge}>{itemCount}</span>}
               </NavLink>
 
               <NavLink to="/wishlist" className={navLinkClass}>
@@ -283,53 +362,15 @@ const Navbar = () => {
                   <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
                 </svg>
                 Wishlist
-                {wishlistCount > 0 && (
-                  <span className={styles.drawerBadge}>{wishlistCount}</span>
-                )}
+                {wishlistCount > 0 && <span className={styles.drawerBadge}>{wishlistCount}</span>}
               </NavLink>
 
-              <NavLink to="/orders" className={navLinkClass}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" strokeWidth="2">
-                  <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>
-                  <rect x="9" y="3" width="6" height="4" rx="1"/>
-                </svg>
-                My orders
-              </NavLink>
-
-              <NavLink to="/profile" className={navLinkClass}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" strokeWidth="2">
-                  <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
-                  <circle cx="12" cy="7" r="4"/>
-                </svg>
-                My profile
-              </NavLink>
-
-               <NavLink to="/watchlist" className={navLinkClass}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" strokeWidth="2">
-                  <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
-                </svg>
-                Watchlist
-              </NavLink>
-
-              <NavLink to="/notifications" className={navLinkClass}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" strokeWidth="2">
-                  <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-                  <path d="M13.73 21a2 2 0 01-3.46 0"/>
-                </svg>
-                Notifications
-              </NavLink>
-
-              <NavLink to="/sell" className={navLinkClass}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" strokeWidth="2">
-                  <path d="M12 2v20M2 12h20"/>
-                </svg>
-                Sell on Halfsec
-              </NavLink>
+              {accountLinks.map((item) => (
+                <NavLink key={item.to} to={item.to} className={navLinkClass}>
+                  {item.icon}
+                  {item.label}
+                </NavLink>
+              ))}
 
               {isAdmin && (
                 <>
@@ -374,21 +415,14 @@ const Navbar = () => {
 
         <div className={styles.drawerDivider} />
 
-        {/* Drawer footer */}
         <div className={styles.drawerFooter}>
-          <button
-            className={styles.drawerThemeBtn}
-            onClick={toggleTheme}
-          >
+          <button className={styles.drawerThemeBtn} onClick={toggleTheme}>
             {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
             <span>{theme === 'dark' ? 'Light mode' : 'Dark mode'}</span>
           </button>
 
           {isAuthenticated && (
-            <button
-              className={styles.drawerLogoutBtn}
-              onClick={handleLogout}
-            >
+            <button className={styles.drawerLogoutBtn} onClick={handleLogout}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" strokeWidth="2">
                 <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
