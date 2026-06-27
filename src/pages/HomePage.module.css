@@ -213,7 +213,7 @@
   color: var(--color-text-secondary);
 }
 
-/* ── Products grid ── */
+/* ── Products grid (desktop) ── */
 .productsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -285,14 +285,62 @@
 .ctaSub { font-size: 16px; color: var(--color-muted); max-width: 480px; }
 .ctaActions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
 
-/* ── Responsive ── */
+/* ── Responsive: tablet ── */
 @media (max-width: 900px) {
   .heroContent { grid-template-columns: 1fr; }
   .heroVisual { display: none; }
   .whyGrid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ── Responsive: mobile ── */
 @media (max-width: 600px) {
+  /* Hero: shrink to content height, no full-screen forcing */
+  .hero {
+    min-height: unset;
+    padding: 32px 0 28px;
+  }
+
+  /* Tighten section padding */
+  .section { padding: 36px 0; }
+  .whySection { padding: 40px 0; }
+  .ctaSection { padding: 40px 0; }
+
   .whyGrid { grid-template-columns: 1fr; }
   .heroStats { flex-wrap: wrap; gap: 16px; }
   .categoriesGrid { grid-template-columns: repeat(3, 1fr); }
+
+  /* Products: horizontal scroll row instead of vertical grid */
+  .productsGrid {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 12px;
+    padding-bottom: 12px;
+    /* Hide scrollbar visually but keep functionality */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .productsGrid::-webkit-scrollbar { display: none; }
+
+  /* Each card fixed width so they don't shrink */
+  .productsGrid > * {
+    flex: 0 0 200px;
+    min-width: 200px;
+  }
+
+  /* Skeleton row too */
+  .skeletonGrid {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 12px;
+    padding-bottom: 12px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .skeletonGrid::-webkit-scrollbar { display: none; }
+  .skeletonGrid > * {
+    flex: 0 0 200px;
+    min-width: 200px;
+  }
 }
