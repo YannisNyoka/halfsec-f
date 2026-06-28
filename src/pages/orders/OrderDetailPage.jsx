@@ -6,6 +6,7 @@ import styles from './OrderDetailPage.module.css';
 import ProtectionFeeInfo from '../../components/common/ProtectionFeeInfo';
 import EscrowStatus from '../../components/common/EscrowStatus';
 import RateSellerCard from '../../components/common/RateSellerCard';
+import TrackingInfo from '../../components/common/TrackingInfo';
 
 const STEPS = ['pending', 'confirmed', 'processing', 'shipped', 'delivered'];
 
@@ -96,6 +97,8 @@ const handleSubOrderUpdate = (subOrderId, updates) => {
     estimatedDelivery={order.estimatedDelivery}
   />
 </div>
+
+<TrackingInfo order={order} />
 
         <div className={styles.layout}>
           {/* Items */}

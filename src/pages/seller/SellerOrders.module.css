@@ -14,7 +14,20 @@
 .cardHeader { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; }
 .orderNum { font-size: 14px; font-weight: 700; color: var(--color-text); }
 .customer { font-size: 13px; color: var(--color-muted); margin-left: 4px; }
-.badges { display: flex; gap: 6px; }
+.badges { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+
+.expandBtn {
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-gold);
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.expandBtn:hover { background: var(--color-gold-muted); border-color: var(--color-gold); }
 
 .items { display: flex; flex-direction: column; gap: 10px; }
 .item { display: grid; grid-template-columns: 44px 1fr auto; gap: 10px; align-items: center; }
@@ -32,6 +45,12 @@
 }
 .dateLabel { font-size: 12px; color: var(--color-muted); }
 .total { font-size: 14px; font-weight: 700; color: var(--color-gold); }
+
+/* Tracking section slides in below the card footer */
+.trackingSection {
+  border-top: 1px solid var(--color-border);
+  padding-top: 14px;
+}
 
 .pagination { display: flex; align-items: center; justify-content: center; gap: 12px; }
 .pageInfo { font-size: 13px; color: var(--color-muted); }

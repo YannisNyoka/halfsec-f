@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getSellerOrders } from '../../api/seller';
+import SellerOrderTracking from './SellerOrderTracking';
 import styles from './SellerOrders.module.css';
 
 const SellerOrders = () => {
@@ -7,6 +8,7 @@ const SellerOrders = () => {
   const [pagination, setPagination] = useState({});
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [expanded, setExpanded] = useState(null);
 
   const fetchOrders = async (p = page) => {
     setLoading(true);
@@ -22,6 +24,12 @@ const SellerOrders = () => {
 
   const itemTotal = (items) =>
     items.reduce((sum, i) => sum + i.price * i.quantity, 0);
+
+  const handleOrderUpdated = (orderId, updatedOrder) => {
+    setOrders((prev) =>
+      prev.map((o) => (o._id === orderId ? { ...o, ...updatedOrder } : o))
+    );
+  };
 
   return (
     <div className={styles.page}>
@@ -61,6 +69,12 @@ const SellerOrders = () => {
                     <span className={`badge ${order.paymentStatus === 'paid' ? 'badge-success' : 'badge-muted'}`}>
                       {order.paymentStatus}
                     </span>
+                    <button
+                      className={styles.expandBtn}
+                      onClick={() => setExpanded(expanded === order._id ? null : order._id)}
+                    >
+                      {expanded === order._id ? 'Hide details ↑' : 'Manage ↓'}
+                    </button>
                   </div>
                 </div>
 
@@ -91,6 +105,16 @@ const SellerOrders = () => {
                     Your earnings: R{itemTotal(order.items).toLocaleString()}
                   </span>
                 </div>
+
+                {/* Tracking section — expands when seller clicks "Manage" */}
+                {expanded === order._id && (
+                  <div className={styles.trackingSection}>
+                    <SellerOrderTracking
+                      order={order}
+                      onUpdated={(updatedOrder) => handleOrderUpdated(order._id, updatedOrder)}
+                    />
+                  </div>
+                )}
               </div>
             ))}
           </div>
