@@ -280,7 +280,7 @@ useEffect(() => {
               {form.paymentMethod === 'eft' && (
                 <div className={styles.eftInfo}>
                   <strong>Banking details:</strong><br />
-                  Bank: FNB · Account: your_account_number<br />
+                  Bank: Capitec · Account: 2331479069<br />
                   Branch: 250655 · Reference: your order number
                 </div>
               )}
