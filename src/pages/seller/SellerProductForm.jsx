@@ -59,16 +59,20 @@ const SellerProductForm = () => {
     if (!files.length) return;
     setUploading(true);
     try {
-      for (const file of files) {
-        const formData = new FormData();
-        formData.append('image', file);
-        const { data } = await api.post('/upload', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
-        setForm((p) => ({ ...p, images: [...p.images, { url: data.url, publicId: data.publicId }] }));
-      }
-    } catch {
-      setError('Image upload failed.');
+      // Send all selected files in one request under the field name "images"
+      // (matches upload.array('images', 5) on the backend route)
+      const formData = new FormData();
+      files.forEach((file) => formData.append('images', file));
+
+      // No manual Content-Type header — let the browser set the multipart boundary
+      const { data } = await api.post('/upload', formData);
+
+      // The route returns { images: [{ url, publicId }, ...] }
+      const uploaded = data.images.map((img) => ({ url: img.url, publicId: img.publicId }));
+
+      setForm((p) => ({ ...p, images: [...p.images, ...uploaded] }));
+    } catch (err) {
+      setError(err.response?.data?.message || 'Image upload failed.');
     } finally {
       setUploading(false);
     }
