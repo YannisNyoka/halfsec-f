@@ -8,6 +8,7 @@ const STATUS_COLORS = {
   declined: 'badge-danger',
   expired: 'badge-muted',
   withdrawn: 'badge-muted',
+  purchased: 'badge-success',
 };
 
 const timeLeft = (expiresAt) => {

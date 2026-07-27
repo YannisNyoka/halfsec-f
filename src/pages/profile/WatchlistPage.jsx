@@ -26,6 +26,7 @@ const STATUS_COLORS = {
   declined: 'badge-danger',
   expired: 'badge-muted',
   withdrawn: 'badge-muted',
+  purchased: 'badge-success',
 };
 
 const WatchlistPage = () => {
@@ -317,8 +318,13 @@ const WatchlistPage = () => {
                     </div>
                     <div className={styles.cardActions}>
                       {o.status === 'accepted' && (
-                        <Link to={`/shop/${o.product?.slug}`} className="btn btn-primary btn-sm">
+                        <Link to={`/offers/${o._id}/checkout`} className="btn btn-primary btn-sm">
                           Buy at R{o.offerPrice.toLocaleString()}
+                        </Link>
+                      )}
+                      {o.status === 'purchased' && (
+                        <Link to={`/orders/${o.order}`} className="btn btn-ghost btn-sm">
+                          View order
                         </Link>
                       )}
                       {o.status === 'pending' && (

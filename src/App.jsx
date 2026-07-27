@@ -33,6 +33,7 @@ import ComparePage from './pages/compare/ComparePage';
 // Customer protected pages
 import CartPage from './pages/cart/CartPage';
 import CheckoutPage from './pages/cart/CheckoutPage';
+import OfferCheckoutPage from './pages/offers/OfferCheckoutPage';
 import OrdersPage from './pages/orders/OrdersPage';
 import OrderDetailPage from './pages/orders/OrderDetailPage';
 import ProfilePage from './pages/profile/ProfilePage';
@@ -124,6 +125,13 @@ const AppContent = () => {
           <ProtectedRoute>
             <PageErrorBoundary>
               <CheckoutPage />
+            </PageErrorBoundary>
+          </ProtectedRoute>
+        } />
+        <Route path="/offers/:id/checkout" element={
+          <ProtectedRoute>
+            <PageErrorBoundary>
+              <OfferCheckoutPage />
             </PageErrorBoundary>
           </ProtectedRoute>
         } />
