@@ -12,7 +12,11 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    // /auth/me is polled silently to check session state — a 401 there just
+    // means "not logged in", not "your session expired", so it shouldn't
+    // force-redirect a guest off whatever public page they're on.
+    const isAuthCheck = error.config?.url?.includes('/auth/me');
+    if (error.response?.status === 401 && !isAuthCheck) {
       if (!window.location.pathname.includes('/login')) {
         window.location.href = '/login';
       }
