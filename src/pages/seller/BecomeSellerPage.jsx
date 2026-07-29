@@ -152,6 +152,7 @@ const BecomeSellerPage = () => {
               <p className={styles.sub}>
                 Join our community of sellers and reach thousands of buyers looking for
                 quality second-hand items. Just fill in your details below to apply.
+                {' '}<Link to="/how-it-works">See how selling works →</Link>
               </p>
             </div>
 

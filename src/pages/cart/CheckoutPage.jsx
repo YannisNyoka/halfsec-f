@@ -24,7 +24,7 @@ const CheckoutPage = () => {
   const failed = searchParams.get('failed');
   const returnOrderId = searchParams.get('orderId');
 
-  const shippingCost = total >= 500 ? 0 : 80;
+  const shippingCost = 80;
   const [appliedCoupon, setAppliedCoupon] = useState(null);
 const discountAmount = appliedCoupon?.discountAmount || 0;
 const orderTotal = total + shippingCost - discountAmount;
@@ -342,9 +342,7 @@ useEffect(() => {
               </div>
               <div className={styles.summaryRow}>
                 <span>Shipping</span>
-                <span style={{ color: shippingCost === 0 ? 'var(--color-success)' : 'inherit' }}>
-                  {shippingCost === 0 ? 'Free' : `R${shippingCost}`}
-                </span>
+                <span>R{shippingCost}</span>
               </div>
               {discountAmount > 0 && (
     <div className={styles.summaryRow} style={{ color: 'var(--color-success)' }}>
@@ -387,9 +385,7 @@ useEffect(() => {
 
       <div className={styles.summaryRow}>
         <span>Shipping</span>
-        <span className={preview.shippingCost === 0 ? styles.freeShipping : ''}>
-          {preview.shippingCost === 0 ? 'Free' : `R${preview.shippingCost}`}
-        </span>
+        <span>R{preview.shippingCost.toLocaleString()}</span>
       </div>
 
       {preview.sellerCount > 1 && (

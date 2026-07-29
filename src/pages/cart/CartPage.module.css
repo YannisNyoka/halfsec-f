@@ -80,8 +80,6 @@
 .summaryTitle { font-size: 18px; font-weight: 700; color: var(--color-text); }
 .summaryRows { display: flex; flex-direction: column; gap: 12px; }
 .summaryRow { display: flex; justify-content: space-between; font-size: 14px; color: var(--color-text-secondary); }
-.free { color: var(--color-success); font-weight: 600; }
-.freeShipNote { font-size: 12px; color: var(--color-muted); }
 .divider { height: 1px; background: var(--color-border); }
 .summaryTotal { display: flex; justify-content: space-between; font-size: 17px; font-weight: 700; color: var(--color-text); }
 

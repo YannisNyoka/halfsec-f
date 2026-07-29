@@ -100,8 +100,9 @@ const HomePage = () => {
                   <line x1="3" y1="6" x2="21" y2="6"/>
                   <path d="M16 10a4 4 0 01-8 0"/>
                 </svg>
-                <p>Your next favourite<br />item is waiting</p>
-                <Link to="/shop" className={styles.heroCardBtn}>Shop now →</Link>
+                <p>Got items gathering<br />dust? Turn them into cash</p>
+                <Link to="/sell" className={styles.heroCardBtn}>Sell now →</Link>
+                <Link to="/how-it-works" className={styles.heroCardLink}>Learn how it works</Link>
               </div>
             </div>
           </div>
@@ -233,7 +234,7 @@ const HomePage = () => {
                     </svg>
                   ),
                   title: 'SA-wide delivery',
-                  desc: 'We ship anywhere in South Africa. Free delivery on orders over R500.',
+                  desc: 'We ship anywhere in South Africa, with tracked courier delivery on every order.',
                 },
                 {
                   icon: (

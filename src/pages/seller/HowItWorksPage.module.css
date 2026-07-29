@@ -1,0 +1,160 @@
+.page { background: var(--color-bg); }
+
+/* ── Hero ── */
+.hero {
+  padding: 72px 0 56px;
+  text-align: center;
+  border-bottom: 1px solid var(--color-border);
+  background:
+    radial-gradient(circle at 50% 0%, var(--color-gold-muted) 0%, transparent 55%),
+    linear-gradient(135deg, var(--color-bg) 0%, var(--color-surface) 100%);
+}
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-gold);
+  background: var(--color-gold-muted);
+  padding: 5px 14px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+.title {
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--color-text);
+  max-width: 700px;
+  margin: 0 auto 16px;
+}
+.sub {
+  font-size: 16px;
+  color: var(--color-muted);
+  max-width: 520px;
+  margin: 0 auto 28px;
+  line-height: 1.7;
+}
+
+/* ── Sections ── */
+.section { padding: 64px 0; border-bottom: 1px solid var(--color-border); }
+.sectionTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-text);
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+/* ── Steps ── */
+.stepsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+.stepCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 28px 22px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  transition: border-color var(--transition), transform var(--transition);
+}
+.stepCard:hover { border-color: var(--color-gold); transform: translateY(-2px); }
+.stepIcon {
+  width: 52px; height: 52px;
+  background: var(--color-gold-muted);
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-gold);
+  flex-shrink: 0;
+}
+.stepTitle { font-size: 16px; font-weight: 700; color: var(--color-text); }
+.stepDesc { font-size: 14px; color: var(--color-muted); line-height: 1.6; }
+
+/* ── Trust section ── */
+.trustSection { background: var(--color-surface); }
+.trustGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.trustGrid .sectionTitle { text-align: left; margin-bottom: 12px; }
+.trustLead { font-size: 15px; color: var(--color-muted); line-height: 1.7; }
+.trustList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.trustList li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--color-border);
+}
+.trustList li:last-child { border-bottom: none; padding-bottom: 0; }
+.trustList strong { font-size: 15px; color: var(--color-text); }
+.trustList span { font-size: 14px; color: var(--color-muted); line-height: 1.6; }
+
+/* ── FAQ ── */
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.faqItem {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  background: var(--color-surface);
+}
+.faqQ {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  cursor: pointer;
+  list-style: none;
+}
+.faqQ::-webkit-details-marker { display: none; }
+.faqQ::after {
+  content: '+';
+  float: right;
+  color: var(--color-gold);
+  font-weight: 700;
+}
+.faqItem[open] .faqQ::after { content: '\2212'; }
+.faqA {
+  font-size: 14px;
+  color: var(--color-muted);
+  line-height: 1.7;
+  margin-top: 12px;
+}
+
+/* ── CTA ── */
+.ctaSection { padding: 72px 0; background: var(--color-gold-muted); }
+.ctaContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+}
+.ctaTitle { font-size: 28px; font-weight: 800; color: var(--color-text); letter-spacing: -1px; }
+.ctaSub { font-size: 15px; color: var(--color-muted); }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .stepsGrid { grid-template-columns: repeat(2, 1fr); }
+  .trustGrid { grid-template-columns: 1fr; gap: 32px; }
+  .trustGrid .sectionTitle { text-align: center; }
+}
+@media (max-width: 600px) {
+  .hero { padding: 48px 0 40px; }
+  .section { padding: 40px 0; }
+  .stepsGrid { grid-template-columns: 1fr; }
+}

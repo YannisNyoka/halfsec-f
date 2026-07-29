@@ -148,11 +148,6 @@
   gap: 6px;
 }
 
-.freeShipping {
-  color: var(--color-success);
-  font-weight: 600;
-}
-
 .multiSellerNote {
   display: flex;
   align-items: flex-start;

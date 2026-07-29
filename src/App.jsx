@@ -45,6 +45,7 @@ import WatchlistPage from './pages/profile/WatchlistPage';
 
 // Seller pages
 import BecomeSellerPage from './pages/seller/BecomeSellerPage';
+import HowItWorksPage from './pages/seller/HowItWorksPage';
 import SellerLayout from './pages/seller/SellerLayout';
 import SellerDashboard from './pages/seller/SellerDashboard';
 import SellerProducts from './pages/seller/SellerProducts';
@@ -109,6 +110,7 @@ const AppContent = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+        <Route path="/how-it-works" element={<HowItWorksPage />} />
         <Route path="/shop" element={<ShopPage />} />
         <Route path="/shop/:slug" element={<ProductDetailPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />

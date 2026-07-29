@@ -28,7 +28,7 @@ const CartPage = () => {
     finally { setRemoving((p) => ({ ...p, [productId]: false })); }
   };
 
-  const shippingCost = total >= 500 ? 0 : 80;
+  const shippingCost = 80;
   const orderTotal = total + shippingCost;
 
   if (loading) return (
@@ -143,15 +143,8 @@ const CartPage = () => {
               </div>
               <div className={styles.summaryRow}>
                 <span>Shipping</span>
-                <span className={shippingCost === 0 ? styles.free : ''}>
-                  {shippingCost === 0 ? 'Free' : `R${shippingCost}`}
-                </span>
+                <span>R{shippingCost}</span>
               </div>
-              {shippingCost > 0 && (
-                <p className={styles.freeShipNote}>
-                  Add R{(500 - total).toLocaleString()} more for free shipping
-                </p>
-              )}
               <div className={styles.divider} />
               <div className={styles.summaryTotal}>
                 <span>Total</span>

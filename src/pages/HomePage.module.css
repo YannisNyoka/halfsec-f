@@ -118,6 +118,12 @@
   transition: background var(--transition);
 }
 .heroCardBtn:hover { background: var(--color-gold-hover); }
+.heroCardLink {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-muted);
+}
+.heroCardLink:hover { color: var(--color-gold); text-decoration: underline; }
 
 .heroBadgeFloat {
   position: absolute;

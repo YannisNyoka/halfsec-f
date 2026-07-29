@@ -146,7 +146,7 @@ const Footer = () => {
               <circle cx="5.5" cy="18.5" r="2.5"/>
               <circle cx="18.5" cy="18.5" r="2.5"/>
             </svg>
-            Free shipping on orders over R500
+            Nationwide courier delivery
           </div>
         </div>
 

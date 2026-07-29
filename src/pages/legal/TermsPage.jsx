@@ -31,7 +31,7 @@ const TermsPage = () => (
 
         <section className={styles.section}>
           <h2>5. Shipping</h2>
-          <p>We ship nationwide via courier. Orders are typically processed within 1-2 business days. Delivery takes 2-5 business days depending on your location. Free shipping applies to orders over R500.</p>
+          <p>We ship nationwide via courier. Orders are typically processed within 1-2 business days. Delivery takes 2-5 business days depending on your location. A flat shipping fee applies per order.</p>
         </section>
 
         <section className={styles.section}>
