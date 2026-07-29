@@ -22,6 +22,8 @@ import InstallPrompt from './components/common/InstallPrompt';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
+import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
+import ResetPasswordPage from './pages/auth/ResetPasswordPage';
 import ShopPage from './pages/shop/ShopPage';
 import ProductDetailPage from './pages/shop/ProductDetailPage';
 import PrivacyPage from './pages/legal/PrivacyPage';
@@ -105,6 +107,8 @@ const AppContent = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
         <Route path="/shop" element={<ShopPage />} />
         <Route path="/shop/:slug" element={<ProductDetailPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
