@@ -9,6 +9,8 @@
   position: relative; height: 4px;
   background: var(--color-border); border-radius: 999px;
   margin: 10px 0;
+  user-select: none;
+  touch-action: none;
 }
 
 .fill {

@@ -227,7 +227,11 @@ const handleSaveSearch = async () => {
   const hasPriceFilter = filters.minPrice > 0 || filters.maxPrice > 0;
 
   // ── Filter panel (shared between sidebar and drawer) ──────────────────────────
-  const FilterPanel = () => (
+  // NB: this is plain JSX, not a component — defining it as a component (e.g.
+  // `const FilterPanel = () => (...)`) would give it a new identity every
+  // ShopPage render, so React would remount the whole subtree (including
+  // PriceRangeSlider, resetting its drag state) on every filter change.
+  const filterPanel = (
     <div className={styles.filterPanel}>
       {/* Categories */}
       <div className={styles.filterSection}>
@@ -554,7 +558,7 @@ const handleSaveSearch = async () => {
         <div className={styles.layout}>
           {/* ── Desktop sidebar ── */}
           <aside className={styles.sidebar}>
-            <FilterPanel />
+            {filterPanel}
           </aside>
 
           {/* ── Product grid ── */}
@@ -661,7 +665,7 @@ const handleSaveSearch = async () => {
               </button>
             </div>
             <div className={styles.drawerBody}>
-              <FilterPanel />
+              {filterPanel}
             </div>
             <div className={styles.drawerFooter}>
               <button

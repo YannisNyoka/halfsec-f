@@ -5,6 +5,13 @@ const PriceRangeSlider = ({ min, max, value, onChange }) => {
   const [dragging, setDragging] = useState(null); // 'min' | 'max'
   const trackRef = useRef(null);
 
+  // Keep latest props/state in a ref so the drag listeners (attached once per
+  // drag) always read current values without needing to be torn down and
+  // re-attached on every mousemove — reattaching mid-drag was dropping most
+  // move events, which made dragging feel stuck/unresponsive on desktop.
+  const latest = useRef({});
+  latest.current = { dragging, value, min, max, onChange };
+
   const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 
   const getPercent = (v) => ((v - min) / (max - min)) * 100;
@@ -12,15 +19,19 @@ const PriceRangeSlider = ({ min, max, value, onChange }) => {
   const getPosFromEvent = useCallback((e) => {
     const rect = trackRef.current.getBoundingClientRect();
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const { min, max } = latest.current;
     const raw = (clientX - rect.left) / rect.width;
     const step = 50;
     return Math.round((clamp(raw, 0, 1) * (max - min) + min) / step) * step;
-  }, [min, max]);
+  }, []);
 
   useEffect(() => {
     if (!dragging) return;
+
     const move = (e) => {
+      if (e.cancelable) e.preventDefault();
       const pos = getPosFromEvent(e);
+      const { dragging, value, min, max, onChange } = latest.current;
       if (dragging === 'min') {
         onChange([clamp(pos, min, value[1] - 50), value[1]]);
       } else {
@@ -28,6 +39,7 @@ const PriceRangeSlider = ({ min, max, value, onChange }) => {
       }
     };
     const up = () => setDragging(null);
+
     window.addEventListener('mousemove', move);
     window.addEventListener('mouseup', up);
     window.addEventListener('touchmove', move, { passive: false });
@@ -38,10 +50,15 @@ const PriceRangeSlider = ({ min, max, value, onChange }) => {
       window.removeEventListener('touchmove', move);
       window.removeEventListener('touchend', up);
     };
-  }, [dragging, value, min, max, getPosFromEvent, onChange]);
+  }, [dragging, getPosFromEvent]);
 
   const leftPct = getPercent(value[0]);
   const rightPct = getPercent(value[1]);
+
+  const startDrag = (thumb) => (e) => {
+    e.preventDefault();
+    setDragging(thumb);
+  };
 
   return (
     <div className={styles.wrap}>
@@ -58,8 +75,8 @@ const PriceRangeSlider = ({ min, max, value, onChange }) => {
         <div
           className={`${styles.thumb} ${dragging === 'min' ? styles.thumbActive : ''}`}
           style={{ left: `${leftPct}%` }}
-          onMouseDown={() => setDragging('min')}
-          onTouchStart={() => setDragging('min')}
+          onMouseDown={startDrag('min')}
+          onTouchStart={startDrag('min')}
           role="slider"
           aria-valuenow={value[0]}
           aria-valuemin={min}
@@ -69,8 +86,8 @@ const PriceRangeSlider = ({ min, max, value, onChange }) => {
         <div
           className={`${styles.thumb} ${dragging === 'max' ? styles.thumbActive : ''}`}
           style={{ left: `${rightPct}%` }}
-          onMouseDown={() => setDragging('max')}
-          onTouchStart={() => setDragging('max')}
+          onMouseDown={startDrag('max')}
+          onTouchStart={startDrag('max')}
           role="slider"
           aria-valuenow={value[1]}
           aria-valuemin={value[0]}
