@@ -36,7 +36,7 @@ const Footer = () => {
               </svg>
             </a>
             
-            <a  href="https://instagram.com/halfsec"
+            <a  href="https://www.instagram.com/halfsec_"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.social}
@@ -49,8 +49,19 @@ const Footer = () => {
                 <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
               </svg>
             </a>
-            
-           <a   href="https://facebook.com/halfsec"
+
+            <a  href="https://www.tiktok.com/@halfsec7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.social}
+              aria-label="TikTok"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M16.6 5.82c-1.01-.88-1.65-2.12-1.75-3.51V2h-3.44v13.4a2.59 2.59 0 01-4.65 1.56 2.59 2.59 0 012.06-4.15c.28 0 .55.05.8.13V9.4a5.99 5.99 0 00-.8-.05 6.03 6.03 0 100 12.06c3.33 0 6.03-2.7 6.03-6.03V8.44a9.4 9.4 0 005.4 1.7V6.7a5.86 5.86 0 01-3.65-.88z"/>
+              </svg>
+            </a>
+
+           <a   href="https://web.facebook.com/halfsec123/?_rdc=1&_rdr#"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.social}
@@ -60,7 +71,7 @@ const Footer = () => {
                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
               </svg>
             </a>
-            
+
             <a  href="https://twitter.com/halfsec"
               target="_blank"
               rel="noopener noreferrer"
