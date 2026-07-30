@@ -305,8 +305,24 @@
 /* ── Responsive: tablet ── */
 @media (max-width: 900px) {
   .heroContent { grid-template-columns: 1fr; }
-  .heroVisual { display: none; }
   .whyGrid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Sell CTA: compact horizontal banner instead of the tall desktop card */
+  .heroVisual { margin-top: 4px; }
+  .heroBadgeFloat { display: none; }
+  .heroCard {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    padding: 12px 14px;
+    gap: 12px;
+    max-width: 100%;
+  }
+  .heroCard svg { width: 32px; height: 32px; flex-shrink: 0; }
+  .heroCard p { font-size: 13px; line-height: 1.35; }
+  .heroCard p br { display: none; }
+  .heroCardBtn { padding: 8px 14px; font-size: 13px; white-space: nowrap; }
+  .heroCardLink { display: none; }
 }
 
 /* ── Responsive: mobile ── */

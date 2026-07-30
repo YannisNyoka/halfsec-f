@@ -82,7 +82,7 @@ const AdminProducts = () => {
                       : <div className={styles.imgFallback} />
                     }
                   </div>
-                  <div>
+                  <div className={styles.productInfo}>
                     <div className={styles.productName}>{product.name}</div>
                     <div className={styles.productSlug}>{product.slug}</div>
                   </div>

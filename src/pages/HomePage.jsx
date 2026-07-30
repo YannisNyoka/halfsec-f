@@ -100,7 +100,7 @@ const HomePage = () => {
                   <line x1="3" y1="6" x2="21" y2="6"/>
                   <path d="M16 10a4 4 0 01-8 0"/>
                 </svg>
-                <p>Got items gathering<br />dust? Turn them into cash</p>
+                <p>Got items gathering <br />dust? Turn them into cash</p>
                 <Link to="/sell" className={styles.heroCardBtn}>Sell now →</Link>
                 <Link to="/how-it-works" className={styles.heroCardLink}>Learn how it works</Link>
               </div>
