@@ -8,7 +8,7 @@ import styles from './ShopPage.module.css';
 import { saveSearch, getMySavedSearches, deleteSavedSearch } from '../../api/watchlist';
 import useAuth from '../../hooks/useAuth';
 
-const CONDITIONS = ['like new', 'good', 'fair', 'poor'];
+const CONDITIONS = ['new', 'like new', 'good', 'fair', 'poor'];
 const SORT_OPTIONS = [
   { value: 'newest', label: 'Newest first' },
   { value: 'price_asc', label: 'Price: low to high' },

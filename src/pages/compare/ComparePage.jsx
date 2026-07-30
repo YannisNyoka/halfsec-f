@@ -71,6 +71,7 @@ const Cell = ({ row, product, onAddToCart, adding }) => {
     case 'condition':
       return (
         <span className={`badge ${
+          product.condition === 'new' ? 'badge-gold' :
           product.condition === 'like new' ? 'badge-gold' :
           product.condition === 'good' ? 'badge-success' :
           'badge-muted'

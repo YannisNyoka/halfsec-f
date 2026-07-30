@@ -9,7 +9,7 @@ import { getCategories } from '../../api/products';
 import api from '../../api/axios';
 import styles from './SellerProductForm.module.css';
 
-const CONDITIONS = ['like new', 'good', 'fair', 'poor'];
+const CONDITIONS = ['new', 'like new', 'good', 'fair', 'poor'];
 
 const INITIAL = {
   name: '', description: '', price: '', originalPrice: '',

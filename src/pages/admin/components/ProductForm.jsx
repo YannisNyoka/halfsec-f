@@ -4,7 +4,7 @@ import { getAllCategoriesAdmin } from '../../../api/admin';
 import styles from './ProductForm.module.css';
 import { generateDescription } from '../../../api/ai';
 
-const CONDITIONS = ['like new', 'good', 'fair', 'poor'];
+const CONDITIONS = ['new', 'like new', 'good', 'fair', 'poor'];
 
 const ProductForm = ({ initial = {}, onSubmit, loading, submitLabel = 'Save product' }) => {
   const [form, setForm] = useState({

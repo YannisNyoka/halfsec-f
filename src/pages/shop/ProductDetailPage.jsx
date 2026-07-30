@@ -16,6 +16,7 @@ import { setPriceAlert, getMyPriceAlerts, deletePriceAlert } from '../../api/wat
 import MakeOfferModal from '../../components/common/MakeOfferModal';
 
 const conditionColors = {
+  'new': 'badge-gold',
   'like new': 'badge-gold',
   'good': 'badge-success',
   'fair': 'badge-muted',

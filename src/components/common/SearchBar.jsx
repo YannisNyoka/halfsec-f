@@ -128,6 +128,7 @@ const SearchBar = ({ placeholder = 'Search products...', className = '' }) => {
                         {product.category?.name}
                       </span>
                       <span className={`badge ${
+                        product.condition === 'new' ? 'badge-gold' :
                         product.condition === 'like new' ? 'badge-gold' :
                         product.condition === 'good' ? 'badge-success' : 'badge-muted'
                       }`}>

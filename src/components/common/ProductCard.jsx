@@ -6,6 +6,7 @@ import { RatingDisplay } from './StarRating';
 import CompareButton from './CompareButton';
 
 const conditionColors = {
+  'new': 'badge-gold',
   'like new': 'badge-gold',
   'good': 'badge-success',
   'fair': 'badge-muted',
