@@ -49,7 +49,7 @@ const HomePage = () => {
         <section className={styles.hero}>
           <div className={`container ${styles.heroContent}`}>
             <div className={styles.heroText}>
-              <span className={styles.badge}>Second hand. First class.</span>
+              <Link to="/sell" className={styles.sellBadge}>Sell now →</Link>
               <h1 className={styles.heading}>
                 Find unique items<br />at <span>unbeatable</span> prices
               </h1>
