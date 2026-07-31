@@ -48,23 +48,8 @@ const HomePage = () => {
         {/* ── Hero ── */}
         <section className={styles.hero}>
           <div className={`container ${styles.heroContent}`}>
-            <div className={styles.heroVisual}>
-              <div className={styles.heroBadgeFloat}>
-                <span>✓</span> Verified condition
-              </div>
-              <div className={styles.heroCard}>
-                <svg width="80" height="80" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" strokeWidth="1">
-                  <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                  <line x1="3" y1="6" x2="21" y2="6"/>
-                  <path d="M16 10a4 4 0 01-8 0"/>
-                </svg>
-                <p>Got items gathering <br />dust? Turn them into cash</p>
-                <Link to="/sell" className={styles.heroCardBtn}>Sell now →</Link>
-                <Link to="/how-it-works" className={styles.heroCardLink}>Learn how it works</Link>
-              </div>
-            </div>
             <div className={styles.heroText}>
+              <span className={styles.badge}>Second hand. First class.</span>
               <h1 className={styles.heading}>
                 Find unique items<br />at <span>unbeatable</span> prices
               </h1>
@@ -102,6 +87,22 @@ const HomePage = () => {
                   <span className={styles.statNum}>Fast</span>
                   <span className={styles.statLabel}>SA-wide delivery</span>
                 </div>
+              </div>
+            </div>
+            <div className={styles.heroVisual}>
+              <div className={styles.heroBadgeFloat}>
+                <span>✓</span> Verified condition
+              </div>
+              <div className={styles.heroCard}>
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" strokeWidth="1">
+                  <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                  <line x1="3" y1="6" x2="21" y2="6"/>
+                  <path d="M16 10a4 4 0 01-8 0"/>
+                </svg>
+                <p>Got items gathering <br />dust? Turn them into cash</p>
+                <Link to="/sell" className={styles.heroCardBtn}>Sell now →</Link>
+                <Link to="/how-it-works" className={styles.heroCardLink}>Learn how it works</Link>
               </div>
             </div>
           </div>

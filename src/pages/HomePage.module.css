@@ -43,6 +43,17 @@
 
 .heroText { display: flex; flex-direction: column; gap: 24px; }
 
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-gold);
+  background: var(--color-gold-muted);
+  padding: 5px 14px;
+  border-radius: 999px;
+  width: fit-content;
+}
+
 .heading {
   font-size: clamp(36px, 4.5vw, 58px);
   font-weight: 800;
@@ -296,8 +307,11 @@
   .heroContent { grid-template-columns: 1fr; }
   .whyGrid { grid-template-columns: repeat(2, 1fr); }
 
-  /* Sell CTA: compact horizontal banner instead of the tall desktop card */
-  .heroVisual { margin-top: 4px; }
+  /* Sell CTA: compact horizontal banner at the top instead of the tall
+     desktop card lower down — reordered visually (not in the DOM) so
+     desktop's layout/markup order is untouched. */
+  .badge { display: none; }
+  .heroVisual { order: -1; margin-top: 0; }
   .heroBadgeFloat { display: none; }
   .heroCard {
     flex-direction: row;
