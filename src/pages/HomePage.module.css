@@ -305,7 +305,26 @@
 /* ── Responsive: tablet ── */
 @media (max-width: 900px) {
   .heroContent { grid-template-columns: 1fr; }
-  .whyGrid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Why section: horizontal scroll row instead of stacked/cramped cards */
+  .whyGrid {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 12px;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .whyGrid::-webkit-scrollbar { display: none; }
+  .whyGrid > * {
+    flex: 0 0 200px;
+    min-width: 200px;
+  }
+  .whyCard { padding: 18px; gap: 10px; }
+  .whyIcon { width: 44px; height: 44px; }
+  .whyTitle { font-size: 15px; }
+  .whyDesc { font-size: 13px; line-height: 1.5; }
 
   /* Sell CTA: compact horizontal banner at the top instead of the tall
      desktop card lower down — reordered visually (not in the DOM) so
@@ -341,7 +360,6 @@
   .whySection { padding: 40px 0; }
   .ctaSection { padding: 40px 0; }
 
-  .whyGrid { grid-template-columns: 1fr; }
   .heroStats { flex-wrap: wrap; gap: 16px; }
   .categoryCard { width: 68px; gap: 7px; }
   .categoryImageWrap { width: 56px; height: 56px; }
