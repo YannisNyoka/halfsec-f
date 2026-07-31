@@ -43,19 +43,6 @@
 
 .heroText { display: flex; flex-direction: column; gap: 24px; }
 
-.sellBadge {
-  display: inline-block;
-  font-size: 13px;
-  font-weight: 700;
-  color: #fff;
-  background: var(--color-gold);
-  padding: 7px 16px;
-  border-radius: 999px;
-  width: fit-content;
-  transition: background var(--transition);
-}
-.sellBadge:hover { background: var(--color-gold-hover); }
-
 .heading {
   font-size: clamp(36px, 4.5vw, 58px);
   font-weight: 800;
