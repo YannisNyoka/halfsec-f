@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import { isProductSoldOut } from '../../utils/product';
 
 const DEFAULT = {
   title: 'halfsec',
@@ -59,7 +60,7 @@ const SEO = ({
           <meta property="product:price:currency" content="ZAR" />
           <meta
             property="product:availability"
-            content={product.stock > 0 ? 'in stock' : 'out of stock'}
+            content={isProductSoldOut(product) ? 'out of stock' : 'in stock'}
           />
           <meta property="product:condition" content={product.condition} />
         </>
@@ -79,10 +80,9 @@ const SEO = ({
                   '@type': 'Offer',
                   price: product.price,
                   priceCurrency: 'ZAR',
-                  availability:
-                    product.stock > 0
-                      ? 'https://schema.org/InStock'
-                      : 'https://schema.org/OutOfStock',
+                  availability: isProductSoldOut(product)
+                    ? 'https://schema.org/OutOfStock'
+                    : 'https://schema.org/InStock',
                   seller: { '@type': 'Organization', name: 'halfsec' },
                 },
               }

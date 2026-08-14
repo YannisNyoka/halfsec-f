@@ -31,6 +31,12 @@
 }
 .uploadBtn:hover { border-color: var(--color-gold); color: var(--color-gold); }
 
+.soldOutCheckbox {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14px; color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
 .formActions { display: flex; gap: 10px; padding-top: 8px; }
 
 @media (max-width: 640px) {

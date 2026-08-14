@@ -29,6 +29,7 @@
 .productCategory { font-size: 11px; color: var(--color-muted); }
 .cell { font-size: 13px; color: var(--color-text-secondary); }
 .outOfStock { color: var(--color-danger); font-weight: 600; }
+.statusFlags { display: flex; gap: 4px; flex-wrap: wrap; }
 .actions { display: flex; gap: 6px; }
 .pagination { display: flex; align-items: center; justify-content: center; gap: 12px; }
 .pageInfo { font-size: 13px; color: var(--color-muted); }

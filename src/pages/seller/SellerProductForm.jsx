@@ -14,7 +14,7 @@ const CONDITIONS = ['new', 'like new', 'good', 'fair', 'poor'];
 const INITIAL = {
   name: '', description: '', price: '', originalPrice: '',
   category: '', condition: 'good', stock: '1', tags: '',
-  images: [],
+  isSoldOut: false, images: [],
 };
 
 const SellerProductForm = () => {
@@ -43,6 +43,7 @@ const SellerProductForm = () => {
           condition: p.condition,
           stock: p.stock,
           tags: p.tags?.join(', ') || '',
+          isSoldOut: p.isSoldOut || false,
           images: p.images || [],
         });
       }).catch(() => navigate('/seller/products')).finally(() => setLoading(false));
@@ -50,7 +51,8 @@ const SellerProductForm = () => {
   }, [id]);
 
   const handleChange = (e) => {
-    setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+    const { name, value, type, checked } = e.target;
+    setForm((p) => ({ ...p, [name]: type === 'checkbox' ? checked : value }));
     setError('');
   };
 
@@ -105,6 +107,7 @@ const SellerProductForm = () => {
         condition: form.condition,
         stock: Number(form.stock),
         tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
+        isSoldOut: form.isSoldOut,
         images: form.images,
       };
 
@@ -191,6 +194,13 @@ const SellerProductForm = () => {
               placeholder="vintage, denim, casual" />
           </div>
         </div>
+
+        {isEdit && (
+          <label className={styles.soldOutCheckbox}>
+            <input type="checkbox" name="isSoldOut" checked={form.isSoldOut} onChange={handleChange} />
+            Mark as sold out (stays listed, can't be purchased)
+          </label>
+        )}
 
         {/* Images */}
         <div className="form-group">

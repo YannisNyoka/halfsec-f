@@ -4,6 +4,7 @@ import { useCompare } from '../../context/CompareContext.jsx';
 import { useCart } from '../../context/CartContext.jsx';
 import { RatingDisplay } from '../../components/common/StarRating';
 import SEO from '../../components/common/SEO';
+import { isProductSoldOut } from '../../utils/product';
 import styles from './ComparePage.module.css';
 
 const ROWS = [
@@ -93,8 +94,8 @@ const Cell = ({ row, product, onAddToCart, adding }) => {
 
     case 'stock':
       return (
-        <span className={product.stock > 0 ? styles.inStock : styles.outStock}>
-          {product.stock > 0 ? `${product.stock} available` : 'Out of stock'}
+        <span className={isProductSoldOut(product) ? styles.outStock : styles.inStock}>
+          {isProductSoldOut(product) ? 'Out of stock' : `${product.stock} available`}
         </span>
       );
 
@@ -119,11 +120,11 @@ const Cell = ({ row, product, onAddToCart, adding }) => {
           <button
             className="btn btn-primary btn-full"
             onClick={() => onAddToCart(product)}
-            disabled={adding === product._id || product.stock === 0}
+            disabled={adding === product._id || isProductSoldOut(product)}
           >
             {adding === product._id ? (
               <><span className="spinner" />Adding...</>
-            ) : product.stock === 0 ? (
+            ) : isProductSoldOut(product) ? (
               'Out of stock'
             ) : (
               'Add to cart'
@@ -152,7 +153,7 @@ const ComparePage = () => {
   
 
   const handleAddToCart = async (product) => {
-    if (product.stock === 0) return;
+    if (isProductSoldOut(product)) return;
     setAdding(product._id);
     try {
       await add(product._id, 1);

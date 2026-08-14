@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getMyProducts, deleteSellerProduct } from '../../api/seller';
+import { getMyProducts, deleteSellerProduct, updateSellerProduct } from '../../api/seller';
 import styles from './SellerProducts.module.css';
 
 const SellerProducts = () => {
@@ -30,6 +30,13 @@ const SellerProducts = () => {
       setProducts((p) => p.filter((x) => x._id !== id));
     } catch {}
     finally { setDeleting(null); }
+  };
+
+  const handleToggleSoldOut = async (product) => {
+    try {
+      const { data } = await updateSellerProduct(product._id, { isSoldOut: !product.isSoldOut });
+      setProducts((p) => p.map((x) => x._id === product._id ? data.product : x));
+    } catch {}
   };
 
   return (
@@ -97,12 +104,22 @@ const SellerProducts = () => {
                     </td>
                     <td className={styles.cell}>{product.sold || 0}</td>
                     <td>
-                      <span className={`badge ${product.isActive ? 'badge-success' : 'badge-muted'}`}>
-                        {product.isActive ? 'Active' : 'Inactive'}
-                      </span>
+                      <div className={styles.statusFlags}>
+                        <span className={`badge ${product.isActive ? 'badge-success' : 'badge-muted'}`}>
+                          {product.isActive ? 'Active' : 'Inactive'}
+                        </span>
+                        {product.isSoldOut && <span className="badge badge-danger">Sold out</span>}
+                      </div>
                     </td>
                     <td>
                       <div className={styles.actions}>
+                        <button
+                          className="btn btn-ghost btn-sm"
+                          onClick={() => handleToggleSoldOut(product)}
+                          title={product.isSoldOut ? 'Mark as available' : 'Mark as sold out'}
+                        >
+                          {product.isSoldOut ? 'Restock' : 'Mark sold out'}
+                        </button>
                         <Link to={`/seller/products/edit/${product._id}`} className="btn btn-ghost btn-sm">
                           Edit
                         </Link>

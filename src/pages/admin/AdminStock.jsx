@@ -5,6 +5,7 @@ import {
   getLowStockProducts,
   updateStock,
 } from '../../api/stock';
+import { updateProduct } from '../../api/admin';
 import styles from './AdminStock.module.css';
 
 const AdminStock = () => {
@@ -72,7 +73,17 @@ const AdminStock = () => {
     }
   };
 
+  const toggleSoldOut = async (product) => {
+    try {
+      await updateProduct(product._id, { isSoldOut: !product.isSoldOut });
+      await fetchData();
+    } catch {
+      setError('Failed to update product.');
+    }
+  };
+
   const getStockStatus = (product) => {
+    if (product.isSoldOut) return { label: 'Sold out', cls: styles.statusOut };
     if (product.stock === 0) return { label: 'Out of stock', cls: styles.statusOut };
     if (product.stock <= product.lowStockThreshold) return { label: 'Low stock', cls: styles.statusLow };
     return { label: 'In stock', cls: styles.statusIn };
@@ -267,6 +278,12 @@ const AdminStock = () => {
                           onClick={() => startEdit(product)}
                         >
                           Edit stock
+                        </button>
+                        <button
+                          className="btn btn-ghost btn-sm"
+                          onClick={() => toggleSoldOut(product)}
+                        >
+                          {product.isSoldOut ? 'Restock' : 'Mark sold out'}
                         </button>
                         <Link
                           to={`/admin/products/edit/${product._id}`}

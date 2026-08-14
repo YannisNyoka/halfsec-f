@@ -4,6 +4,7 @@ import ShareButton from './ShareButton';
 import WishlistButton from './WishlistButton';
 import { RatingDisplay } from './StarRating';
 import CompareButton from './CompareButton';
+import { isProductSoldOut } from '../../utils/product';
 
 const conditionColors = {
   'new': 'badge-gold',
@@ -40,7 +41,7 @@ const ProductCard = ({ product }) => {
           <CompareButton product={product} size="sm" />
         </div>
         {discount && <span className={styles.discountBadge}>-{discount}%</span>}
-        {product.stock === 0 && <div className={styles.soldOut}>Sold out</div>}
+        {isProductSoldOut(product) && <div className={styles.soldOut}>Sold out</div>}
       </div>
 
       <div className={styles.body}>

@@ -11,6 +11,7 @@ import ShareButton from '../../components/common/ShareButton';
 import WishlistButton from '../../components/common/WishlistButton';
 import ImageLightbox from '../../components/common/ImageLightbox';
 import useRecentlyViewed from '../../hooks/useRecentlyViewed';
+import { isProductSoldOut } from '../../utils/product';
 import styles from './ProductDetailPage.module.css';
 import { setPriceAlert, getMyPriceAlerts, deletePriceAlert } from '../../api/watchlist';
 import MakeOfferModal from '../../components/common/MakeOfferModal';
@@ -134,6 +135,8 @@ const handleRemoveAlert = async () => {
   );
 
   if (!product) return null;
+
+  const soldOut = isProductSoldOut(product);
 
   const discount = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
@@ -311,14 +314,14 @@ const handleRemoveAlert = async () => {
               {/* Stock */}
               <div className={styles.stockRow}>
                 <div className={`${styles.stockDot} ${
-                  product.stock > 0 ? styles.inStock : styles.outStock
+                  !soldOut ? styles.inStock : styles.outStock
                 }`} />
                 <span className={styles.stockText}>
-                  {product.stock > 0
-                    ? product.stock === 1
+                  {soldOut
+                    ? 'Out of stock'
+                    : product.stock === 1
                       ? 'Last one left!'
                       : `${product.stock} in stock`
-                    : 'Out of stock'
                   }
                 </span>
               </div>
@@ -337,11 +340,11 @@ const handleRemoveAlert = async () => {
                   className="btn btn-primary btn-lg"
                   style={{ flex: 1 }}
                   onClick={handleAddToCart}
-                  disabled={addingToCart || product.stock === 0}
+                  disabled={addingToCart || soldOut}
                 >
                   {addingToCart
                     ? <><span className="spinner" />Adding...</>
-                    : product.stock === 0
+                    : soldOut
                     ? 'Out of stock'
                     : 'Add to cart'
                   }
@@ -411,7 +414,7 @@ const handleRemoveAlert = async () => {
   </div>
 )}
 
-{isAuthenticated && product.seller && product.stock > 0 && (
+{isAuthenticated && product.seller && !soldOut && (
   <div>
     {offerPlaced ? (
       <div className={styles.offerPlaced}>

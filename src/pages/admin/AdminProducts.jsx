@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { getAllProductsAdmin, deleteProduct, toggleFeatured } from '../../api/admin';
+import { getAllProductsAdmin, deleteProduct, toggleFeatured, updateProduct } from '../../api/admin';
 import styles from './AdminProducts.module.css';
 
 const AdminProducts = () => {
@@ -37,6 +37,13 @@ const AdminProducts = () => {
     try {
       const { data } = await toggleFeatured(id);
       setProducts((p) => p.map((pr) => pr._id === id ? data.product : pr));
+    } catch {}
+  };
+
+  const handleToggleSoldOut = async (product) => {
+    try {
+      const { data } = await updateProduct(product._id, { isSoldOut: !product.isSoldOut });
+      setProducts((p) => p.map((pr) => pr._id === product._id ? data.product : pr));
     } catch {}
   };
 
@@ -101,10 +108,18 @@ const AdminProducts = () => {
                     <span className={`badge ${product.isActive ? 'badge-success' : 'badge-danger'}`}>
                       {product.isActive ? 'Active' : 'Hidden'}
                     </span>
+                    {product.isSoldOut && <span className="badge badge-danger">Sold out</span>}
                     {product.isFeatured && <span className="badge badge-gold">Featured</span>}
                   </div>
                 </span>
                 <div className={styles.actions}>
+                  <button
+                    className="btn btn-ghost btn-sm"
+                    onClick={() => handleToggleSoldOut(product)}
+                    title={product.isSoldOut ? 'Mark as available' : 'Mark as sold out'}
+                  >
+                    {product.isSoldOut ? 'Restock' : 'Mark sold out'}
+                  </button>
                   <button
                     className="btn btn-ghost btn-sm"
                     onClick={() => handleToggleFeatured(product._id)}

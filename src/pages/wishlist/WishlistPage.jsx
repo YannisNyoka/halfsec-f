@@ -4,6 +4,7 @@ import { useWishlist } from '../../context/WishlistContext.jsx';
 import { useCart } from '../../context/CartContext.jsx';
 import SEO from '../../components/common/SEO';
 import WishlistButton from '../../components/common/WishlistButton';
+import { isProductSoldOut } from '../../utils/product';
 import styles from './WishlistPage.module.css';
 
 const WishlistPage = () => {
@@ -13,7 +14,7 @@ const WishlistPage = () => {
   const [cartSuccess, setCartSuccess] = useState({});
 
   const handleAddToCart = async (product) => {
-    if (product.stock === 0) return;
+    if (isProductSoldOut(product)) return;
     setAddingToCart((p) => ({ ...p, [product._id]: true }));
     try {
       await add(product._id, 1);
@@ -101,7 +102,7 @@ const WishlistPage = () => {
                       {discount && (
                         <span className={styles.discount}>-{discount}%</span>
                       )}
-                      {product.stock === 0 && (
+                      {isProductSoldOut(product) && (
                         <div className={styles.outOfStockOverlay}>Out of stock</div>
                       )}
                     </Link>
@@ -139,7 +140,7 @@ const WishlistPage = () => {
                       <button
                         className={`btn btn-primary btn-full ${isAdded ? styles.addedBtn : ''}`}
                         onClick={() => handleAddToCart(product)}
-                        disabled={isAdding || product.stock === 0}
+                        disabled={isAdding || isProductSoldOut(product)}
                       >
                         {isAdding ? (
                           <><span className="spinner" />Adding...</>
@@ -151,7 +152,7 @@ const WishlistPage = () => {
                             </svg>
                             Added to cart!
                           </>
-                        ) : product.stock === 0 ? (
+                        ) : isProductSoldOut(product) ? (
                           'Out of stock'
                         ) : (
                           'Add to cart'

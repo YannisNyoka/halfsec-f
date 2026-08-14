@@ -10,7 +10,7 @@ const ProductForm = ({ initial = {}, onSubmit, loading, submitLabel = 'Save prod
   const [form, setForm] = useState({
     name: '', description: '', price: '', originalPrice: '',
     category: '', condition: 'like new', stock: '1',
-    isFeatured: false, isActive: true, tags: '',
+    isFeatured: false, isActive: true, isSoldOut: false, tags: '',
     ...initial,
     tags: initial.tags?.join(', ') || '',
     price: initial.price?.toString() || '',
@@ -115,6 +115,7 @@ const [genError, setGenError] = useState('');
       stock: Number(form.stock) || 1,
       isFeatured: form.isFeatured,
       isActive: form.isActive,
+      isSoldOut: form.isSoldOut,
       tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
       images,
     });
@@ -275,6 +276,11 @@ const [genError, setGenError] = useState('');
             <input type="checkbox" name="isActive" checked={form.isActive} onChange={handleChange} />
             <span className={styles.checkmark} />
             Product is active (visible in shop)
+          </label>
+          <label className={styles.checkbox}>
+            <input type="checkbox" name="isSoldOut" checked={form.isSoldOut} onChange={handleChange} />
+            <span className={styles.checkmark} />
+            Mark as sold out (stays listed, can't be purchased)
           </label>
         </div>
       </div>
